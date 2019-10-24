@@ -2,10 +2,69 @@
   "name": "backend",
   "version": "1.0.0",
   "description": "Backend application for scotia bank project",
-  "main": "index.js",
+  "main": "src/server.ts",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "postinstall": "npx tsc",
+    "dev": "tsc-watch --onSuccess \"node ./dist/server.js\"",
+    "start": "npx pm2 start pm2.yaml",
+    "test": "jest --coverage --verbose",
+    "generate-db-types": "schemats generate"
   },
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "jest": {
+    "verbose": true,
+    "testEnvironment": "node",
+    "transform": {
+      ".+\\.tsx?$": "ts-jest"
+    },
+    "testPathIgnorePatterns": [
+      "/dist/",
+      "/node_modules/"
+    ],
+    "setupFiles": ["<rootDir>\\src\\config\\jestSetup.ts"],
+    "testRegex": "(/__tests__/.*|(\\.|/)(test|spec))\\.(jsx?|tsx?)$",
+    "moduleFileExtensions": [
+      "ts",
+      "tsx",
+      "js",
+      "jsx",
+      "json",
+      "node"
+    ]
+  },
+  "dependencies": {
+    "@types/compression": "1.0.1",
+    "@types/connect-pg-simple": "4.2.0",
+    "@types/cors": "2.8.6",
+    "@types/dotenv": "6.1.1",
+    "@types/express": "4.17.1",
+    "@types/express-session": "1.15.14",
+    "@types/jest": "24.0.18",
+    "@types/node": "12.7.5",
+    "@types/pg": "7.11.1",
+    "@types/request-promise": "4.1.44",
+    "@types/supertest": "2.0.8",
+    "@types/swagger-ui-express": "3.0.1",
+    "compression": "1.7.4",
+    "connect-pg-simple": "6.0.1",
+    "cors": "2.8.5",
+    "dotenv": "8.1.0",
+    "express": "5.0.0-alpha.7",
+    "express-session": "1.16.2",
+    "jest": "24.9.0",
+    "node-postgres": "0.0.1",
+    "pg": "7.12.1",
+    "pm2": "3.5.1",
+    "request": "2.88.0",
+    "request-promise": "4.2.4",
+    "schemats": "3.0.3",
+    "supertest": "4.0.2",
+    "swagger-ui-express": "4.1.0",
+    "ts-jest": "24.1.0",
+    "tsc-watch": "3.0.1",
+    "tslint": "5.20.0",
+    "typescript": "3.6.3",
+    "winston": "3.2.1"
+  }
 }

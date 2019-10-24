@@ -1,0 +1,66 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "version": "1.0.0",
+    "title": "RequestToPay"
+  },
+  "host": "localhost:3000",
+  "basePath": "/api/v1",
+  "schemes": ["http"],
+  "produces": ["application/json"],
+  "paths": {
+    "/endpoint": {
+      "get": {
+        "tags": ["Tag"],
+        "summary": "Summary",
+        "responses": {
+          "200": {
+            "description": "200 response description"
+          },
+          "400": {
+            "description": "400 response description"
+          }
+        },
+        "parameters": [
+          {
+            "name": "parameter 1 name",
+            "in": "query",
+            "description": "parameter 1 description",
+            "required": true,
+            "type": "string"
+          }
+        ]
+      }
+    },
+    "/login": {
+      "get": {
+        "tags": ["Search Text"],
+        "summary": "Login description",
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad request"
+          }
+        },
+        "parameters": [
+          {
+            "name": "u",
+            "in": "query",
+            "description": "Specifies the username",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "p",
+            "in": "query",
+            "description": "Specifies the password",
+            "required": true,
+            "type": "string"
+          }
+        ]
+      }
+    }
+  }
+}
