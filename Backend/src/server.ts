@@ -15,5 +15,8 @@ const { PORT = 3000 } = process.env;
 const server = http.createServer(router);
 
 server.listen(PORT, () => {
-    logger.info(`Server is running http://localhost:${PORT}...`);
+    logger.info({
+        file: "server.ts",
+        message: `Server is running http://localhost:${PORT}...`,
+    });
 });

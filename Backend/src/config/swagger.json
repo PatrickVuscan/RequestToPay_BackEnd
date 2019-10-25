@@ -32,6 +32,29 @@
         ]
       }
     },
+    "/users": {
+      "get": {
+        "tags": ["Search Text"],
+        "summary": "get a single user based on username",
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad request"
+          }
+        },
+        "parameters": [
+          {
+            "name": "u",
+            "in": "query",
+            "description": "Specifies the username",
+            "required": true,
+            "type": "string"
+          }
+        ]
+      }
+    },
     "/login": {
       "get": {
         "tags": ["Search Text"],

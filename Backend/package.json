@@ -23,7 +23,7 @@
       "/node_modules/"
     ],
     "setupFiles": ["<rootDir>\\src\\config\\jestSetup.ts"],
-    "testRegex": "(/__tests__/.*|(\\.|/)(test|spec))\\.(jsx?|tsx?)$",
+    "testRegex": "(src\\\\).*(test)\\.(ts)",
     "moduleFileExtensions": [
       "ts",
       "tsx",

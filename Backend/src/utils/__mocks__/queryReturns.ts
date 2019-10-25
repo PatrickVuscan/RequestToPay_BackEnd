@@ -1,4 +1,6 @@
-/* This is a list of examples that could be returned by q. */
+/* This is a list of examples that could be returned by q. There are separate objects for login and users because
+* it is reasonable that login should return different information than users.
+* */
 
 import {QueryResult} from "pg";
 
@@ -81,6 +83,29 @@ export const twoUsers: QueryResult = {
             password: "$3a$06$h4oAU7Pl.vKEshsnBhOSUOMGVrbkayJxJk8QyCbZwoyMk0h6hGyIW",
             privilege: 1,
             uname: "bubba",
+        },
+    ],
+};
+
+export const loginNoUsers: QueryResult = {
+    command: "SELECT",
+    fields: usersFields,
+    oid: 0,
+    rowCount: 0,
+    rows: [],
+};
+
+export const loginOneUsers: QueryResult = {
+    command: "SELECT",
+    fields: usersFields,
+    oid: 0,
+    rowCount: 1,
+    rows: [
+        {
+            id: 1,
+            password: "$2a$06$h4oAU7Pl.vKEshsnBhOSUOMGVrbkayJxJk8QyCbZwoyMk0h6hGyIW",
+            privilege: 0,
+            uname: "admin",
         },
     ],
 };

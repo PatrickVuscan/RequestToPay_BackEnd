@@ -10,15 +10,18 @@ dotenv.config();
 
 export const pool: Pool = new Pool();
 
-pool.on("error", (err: Error, client: PoolClient) => {
-    logger.error(`err: ${err}, client: ${client}`);
+pool.on("error", (err: Error) => {
+    logger.error({
+        error: err,
+        file: "utils/query.ts",
+        method: "pool.on('error')",
+    });
 });
 
-pool.on("acquire", (client: PoolClient) => {
+pool.on("acquire", () => {
     logger.info({
-        client,
         file: "query.ts",
-        method: "acquired database client",
+        method: "pool.on('acquire')",
     });
 });
 
@@ -31,13 +34,14 @@ export default async (q: string): Promise<QueryResult> => {
         rows: [],
     };
     try {
+        // try to set res to the response from the db
         res = await pool.query(q) as QueryResult;
     } catch (e) {
+        // log the error. We'll return the empty res
         logger.error({
             error: e,
             file: "query.ts",
         });
-        process.exit(1);
     }
     return res;
 };

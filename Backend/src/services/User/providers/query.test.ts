@@ -12,8 +12,8 @@ describe("query", () => {
     test("getUserByName: test no users", async () => {
         // get get the result of what we are testing. the mocked q should 'know' this query
         // assert that the request raises an error
-        await expect(Provider.getUserByName("zero")).rejects.toEqual(new HTTP400Error(
-            "Either found multiple or no users with his username: zero.  Query result: [object Object]",
+        expect(Provider.getUserByName("zero")).rejects.toEqual(new HTTP400Error(
+            "Found no users with his username: zero.  Query result: [object Object]",
         ));
     });
     test("getUserByName: test single user", async () => {
@@ -25,8 +25,8 @@ describe("query", () => {
     test("getUserByName: test more than 1 user", async () => {
         // get get the result of what we are testing. the mocked q should 'know' this query
         // assert that the request raises an error
-        await expect(Provider.getUserByName("two")).rejects.toEqual(new HTTP400Error(
-            "Either found multiple or no users with his username: two.  Query result: [object Object]",
+        expect(Provider.getUserByName("two")).rejects.toEqual(new HTTP400Error(
+            "Found multiple users with his username: two.  Query result: [object Object]",
         ));
     });
 });

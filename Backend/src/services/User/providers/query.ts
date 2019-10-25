@@ -7,24 +7,34 @@ import q from "../../../utils/query";
 type UserGetter = (name: string) => Promise<users>;
 type UserVerify = (name: string, password: string) => Promise<users>;
 
-export const getUserByName: UserGetter  = async (name: string) => {
-    // TODO: add check so that <name> is only ASCII characters adn add test for this
-    const res = await q(`select * from users where uname = '${name}';`);
-    if (res.rows.length !== 1) {
+export const generateLoginString: (uname: string, pass: string) => string = (uname: string, pass: string) => {
+    return `select * from users where
+            uname = '${uname}' and
+            password = crypt('${pass}', password);`;
+};
+
+export const generateGetUserString: (user: string) => string = (uname: string) => {
+    return `select * from users where uname = '${uname}';`;
+};
+
+export const getUserByName: UserGetter  = async (uname: string) => {
+    const res = await q(generateGetUserString(uname));
+    if (res.rows.length === 0) {
         throw new HTTP400Error(
-            `Either found multiple or no users with his username: ${name}.  Query result: ${res}`
+            `Found no users with his username: ${uname}.  Query result: ${res}`,
+        );
+    } else if (res.rows.length > 1) {
+        throw new HTTP400Error(
+            `Found multiple users with his username: ${uname}.  Query result: ${res}`,
         );
     }
     return res.rows[0];
 };
 
 export const login: UserVerify = async (uname: string, pass: string) => {
-    const res = await q(
-        `select * from users where
-            uname = '${uname}' and
-            password = crypt('${pass}', password);`);
+    const res = await q(generateLoginString(uname, pass));
     if (res.rows.length !== 1) {
-        throw new HTTP400Error("Could not find user with specified password");
+        throw new HTTP400Error(`Could not find user(${uname}) with specified password(${pass})`);
     }
     return res.rows[0] as users;
 };

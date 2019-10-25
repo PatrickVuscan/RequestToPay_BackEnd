@@ -4,7 +4,6 @@ import request from "supertest";
 import middleware from "../../middleware";
 import errorHandlers from "../../middleware/errorHandlers";
 import { applyMiddleware, applyRoutes } from "../../utils";
-import * as Provider from "./providers/query";
 import routes from "./routes";
 
 // we will be mocking this object by providing fake data
@@ -21,19 +20,36 @@ describe("routes", () => {
         applyMiddleware(errorHandlers, router);
     });
 
+    // users -------------------------------------------------------------------------------------------
     // the test to be run with a description
     test("users: test a valid API call", async () => {
         const response = await request(router).get("/api/v1/users?u=one");
         expect(response.status).toEqual(200);
     });
 
-    test("users: an empty string", async () => {
-        const response = await request(router).get("/api/v1/users?u=");
+    test("users: test no users returned", async () => {
+        const response = await request(router).get("/api/v1/login?u=none");
         expect(response.status).toEqual(400);
     });
 
     test("users: invalid symbol in u parameter", async () => {
         const response = await request(router).get("/api/v1/users?u=asd(-)dsa");
+        expect(response.status).toEqual(400);
+    });
+
+    // login -------------------------------------------------------------------------------------------
+    test("login: test a valid API call", async () => {
+        const response = await request(router).get("/api/v1/login?u=one&p=one");
+        expect(response.status).toEqual(200);
+    });
+
+    test("login: test no users returned", async () => {
+        const response = await request(router).get("/api/v1/login?u=zero&p=zero");
+        expect(response.status).toEqual(400);
+    });
+
+    test("login: invalid symbol in parameter", async () => {
+        const response = await request(router).get("/api/v1/login?u=admin&p=a]min");
         expect(response.status).toEqual(400);
     });
 });
