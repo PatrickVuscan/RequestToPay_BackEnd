@@ -9,55 +9,9 @@
   "schemes": ["http"],
   "produces": ["application/json"],
   "paths": {
-    "/endpoint": {
-      "get": {
-        "tags": ["Tag"],
-        "summary": "Summary",
-        "responses": {
-          "200": {
-            "description": "200 response description"
-          },
-          "400": {
-            "description": "400 response description"
-          }
-        },
-        "parameters": [
-          {
-            "name": "parameter 1 name",
-            "in": "query",
-            "description": "parameter 1 description",
-            "required": true,
-            "type": "string"
-          }
-        ]
-      }
-    },
-    "/users": {
-      "get": {
-        "tags": ["Search Text"],
-        "summary": "get a single user based on username",
-        "responses": {
-          "200": {
-            "description": "OK"
-          },
-          "400": {
-            "description": "Bad request"
-          }
-        },
-        "parameters": [
-          {
-            "name": "u",
-            "in": "query",
-            "description": "Specifies the username",
-            "required": true,
-            "type": "string"
-          }
-        ]
-      }
-    },
     "/login": {
       "get": {
-        "tags": ["Search Text"],
+        "tags": ["User Endpoints"],
         "summary": "Login description",
         "responses": {
           "200": {

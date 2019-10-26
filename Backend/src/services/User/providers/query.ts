@@ -1,7 +1,7 @@
 /* This file defines functions that are used by QueryController and subsequently in the IRoute handler method. */
 
 import {users} from "../../../utils/dbTypes";
-import {HTTP400Error} from "../../../utils/httpErrors";
+import {HTTP400Error, HTTP404Error} from "../../../utils/httpErrors";
 import q from "../../../utils/query";
 
 type UserGetter = (name: string) => Promise<users>;
@@ -20,7 +20,7 @@ export const generateGetUserString: (user: string) => string = (uname: string) =
 export const getUserByName: UserGetter  = async (uname: string) => {
     const res = await q(generateGetUserString(uname));
     if (res.rows.length === 0) {
-        throw new HTTP400Error(
+        throw new HTTP404Error(
             `Found no users with his username: ${uname}.  Query result: ${res}`,
         );
     } else if (res.rows.length > 1) {
@@ -34,7 +34,7 @@ export const getUserByName: UserGetter  = async (uname: string) => {
 export const login: UserVerify = async (uname: string, pass: string) => {
     const res = await q(generateLoginString(uname, pass));
     if (res.rows.length !== 1) {
-        throw new HTTP400Error(`Could not find user(${uname}) with specified password(${pass})`);
+        throw new HTTP404Error(`Could not find user(${uname}) with specified password(${pass})`);
     }
     return res.rows[0] as users;
 };

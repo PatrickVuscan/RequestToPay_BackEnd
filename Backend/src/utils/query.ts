@@ -3,7 +3,7 @@
  * */
 
 import dotenv from "dotenv";
-import {Pool, PoolClient, QueryResult} from "pg";
+import {Pool, QueryResult} from "pg";
 import {logger} from "./logger";
 
 dotenv.config();

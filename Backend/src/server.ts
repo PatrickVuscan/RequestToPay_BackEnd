@@ -1,3 +1,4 @@
+/* This is the file that is hosted. It applies the middleware, routes, and error handlers. */
 import express from "express";
 import http from "http";
 import middleware from "./middleware";

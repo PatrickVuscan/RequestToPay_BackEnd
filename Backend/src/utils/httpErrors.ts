@@ -1,49 +1,51 @@
+/* This defines some common HTTPErrors that can be instantiated. */
 import {logger} from "./logger";
 
 export abstract class HTTPClientError extends Error {
-    readonly statusCode!: number;
-    readonly name!: string;
+    public statusCode!: number;
+    public name!: string;
 
-    constructor(message: object | string) {
+    protected constructor(message: object | string) {
         super(JSON.stringify(message));
         this.name = this.constructor.name;
         Error.captureStackTrace(this, this.constructor);
         logger.error({
-            file: 'httpErrors.ts',
+            file: "httpErrors.ts",
             stack: this.stack,
-            message: this.message
+            message: this.message,
         });
     }
 }
 
+/* This is thrown when there is a bad request made to the server. */
 export class HTTP400Error extends HTTPClientError {
-    readonly statusCode = 400;
-
     constructor(message: string | object = "Bad Request") {
         super(message);
+        this.statusCode = 400;
     }
 }
 
+/* This is thrown when a request is made that the client is not authorized for. */
 export class HTTP401Error extends HTTPClientError {
-    readonly statusCode = 401;
+    public readonly statusCode = 401;
 
     constructor(message: string | object = "Unauthorized") {
         super(message);
     }
 }
 
+/* This is thrown when the client is forbidden from making a certain request. */
 export class HTTP403Error extends HTTPClientError {
-    readonly statusCode = 403;
-
     constructor(message: string | object = "Forbidden") {
         super(message);
+        this.statusCode = 403;
     }
 }
 
+/* Thrown when a file or something is not found. */
 export class HTTP404Error extends HTTPClientError {
-    readonly statusCode = 404;
-
     constructor(message: string | object = "Not found") {
         super(message);
+        this.statusCode = 404;
     }
 }

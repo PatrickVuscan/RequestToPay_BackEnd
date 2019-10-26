@@ -28,8 +28,8 @@ describe("routes", () => {
     });
 
     test("users: test no users returned", async () => {
-        const response = await request(router).get("/api/v1/login?u=none");
-        expect(response.status).toEqual(400);
+        const response = await request(router).get("/api/v1/users?u=zero");
+        expect(response.status).toEqual(404);
     });
 
     test("users: invalid symbol in u parameter", async () => {
@@ -45,7 +45,7 @@ describe("routes", () => {
 
     test("login: test no users returned", async () => {
         const response = await request(router).get("/api/v1/login?u=zero&p=zero");
-        expect(response.status).toEqual(400);
+        expect(response.status).toEqual(404);
     });
 
     test("login: invalid symbol in parameter", async () => {
