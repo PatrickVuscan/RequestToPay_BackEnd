@@ -1,0 +1,4 @@
+{
+  "conn": "schemats generate -c postgres://<user>:<password>@<server>/<database>",
+  "output": "./src/utils/dbTypes.ts"
+}
