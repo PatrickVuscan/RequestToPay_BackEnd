@@ -22,7 +22,9 @@
       "/dist/",
       "/node_modules/"
     ],
-    "setupFiles": ["<rootDir>\\src\\config\\jestSetup.ts"],
+    "setupFiles": [
+      "<rootDir>\\src\\config\\jestSetup.ts"
+    ],
     "testRegex": "(src\\\\).*(test)\\.(ts)",
     "moduleFileExtensions": [
       "ts",
