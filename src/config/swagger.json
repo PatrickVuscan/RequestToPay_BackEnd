@@ -38,6 +38,29 @@
           }
         ]
       }
+    },
+    "/users": {
+      "get": {
+        "tags": ["User Endpoints"],
+        "summary": "Login description",
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad request"
+          }
+        },
+        "parameters": [
+          {
+            "name": "u",
+            "in": "query",
+            "description": "Specifies the username",
+            "required": true,
+            "type": "string"
+          }
+        ]
+      }
     }
   }
 }

@@ -2,7 +2,7 @@
 
 import { Request, Response } from "express";
 import {checkLoginParams, checkUserQueryParams} from "../../middleware/checks";
-import {IRoute} from "../index";
+import {IRoute} from "..";
 import {getUserByName} from "./providers/query";
 import {getLogin} from "./QueryController";
 

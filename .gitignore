@@ -1,1 +1,7 @@
-.idea
+coverage/
+dist/
+logs/
+node_modules/
+.idea/
+.env
+schemats.json
