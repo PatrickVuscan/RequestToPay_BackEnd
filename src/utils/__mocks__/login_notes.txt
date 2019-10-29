@@ -1,0 +1,28 @@
+navigate terminal to /src/utils
+> node login.ts
+in browser, navigate to http://localhost:3000/
+username: cocacola
+password: pepsi
+
+// testing using Google cloud connection requires whitelisting ip in google cloud (manually by Dionysus)
+
+// IN GOOGLE CLOUD SHELL
+
+// change to project
+gcloud config set project testsql-257119
+// set to testdb DATABASE
+gcloud sql connect testdb --user=postgres --quiet
+// enter password
+
+// in postgres->
+
+// Set up new table for account info
+CREATE TABLE accounts (id integer NOT NULL, username VARCHAR NOT NULL, password VARCHAR NOT NULL, email VARCHAR NOT NULL);
+
+// Create new account entry
+INSERT INTO accounts (id, username, password, email) VALUES (1, 'cocacola', 'pepsi', 'coca@cola.com');
+
+// Modify table
+ALTER TABLE accounts ADD PRIMARY KEY (id);
+ALTER TABLE accounts ALTER COLUMN id SET NOT NULL;
+ALTER TABLE accounts ALTER COLUMN id SET AUTO_INCREMENT;
