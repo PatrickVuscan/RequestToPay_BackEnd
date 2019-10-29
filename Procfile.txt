@@ -1,0 +1,2 @@
+// Start the server.
+node dist/server.js
