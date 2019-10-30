@@ -30,7 +30,7 @@ const app = express();
 app.use(session({
     secret: "secret",
     resave: true,
-    saveUninitialized: true
+    saveUninitialized: true,
 }));
 
 // extract form data from login.html
@@ -47,10 +47,11 @@ app.post("/auth", function(request, response) {
 
     const username = request.body.username;
     const password = request.body.password;
-
     if (username && password) {
         // Search Database for correct U/P combo
-        connection.query("SELECT * FROM accounts WHERE username = $1 AND password = $2", [username, password], function(error, results){
+        // results contains matching table row
+        const userPwQuery = "SELECT * FROM accounts WHERE username = $1 AND password = $2";
+        connection.query(userPwQuery, [username, password], function(error, results){
             if (error) {
                 response.send("Not Connected to Google Cloud");
                 // // dirty no-connection alternative test
