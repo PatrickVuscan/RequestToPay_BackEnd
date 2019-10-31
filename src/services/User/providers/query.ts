@@ -10,7 +10,7 @@ type UserVerify = (name: string, password: string) => Promise<users>;
 export const generateLoginString: (uname: string, pass: string) => string = (uname: string, pass: string) => {
     return `select * from users where
             username = '${uname}' and
-            password = ${pass};`;
+            password = '${pass}';`;
 };
 
 export const generateGetUserString: (uname: string) => string = (uname: string) => {
