@@ -2,7 +2,7 @@
  * objects exported by this service.
   * */
 
-import {getUserByName, login} from "./providers/query";
+import {getUserByName, login} from "./providers/loginRequest";
 
 export const getUser = async (name: string) => {
     return await getUserByName(name);

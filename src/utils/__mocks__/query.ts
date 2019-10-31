@@ -1,7 +1,7 @@
-/* This is a mocked implementation of query.ts. It returns certain objects for certain queries. */
+/* This is a mocked implementation of loginRequest.ts. It returns certain objects for certain queries. */
 
 import {QueryResult} from "pg";
-import {generateGetUserString, generateLoginString} from "../../services/User/providers/query";
+import {generateGetUserString, generateLoginString} from "../../services/User/providers/loginRequest";
 import {loginNoUsers, loginOneUsers, singleUser, twoUsers, zeroUsers} from "./queryReturns";
 
 export default async (q: string): Promise<QueryResult> => {
