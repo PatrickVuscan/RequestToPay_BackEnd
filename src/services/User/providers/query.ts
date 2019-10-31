@@ -9,12 +9,12 @@ type UserVerify = (name: string, password: string) => Promise<users>;
 
 export const generateLoginString: (uname: string, pass: string) => string = (uname: string, pass: string) => {
     return `select * from users where
-            uname = '${uname}' and
+            username = '${uname}' and
             password = crypt('${pass}', password);`;
 };
 
 export const generateGetUserString: (user: string) => string = (uname: string) => {
-    return `select * from users where uname = '${uname}';`;
+    return `select * from users where username = '${uname}';`;
 };
 
 export const getUserByName: UserGetter  = async (uname: string) => {
