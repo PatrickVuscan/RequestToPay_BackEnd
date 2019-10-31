@@ -1,17 +1,34 @@
 This is the backend repository for the Scotia Bank project for team Works(*ish*).
 
+A working [demo](https://worksish-backend-v1.herokuapp.com/api-docs) of implemented endpoints. Try `username: driver` 
+and `password: zoomzoom`
+
 
 # Setup
-* To install all of the required packages, run `npm install`
-* If you are using WebStorm, you should enable the tslint package and point it to Backend/tslint.json
-* Create `.env` and a `schemats.json` files that follow their respective example files. These files have 
-    private information in them and cannot be shown in the public git repository.
-
-Necessary in your `.env` File
-
-`DB_CONSTRING=postgres://zcvqkmfmcuyxeh:377a55a83347449b065454395a46a59248e6ba03ced9dfaa3bd403eb3a25ea6d@ec2-174-129-253-104.compute-1.amazonaws.com:5432/dbofdangme5t6r`
-
-- this string may be updated by Heroku 
+1. __Clone the repo__: `git clone https://github.com/PatrickVuscan/RequestToPay_BackEnd.git`
+1. __Enable the linter__: Make sure your dev refers to `tslint.json` for style guidelines.
+1. __If running locally__
+    1. __Install Node.js__: https://nodejs.org/en/
+    1. __Install dependencies__: run `npm install` from the project directory.
+    1. __Set environment variables__: Create a `.env` file that follows the example of `.env.example`.
+        1. __To connect to the Heroku database__:
+        `DB_CONSTRING=postgres://zcvqkmfmcuyxeh:377a55a83347449b065454395a46a59248e6ba03ced9dfaa3bd403eb3a25ea6d@ec2-174-129-253-104.compute-1.amazonaws.com:5432/dbofdangme5t6r`
+        . This is liable to changes from Heroku.
+    1. __Host the application__: `npm run dev` will automatically recompile when changes are made. See `package.json` 
+    for other options.
+1. __If setting up new instance on Heroku__
+    1. __Set up the database (heroku)__
+        1. Connect "Heroku Postgres" as an "add-on" to your heroku application
+        1. Run the file to generate the database schema.
+    1. __Deploy the application__
+        1. Install [Heroku cli](https://devcenter.heroku.com/articles/heroku-cli).
+        1. Ensure that the "settings->config vars" contains the variables described by .env.example. 
+        1. Set the Heroku remote: `heroku git:remote -a worksish-backend-v1`. Verify by looking at `git remote -v`.
+        1. Push your changes to `master` on the heroku remote
+            - e.g. `git push herkou master`
+            - e.g. `git push heroku <your-branch>:master` to push a non-master branch to `heroku:master`.
+        1. __View logs__: `heroku logs --tail`
+1. __Test published endpoints__: Navigate to `https://<host>[:port]/api-docs`.
 
 # Commands
 * **Defined in** `package.json`
