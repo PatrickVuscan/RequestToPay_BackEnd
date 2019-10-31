@@ -10,8 +10,8 @@ dotenv.config();
 
 const config: PoolConfig = {
     connectionString: process.env.DATABASE_URL,
-    // keepAlive: true,
-    // ssl: true,
+    keepAlive: true,
+    ssl: true,
 };
 
 export const pool: Pool = new Pool(config);

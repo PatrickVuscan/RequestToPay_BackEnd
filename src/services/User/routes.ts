@@ -1,8 +1,8 @@
 /* Defines the routes and functions called in that route for the user service. */
 
 import { Request, Response } from "express";
-import {checkLoginParams, checkUserQueryParams} from "../../middleware/checks";
 import {IRoute} from "..";
+import {checkLoginParams, checkUserQueryParams} from "../../middleware/checks";
 import {getUserByName} from "./providers/query";
 import {getLogin} from "./QueryController";
 
@@ -29,7 +29,7 @@ export default [
                 }
                 const result = await getLogin(req.query.u, req.query.p);
                 res.status(200).send(result);
-                req.session.privelage = result.privelage;
+                // req.session.privelage = result.privelage;
                 return result;
             },
         ],
