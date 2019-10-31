@@ -28,7 +28,7 @@ export const getUserByName: UserGetter  = async (uname: string) => {
             `Found multiple users with his username: ${uname}.  Query result: ${res}`,
         );
     }
-    return res.rows[0];
+    return res.rows[0] as users;
 };
 
 export const login: UserVerify = async (uname: string, pass: string) => {

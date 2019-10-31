@@ -13,4 +13,6 @@ export interface IRoute {
 }
 
 // [...A, ...B] concatenates arrays A and B
-export default [...userRoutes] as [IRoute];
+export default [
+    ...userRoutes,
+] as [IRoute];

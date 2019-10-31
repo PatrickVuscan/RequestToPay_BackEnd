@@ -67,6 +67,7 @@ and `password: zoomzoom`
         API. Having this allows us to decouple the external API from our own internal API.
         * `*/providers`: This is where the objects that contact external APIs go. This *decouples*
             our code from code that we cannot control.
+        * Refer to the (How-To)[#Add-a-new-endpoint] section for how to create new endpoints.
     * `utils`: Utilities go here. Utils are used by multiple other files, but do not interact with external
         APIs like services might. Often, a util will define a _singleton_ that is used in many different places.
     * `*/__mocks__/*`: Files defined here can be automatically used by jest during testing to replace files with the 
@@ -98,3 +99,46 @@ and `password: zoomzoom`
 ---
 
 # How To
+## Add a new endpoint
+The endpoint that you will be creating is a service, so most of the code will be placed in `srv/services`. You will also
+have to write tests for this code, as the correctness of the application is determined by whether or not the endpoints
+function correctly. The file structure of the endpoint should be as follows:
+
+- `src/services/`
+    - `<Service>/`
+        - `providers/`
+            - `<external>.ts`
+            - `<external>.test.ts`
+        - `<Service>Controller.ts`
+        - `routes.ts`
+        - `routes.test.ts`
+    - `index.ts` (You will only add one line here)
+
+Each `<service>` is a functionality, for example, the `User` service defines all endpoints and logic pertaining to 
+getting/verifying/creating user information. You may or may not create multiple `providers` to add your functionality to
+an existing service or create a new service.
+
+Each provider is responsible for accessing an external resource, such as the database. In this scenario that the 
+provider is accessing the database, you should create an exported function that returns a SQL string given some set of
+parameters. You would also create a function that uses the `query` util to get a result from the database and do some
+basic checks on the correctness of the query. Finally, the function would return the result `as` some type most likely
+defined in or consisting of a combination of types defined in `src/utils/dbTypes.ts`.
+
+The `<Service>Controller` defines a set of functions that provide standard APIs for the functions defined in the
+providers. These functions are called when a route directs the request to the endpoint assigned to it in `routes.ts`.
+The main reason for this file is to make it so that if you were to change the database that is used, all you would have
+to do is add a `provider` and change the `controller` responsible for the for calling that `provider`.
+
+`routes.ts` defines a list of objects (interface `IRoute`) containing the `path`, HTTP `method`, and list of `handlers` 
+that define the behavior of a certain endpoint. The `path` is the url that, when hit with the specified HTTP `method`, 
+will call the provided list of `handlers` (signature `req: Request, res: Response, next: NextFunction`) which are called
+sequentially. Each handler that accepts a next function is responsible for calling it at the end of the logic for that 
+handler so that the next handler is called. A standard approach to defining the list of handlers is
+
+1. A `check<Provider>Params` function first
+1. A function that calls a `providerController` to get a `result`. If the result returns successfully, send a success
+    status code along with the result (`res.status(200).send(result);`) and return the result.
+    
+To make sure your routes are actually used by the express application, you should import your list of `IRoute` objects 
+in `src/services/index.ts` and concatenate it with the list of other endpoints that are exported. Generally this should
+look something like this: `export default [..., ...<YourIRouteList>] as IRoute[];`.
