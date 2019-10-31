@@ -31,13 +31,13 @@ and `password: zoomzoom`
 1. __Test published endpoints__: Navigate to `https://<host>[:port]/api-docs`.
 
 # Commands
-* **Defined in** `package.json`
-    * `npm run postinstall`: Hook that is automatically run after npm install.
-    * `npm run dev`: Starts a test server that recompiles the application when a file changes.
-    * `npm run start`: Starts the production server using `pm2`. Uses `pm2.yaml` for configurations.
-    * `npm run test`: Uses `jest` to run tests on the application. Options are defined in `package.json'.
-    * `npm run generate-db-types`: Generates typescript types for database objects. Options are in 
-        `schemats.json`.
+* __Defined in__ `package.json` and can be run by `npm run <command>`.
+    * `postinstall`: Hook that is automatically run after npm install and builds the project (output in `dist/`).
+    * `dev`: Starts a test server that re-compiles the application when a file changes.
+    * `start`: Starts a node server referencing `dist/server.js`.
+    * `test`: Uses `jest` to run tests on the application. Options are defined in `package.json`.
+    * `generate-db-types`: Generates typescript interfaces for objects from database tables. Options are defined in
+    `schemats.json`.
 * Other notable commands
     * `pg_dump -U <user> -f schema.sql -s <DBNAME>`: dumps the schema for `<DBNAME>` to a `.sql` file.
 
