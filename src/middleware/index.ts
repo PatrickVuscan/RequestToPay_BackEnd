@@ -8,7 +8,7 @@ import {
     handleCors,
 } from "./common";
 import {handleInfoLogger} from "./loggerHandlers";
-import {handleSession} from "./session";
+// import {handleSession} from "./session";
 
 export default [
     handleCors,
@@ -16,5 +16,5 @@ export default [
     handleCompression,
     handleAPIDocs,
     handleInfoLogger,
-    handleSession,
+    // handleSession,
 ];
