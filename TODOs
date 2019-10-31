@@ -1,5 +1,3 @@
-TODO: schemats.json does not have information filled in
-TODO: .env does not have the appropriate information
 TODO: schema.sql does not generate the tables for the database
 TODO: make sure that when there is no database connection, the correct things are returned
 src/utils/ErrorHandler.ts
