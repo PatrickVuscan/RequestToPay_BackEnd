@@ -7,6 +7,12 @@ This is the backend repository for the Scotia Bank project for team Works(*ish*)
 * Create `.env` and a `schemats.json` files that follow their respective example files. These files have 
     private information in them and cannot be shown in the public git repository.
 
+Necessary in your `.env` File
+
+`DB_CONSTRING=postgres://zcvqkmfmcuyxeh:377a55a83347449b065454395a46a59248e6ba03ced9dfaa3bd403eb3a25ea6d@ec2-174-129-253-104.compute-1.amazonaws.com:5432/dbofdangme5t6r`
+
+- this string may be updated by Heroku 
+
 # Commands
 * **Defined in** `package.json`
     * `npm run postinstall`: Hook that is automatically run after npm install.

@@ -7,7 +7,7 @@ import { applyMiddleware, applyRoutes } from "../../utils";
 import routes from "./routes";
 
 // we will be mocking this object by providing fake data
-jest.mock("../../utils/query.ts");
+jest.mock("../../utils/loginRequest.ts");
 
 describe("routes", () => {
     let router: Router;

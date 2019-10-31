@@ -3,24 +3,30 @@
  * */
 
 import dotenv from "dotenv";
-import {Pool, QueryResult} from "pg";
+import {Pool, PoolConfig, QueryResult} from "pg";
 import {logger} from "./logger";
 
 dotenv.config();
 
-export const pool: Pool = new Pool();
+const config: PoolConfig = {
+    connectionString: process.env.DATABASE_URL,
+    keepAlive: true,
+    ssl: true,
+};
+
+export const pool: Pool = new Pool(config);
 
 pool.on("error", (err: Error) => {
     logger.error({
         error: err,
-        file: "utils/query.ts",
+        file: "utils/loginRequest.ts",
         method: "pool.on('error')",
     });
 });
 
 pool.on("acquire", () => {
     logger.info({
-        file: "query.ts",
+        file: "loginRequest.ts",
         method: "pool.on('acquire')",
     });
 });
@@ -40,7 +46,7 @@ export default async (q: string): Promise<QueryResult> => {
         // log the error. We'll return the empty res
         logger.error({
             error: e,
-            file: "query.ts",
+            file: "loginRequest.ts",
         });
     }
     return res;

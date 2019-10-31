@@ -1,9 +1,9 @@
 /* Defines the routes and functions called in that route for the user service. */
 
 import { Request, Response } from "express";
-import {checkLoginParams, checkUserQueryParams} from "../../middleware/checks";
 import {IRoute} from "..";
-import {getUserByName} from "./providers/query";
+import {checkLoginParams, checkUserQueryParams} from "../../middleware/checks";
+import {getUserByName} from "./providers/loginRequest";
 import {getLogin} from "./QueryController";
 
 export default [
@@ -23,13 +23,13 @@ export default [
         handler: [
             checkLoginParams,
             async (req: Request, res: Response) => {
-                if (!req.session) {
-                    res.status(400);
-                    throw new Error("No session registered to client");
-                }
+                // if (!req.session) {
+                //     res.status(400);
+                //     throw new Error("No session registered to client");
+                // }
                 const result = await getLogin(req.query.u, req.query.p);
                 res.status(200).send(result);
-                req.session.privelage = result.privelage;
+                // req.session.privelage = result.privelage;
                 return result;
             },
         ],

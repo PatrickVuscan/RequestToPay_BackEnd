@@ -25,17 +25,13 @@ export interface session {
 }
 
 export namespace usersFields {
-    export type id = number;
-    export type uname = string;
+    export type username = string;
     export type password = string;
-    export type privilege = number;
 
 }
 
 export interface users {
-    id: usersFields.id;
-    uname: usersFields.uname;
+    uname: usersFields.username;
     password: usersFields.password;
-    privelage: usersFields.privilege;
 
 }
