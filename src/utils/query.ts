@@ -3,12 +3,18 @@
  * */
 
 import dotenv from "dotenv";
-import {Pool, QueryResult} from "pg";
+import {Pool, PoolConfig, QueryResult} from "pg";
 import {logger} from "./logger";
 
 dotenv.config();
 
-export const pool: Pool = new Pool();
+const config: PoolConfig = {
+    connectionString: process.env.PGCONNSTRING,
+    keepAlive: true,
+    ssl: true,
+};
+
+export const pool: Pool = new Pool(config);
 
 pool.on("error", (err: Error) => {
     logger.error({
