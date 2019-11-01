@@ -1,12 +1,45 @@
 /* This is the file where the external APIs of the providers gets turned into the API used by the handlers in the IRoute
- * objects exported by this service.
+ * objects exported by this service. Some checks that are used exclusively by the UserService are also defined here.
   * */
 
-import {getUserByName} from "./providers/userRequest";
+import {NextFunction, Request, Response} from "express";
+import {checkAscii} from "../../utils/checks";
+import {HTTP400Error} from "../../utils/httpErrors";
 import {loginRequest} from "./providers/loginRequest";
+import {getUserByName} from "./providers/userRequest";
+
+export const checkUserQueryParams = (
+    req: Request,
+    res: Response,
+    next: NextFunction,
+): void => {
+    if (!req.query.u) {
+        throw new HTTP400Error("Missing u parameter");
+    } else if (!checkAscii(req.query.u)) {
+        throw new HTTP400Error("Only alphabetic characters are allowed");
+    } else {
+        next();
+    }
+};
 
 export const getUser = async (name: string) => {
     return await getUserByName(name);
+};
+
+export const checkLoginParams = (
+    req: Request,
+    res: Response,
+    next: NextFunction,
+) => {
+    if (!req.query.u) {
+        throw new HTTP400Error("Missing u parameter");
+    } else if (!req.query.p) {
+        throw new HTTP400Error("Missing p parameter");
+    } else if (!checkAscii(req.query.u) || !checkAscii(req.query.p)) {
+        throw new HTTP400Error("Only alphabetic characters are allowed");
+    } else {
+        next();
+    }
 };
 
 export const getLogin = async  (name: string, pass: string) => {

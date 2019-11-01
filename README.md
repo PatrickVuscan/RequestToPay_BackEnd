@@ -100,7 +100,7 @@ and `password: zoomzoom`
 
 # How To
 ## Add a new endpoint
-The endpoint that you will be creating is a service, so most of the code will be placed in `srv/services`. You will also
+The endpoint that you will be creating is a service, so most of the code will be placed in `src/services`. You will also
 have to write tests for this code, as the correctness of the application is determined by whether or not the endpoints
 function correctly. The file structure of the endpoint should be as follows:
 
@@ -118,7 +118,7 @@ Each `<service>` is a functionality, for example, the `User` service defines all
 getting/verifying/creating user information. You may or may not create multiple `providers` to add your functionality to
 an existing service or create a new service.
 
-Each provider is responsible for accessing an external resource, such as the database. In this scenario that the 
+Each provider is responsible for accessing an external resource, such as the database. In the scenario that the 
 provider is accessing the database, you should create an exported function that returns a SQL string given some set of
 parameters. You would also create a function that uses the `query` util to get a result from the database and do some
 basic checks on the correctness of the query. Finally, the function would return the result `as` some type most likely
@@ -126,8 +126,9 @@ defined in or consisting of a combination of types defined in `src/utils/dbTypes
 
 The `<Service>Controller` defines a set of functions that provide standard APIs for the functions defined in the
 providers. These functions are called when a route directs the request to the endpoint assigned to it in `routes.ts`.
-The main reason for this file is to make it so that if you were to change the database that is used, all you would have
-to do is add a `provider` and change the `controller` responsible for the for calling that `provider`.
+Note that service specific checks go here, while checks that are used in more than one service are put in `src/utils`.
+The main reason for this file is to make it so that if you were to change the database that is used, for example, all
+you would have to do is add a `provider` and change the body `controller` function responsible exposing that `provider`.
 
 `routes.ts` defines a list of objects (interface `IRoute`) containing the `path`, HTTP `method`, and list of `handlers` 
 that define the behavior of a certain endpoint. The `path` is the url that, when hit with the specified HTTP `method`, 
@@ -135,7 +136,7 @@ will call the provided list of `handlers` (signature `req: Request, res: Respons
 sequentially. Each handler that accepts a next function is responsible for calling it at the end of the logic for that 
 handler so that the next handler is called. A standard approach to defining the list of handlers is
 
-1. A `check<Provider>Params` function first
+1. A `check<Provider>Params` function first that verifies that the correct parameters are present.
 1. A function that calls a `providerController` to get a `result`. If the result returns successfully, send a success
     status code along with the result (`res.status(200).send(result);`) and return the result.
     
@@ -145,3 +146,32 @@ look something like this: `export default [..., ...<YourIRouteList>] as IRoute[]
 
 
 ## Add new middleware
+Middleware is similar to services, however, it is application wide. While routes are applied to the server using the 
+same method as the HTTP verb being used (`router.get(...)`), middleware is applied using `router.use(...)`. Middleware
+is _usually_ applied to the entire application, and is thus run in every sequence of handlers that is called on 
+request to the server. One example of application wide middleware is `bodyParser` (`src/middleware/common.ts`). This
+parses the request information from the frontend (`https://<host>/<endpoint>?<param>=<value>`) into an object 
+(`{<param>: <value>}`) and stores it in the `Request` object passed to all subsequent handlers.
+
+To add new middleware to the application, you will effectively wrap the call to `app.use(...)` in a handler that is
+automatically called when the application starts.
+
+1. In `<yourMiddleware>.ts`, export a wrapper of type `MiddlewareHandler` (`src/middleware/index.ts`) that will look 
+   something like this:
+    ```$xslt
+    export const handle<MyMiddleware> = (router: Router) => {
+        router.use(...);
+    };
+    ```
+    Note that you do not need to define the type `export const handle<MyMiddleware>: MiddlewareHandler` because 
+    typescript will be able to infer this type later down the road. Just make sure it uses the function header defined
+    by `MiddlewareHandler`.
+1. Add your `handle<MyMiddleware>` function to the default export of `src/middleware/index.ts` (which is exported as 
+   type `MiddlewareHandler[]`). Now your middleware will automatically be imported when the application starts!
+   
+If you are interested in how the middleware is automatically, follow the `applyMiddleware` (`src/utils/index.ts`)
+function is used un `src/server.ts` which is the file that is run on startup.
+
+The main reason for setting up middleware like this is so that `src/server.ts` does not have to deal with middleware
+directly and can just rely on `src/middleware/index.ts`. This reasoning becomes more apparent in larger applications 
+that use a lot of middleware functions.

@@ -2,12 +2,12 @@
  * our code.
  */
 
-import {Request, Response} from "express";
+import {NextFunction, Request, Response} from "express";
 import userRoutes from "./User/routes";
 
 /* This is the interface that each route must implement */
 export interface IRoute {
-    handler: Array<(req: Request, res: Response) => void>;
+    handler: Array<(req: Request, res: Response, next: NextFunction) => void>;
     method: "get" | "post" | "put" | "delete";
     path: string;
 }

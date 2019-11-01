@@ -2,8 +2,8 @@
 
 import { Request, Response } from "express";
 import {IRoute} from "..";
-import {checkLoginParams, checkUserQueryParams} from "../../middleware/checks";
-import {getLogin, getUser} from "./QueryController";
+import {checkUserQueryParams} from "./QueryController";
+import {checkLoginParams, getLogin, getUser} from "./QueryController";
 
 export default [
     {
