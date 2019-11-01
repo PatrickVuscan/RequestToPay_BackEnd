@@ -1,6 +1,6 @@
 /* This file defines methods that error catching middleware uses. That is, when an  */
-import {NextFunction, Request, Response} from "express";
-import {HTTP404Error, HTTPClientError} from "./httpErrors";
+import {NextFunction, Response} from "express";
+import {HTTPClientError} from "./httpErrors";
 import {logger} from "./logger";
 
 // catches client errors

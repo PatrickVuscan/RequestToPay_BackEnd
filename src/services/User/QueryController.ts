@@ -2,12 +2,13 @@
  * objects exported by this service.
   * */
 
-import {getUserByName, login} from "./providers/loginRequest";
+import {getUserByName} from "./providers/userRequest";
+import {loginRequest} from "./providers/loginRequest";
 
 export const getUser = async (name: string) => {
     return await getUserByName(name);
 };
 
 export const getLogin = async  (name: string, pass: string) => {
-    return await login(name, pass);
+    return await loginRequest(name, pass);
 };

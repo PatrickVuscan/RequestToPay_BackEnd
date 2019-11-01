@@ -17,13 +17,6 @@ export namespace sessionFields {
 
 }
 
-export interface session {
-    sid: sessionFields.sid;
-    sess: sessionFields.sess;
-    expire: sessionFields.expire;
-
-}
-
 export namespace usersFields {
     export type username = string;
     export type password = string;

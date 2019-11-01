@@ -62,7 +62,7 @@ and `password: zoomzoom`
         pointing a simple server (`node <file>`) to the compiled version of this file, `dist/server.ts`.
     * `config`: This is a directory for configurations that do not contain sensitive information.
     * `middleware`: This is where middleware wrappers go. In general, anything that would call `express.use(...)` 
-        should be included here (more in the [How-To](#How-To) section).
+        should be included here (more in the [How-To](#Add-new-middleware) section).
     * `services`: This holds services. An example of a service is anything that gets information using an external
         API. Having this allows us to decouple the external API from our own internal API.
         * `*/providers`: This is where the objects that contact external APIs go. This *decouples*
@@ -142,3 +142,6 @@ handler so that the next handler is called. A standard approach to defining the 
 To make sure your routes are actually used by the express application, you should import your list of `IRoute` objects 
 in `src/services/index.ts` and concatenate it with the list of other endpoints that are exported. Generally this should
 look something like this: `export default [..., ...<YourIRouteList>] as IRoute[];`.
+
+
+## Add new middleware

@@ -1,5 +1,5 @@
-/* This is a list of examples that could be returned by q. There are separate objects for login and users because
-* it is reasonable that login should return different information than users.
+/* This is a list of examples that could be returned by q. There are separate objects for loginRequest and users because
+* it is reasonable that loginRequest should return different information than users.
 * */
 
 import {QueryResult} from "pg";
