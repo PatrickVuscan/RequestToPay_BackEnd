@@ -1,6 +1,6 @@
 /* TODO: Cookies
 * Don't forget about the imports in middleware/index.ts
-* Also a lint in routes.ts in the login handler that sets the session privelage
+* Also a lint in routes.ts in the loginRequest handler that sets the session privelage
 * */
 // import pgSession, {} from "connect-pg-simple";
 // import dotenv from "dotenv";

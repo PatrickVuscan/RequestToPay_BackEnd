@@ -19,14 +19,14 @@ export const pool: Pool = new Pool(config);
 pool.on("error", (err: Error) => {
     logger.error({
         error: err,
-        file: "utils/loginRequest.ts",
+        file: "utils/query.ts",
         method: "pool.on('error')",
     });
 });
 
 pool.on("acquire", () => {
     logger.info({
-        file: "loginRequest.ts",
+        file: "userRequest.ts",
         method: "pool.on('acquire')",
     });
 });
@@ -46,7 +46,7 @@ export default async (q: string): Promise<QueryResult> => {
         // log the error. We'll return the empty res
         logger.error({
             error: e,
-            file: "loginRequest.ts",
+            file: "userRequest.ts",
         });
     }
     return res;

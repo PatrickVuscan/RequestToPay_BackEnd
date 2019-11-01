@@ -1,8 +1,9 @@
-/* This is a mocked implementation of loginRequest.ts. It returns certain objects for certain queries. */
+/* This is a mocked implementation of userRequest.ts. It returns certain objects for certain queries. */
 
 import {QueryResult} from "pg";
-import {generateGetUserString, generateLoginString} from "../../services/User/providers/loginRequest";
+import {generateGetUserString} from "../../services/User/providers/userRequest";
 import {loginNoUsers, loginOneUsers, singleUser, twoUsers, zeroUsers} from "./queryReturns";
+import {generateLoginString} from "../../services/User/providers/loginRequest";
 
 export default async (q: string): Promise<QueryResult> => {
     if (q === generateGetUserString("zero")) {

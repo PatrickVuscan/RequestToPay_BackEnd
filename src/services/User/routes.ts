@@ -2,16 +2,15 @@
 
 import { Request, Response } from "express";
 import {IRoute} from "..";
-import {checkLoginParams, checkUserQueryParams} from "../../middleware/checks";
-import {getUserByName} from "./providers/loginRequest";
-import {getLogin} from "./QueryController";
+import {checkUserQueryParams} from "./QueryController";
+import {checkLoginParams, getLogin, getUser} from "./QueryController";
 
 export default [
     {
         handler: [
             checkUserQueryParams,
             async ({ query }: Request, res: Response) => {
-                const result = await getUserByName(query.u);
+                const result = await getUser(query.u);
                 res.status(200).send(result);
                 return result;
             },
