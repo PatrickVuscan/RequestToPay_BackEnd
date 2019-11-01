@@ -23,7 +23,7 @@ and `password: zoomzoom`. _Whether or not this works is __highly__ dependent on 
     1. __Set environment variables__: Create a `.env` file that follows the example of `.env.example`.
         1. __To connect to the Heroku database__:
         `DB_CONSTRING=postgres://zcvqkmfmcuyxeh:377a55a83347449b065454395a46a59248e6ba03ced9dfaa3bd403eb3a25ea6d@ec2-174-129-253-104.compute-1.amazonaws.com:5432/dbofdangme5t6r`
-        . This is liable to changes from Heroku.
+        . This is liable to change (periodically) from Heroku.
     1. __Host the application__: `npm run dev` will automatically recompile when changes are made. See `package.json` 
     for other options.
 1. __If setting up new instance on Heroku__
@@ -35,7 +35,7 @@ and `password: zoomzoom`. _Whether or not this works is __highly__ dependent on 
         1. Ensure that the "settings->config vars" contains the variables described by .env.example. 
         1. Set the Heroku remote: `heroku git:remote -a worksish-backend-v1`. Verify by looking at `git remote -v`.
         1. Push your changes to `master` on the heroku remote
-            - e.g. `git push herkou master`
+            - e.g. `git push heroku master`
             - e.g. `git push heroku <your-branch>:master` to push a non-master branch to `heroku:master`.
         1. __View logs__: `heroku logs --tail`
 1. __Test published endpoints__: Navigate to `https://<host>[:port]/api-docs`.
