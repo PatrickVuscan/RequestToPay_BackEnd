@@ -33,6 +33,6 @@ export default [
             },
         ],
         method: "get",
-        path: "/api/v1/loginRequest",
+        path: "/api/v1/login",
     },
 ] as IRoute[];

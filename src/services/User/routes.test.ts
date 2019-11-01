@@ -39,17 +39,17 @@ describe("routes", () => {
 
     // loginRequest -------------------------------------------------------------------------------------------
     test("loginRequest: test a valid API call", async () => {
-        const response = await request(router).get("/api/v1/loginRequest?u=one&p=one");
+        const response = await request(router).get("/api/v1/login?u=one&p=one");
         expect(response.status).toEqual(200);
     });
 
     test("loginRequest: test no users returned", async () => {
-        const response = await request(router).get("/api/v1/loginRequest?u=zero&p=zero");
+        const response = await request(router).get("/api/v1/login?u=zero&p=zero");
         expect(response.status).toEqual(404);
     });
 
     test("loginRequest: invalid symbol in parameter", async () => {
-        const response = await request(router).get("/api/v1/loginRequest?u=admin&p=a]min");
+        const response = await request(router).get("/api/v1/login?u=admin&p=a]min");
         expect(response.status).toEqual(400);
     });
 });

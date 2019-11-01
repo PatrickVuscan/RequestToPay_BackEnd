@@ -85,9 +85,10 @@ and `password: zoomzoom`. _Whether or not this works is __highly__ dependent on 
 
 ## Specific files
 * `config/`
-    * `swagger.json`: This holds api documentation information that is hosted using the `swagger` package.
-        The middleware handler for this can be found in `middleware/apiDocs.ts`. This is what determines what is rendered
-        when you navigate to `https://<host>[:port]/api-docs`
+    * `swagger.json`: This holds api documentation information that is hosted using the
+        [`swagger` package](https://swagger.io/specification/#tagObject). The middleware handler for this can be found 
+        in `middleware/apiDocs.ts`. This is what determines what is rendered when you navigate to 
+        `https://<host>[:port]/api-docs`.
     * `jestSetup.json`: This is run before any jest test scripts are run. This option is enabled in `package.json`.
 * `.env`: This holds environment variables that are inserted using the `dotenv` package.
 * `.gitignore`: This holds a list of file patterns that should be ignored when putting files on git.

@@ -1,18 +1,28 @@
 {
   "swagger": "2.0",
   "info": {
-    "version": "1.0.0",
-    "title": "RequestToPay"
+    "title": "RequestToPay",
+    "description": "This API is meant to provide data for a demo of Scotia Bank's potential data rich payment on delivery system. Note that using https on locally hosted server will fail and the opposite on a heroku instance.",
+    "license": {
+      "name": "LicenseUndecided",
+      "url": ""
+    },
+    "version": "1.0.0"
   },
-  "host": "localhost:3000",
   "basePath": "/api/v1",
-  "schemes": ["http"],
+  "schemes": ["http", "https"],
   "produces": ["application/json"],
+  "tags": [
+    {
+      "name": "User Endpoints",
+      "description": "This is where to get information about the users from the database."
+    }
+  ],
   "paths": {
     "/login": {
       "get": {
         "tags": ["User Endpoints"],
-        "summary": "Login description",
+        "summary": "Returns user information if user exists in database with given password.",
         "responses": {
           "200": {
             "description": "OK"
@@ -42,7 +52,7 @@
     "/users": {
       "get": {
         "tags": ["User Endpoints"],
-        "summary": "Login description",
+        "summary": "Returns user information if user exists in database.",
         "responses": {
           "200": {
             "description": "OK"
