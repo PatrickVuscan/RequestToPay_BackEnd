@@ -1,7 +1,16 @@
 This is the backend repository for the Scotia Bank project for team Works(*ish*).
 
 A working [demo](https://worksish-backend-v1.herokuapp.com/api-docs) of implemented endpoints. Try `username: driver` 
-and `password: zoomzoom`
+and `password: zoomzoom`. _Whether or not this works is __highly__ dependent on what mood Heroku is in_.
+# Table of contents
+1. [Setup](#Setup)
+1. [Commands](#Commands)
+1. [What is this file?](#what-file)
+    1. [General files by type/directory](#General-files-by-type-or-directory)
+    1. [Specific files](#Specific-files)
+1. [How To](#How-To)
+    1. [Add a new endpoint](#Add-a-new-endpoint)
+    1. [Add new middleware](#Add-new-middleware)
 
 ---
 
@@ -46,8 +55,8 @@ and `password: zoomzoom`
 
 ---
 
-# What is this file?
-## General files by type/directory
+# <a name='what-file'>What is this file?</a>
+## General files by type or directory
 * `*.ts`: Should have a multi-line comment at the top of the file describing its purpose. These are typescript files
     that are compiled to javascript. These are the core of the application.
     * `*.test.ts`: Files that are auto-tested with 
