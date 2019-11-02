@@ -12,6 +12,7 @@ and `password: zoomzoom`. _Whether or not this works is __highly__ dependent on 
 1. [How To](#How-To)
     1. [Add a new endpoint](#Add-a-new-endpoint)
     1. [Add new middleware](#Add-new-middleware)
+    1. [Add a table to the database](#Add-a-table-to-the-database)
 
 ---
 
@@ -252,7 +253,7 @@ automatically called when the application starts.
 
 1. In `<yourMiddleware>.ts`, export a wrapper of type `MiddlewareHandler` (`src/middleware/index.ts`) that will look 
    something like this:
-    ```$xslt
+    ```
     export const handle<MyMiddleware> = (router: Router) => {
         router.use(...);
     };
@@ -269,3 +270,24 @@ function is used un `src/server.ts` which is the file that is run on startup.
 The main reason for setting up middleware like this is so that `src/server.ts` does not have to deal with middleware
 directly and can just rely on `src/middleware/index.ts`. This reasoning becomes more apparent in larger applications 
 that use a lot of middleware functions.
+
+## Add a table to the database
+You will essentially need to documnt your changes in 3 places and ensure that nothing breaks after your change.
+For example, if you were to add a table for driver information, you would see that `Order[DID]` would have to be changed
+to reference `Drivers[DID]`. You  would have to make sure that any data inserted or queries that use this do not break.
+
+1. Add your table to `RequestToPay.ddl`. This would look something like this:
+    ```
+     create table TABLE_NAME (
+       COLUMN_NAME TYPE CONSTRAINTS,
+       ...
+     );
+    ```
+1. Add some data to your newly created table in `R2PData.sql` so that when a fresh database is loaded, the new table is
+    populated.
+1. Update the `README.md` [Database](#Database) section to reflect the changed schema.
+
+You will also have to:
+
+1. Load the new data in the database.
+1. Ensure all tests still pass (`npm tun test`).
