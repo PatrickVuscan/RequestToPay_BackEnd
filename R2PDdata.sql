@@ -28,6 +28,6 @@ insert into WarehouseContents(SID, IID, quantity, "location")
 values (1, 1, 20, '900 Nowhere Ave.');
 
 -- Orders
-insert into Orders(SID, "CID", InId, DID)
+insert into Orders(SID, "cid", InId, DID)
 values (1, 3, 1, 99);
 
