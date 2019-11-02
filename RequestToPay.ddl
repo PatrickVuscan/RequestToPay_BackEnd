@@ -7,20 +7,20 @@ set search_path to RequestToPay;
 
 -- tables
 create table Entity (
-  EID integer primary key,
+  EID serial primary key,
   name text not null,
   billingAddress text not null
 );
 
 create table Items (
-  IID integer primary key,
+  IID serial primary key,
   name text not null,
   SID integer not null references Entity(EID),
   price float not null
 );
 
 create table Invoice (
-  InID integer primary key,
+  InID serial primary key,
   NextInId integer references Invoice(InID)
 );
 
@@ -40,8 +40,8 @@ create table WarehouseContents (
 );
 
 create table Orders (
-  OID integer primary key,
-  InId integer unique not null,
+  OID serial primary key,
+  InId integer unique not null references Invoice(InID),
   DID integer not null,
   SID integer not null references Entity(EID),
   CID integer not null references Entity(EID)
