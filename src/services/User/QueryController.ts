@@ -1,6 +1,6 @@
 /* This is the file where the external APIs of the providers gets turned into the API used by the handlers in the IRoute
  * objects exported by this service. Some checks that are used exclusively by the UserService are also defined here.
-  * */
+ * */
 
 import {NextFunction, Request, Response} from "express";
 import {checkAscii} from "../../utils/checks";

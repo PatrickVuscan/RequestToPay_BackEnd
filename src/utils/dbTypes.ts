@@ -20,11 +20,28 @@ export namespace sessionFields {
 export namespace usersFields {
     export type username = string;
     export type password = string;
-
 }
 
 export interface users {
     uname: usersFields.username;
     password: usersFields.password;
 
+}
+
+export namespace invoiceFields {
+    export type orderId = string;
+    export type buyerId = string;
+    export type sellerId = string;
+    export type orderDate = Date;
+    export type deleveryDate = Date;
+    export type orderedItems = any[];
+}
+
+export interface invoices {
+    oId: invoiceFields.orderId;
+    bId: invoiceFields.buyerId;
+    sId: invoiceFields.sellerId;
+    oDate: invoiceFields.orderDate;
+    dDate: invoiceFields.deleveryDate;
+    items: invoiceFields.orderedItems;
 }

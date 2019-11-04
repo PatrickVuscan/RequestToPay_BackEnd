@@ -1,4 +1,4 @@
-/* This file is responsible for testing the routes used by this service */
+/* This file is responsible for testing the routes used by this service. */
 import express, { Router } from "express";
 import request from "supertest";
 import middleware from "../../middleware";
