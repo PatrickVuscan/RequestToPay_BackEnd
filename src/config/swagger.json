@@ -71,6 +71,73 @@
           }
         ]
       }
+    },
+    "/invoice": {
+      "get":  {
+        "tags": ["Invoice Endpoints"],
+        "summary": "Returns an invoice with the matching InID",
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "404": {
+            "description": "No invoices found"
+          },
+          "400": {
+            "description": "Bad request or multiple invoices found"
+          }
+        },
+        "parameters": [
+          {
+            "name": "InID",
+            "in": "query",
+            "description": "Specifies the invoice ID",
+            "required": true,
+            "type": "integer"
+          }
+        ]
+      },
+      "put": {
+        "tags": ["Invoice Endpoints"],
+        "summary": "Inserts a new invoice into the database.",
+        "responses": {
+          "200": {
+            "description": "This is the ID of the newly created invoice."
+          }
+        },
+        "parameters": [
+          {
+            "name": "DeliveryDate",
+            "in": "query",
+            "description": "The date for the new invoice to be delivered on.",
+            "required": true,
+            "type": "string"
+          }
+        ]
+      }
+    },
+    "/entityInvoices": {
+      "get":  {
+        "tags": ["Invoice Endpoints"],
+        "summary": "Returns all invoices with the matching Entity ID.",
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "404": {
+            "description": "No invoices found"
+          }
+        },
+        "parameters": [
+          {
+            "name": "EID",
+            "in": "query",
+            "description": "Specifies the Entity ID",
+            "required": true,
+            "type": "integer"
+          }
+        ]
+      }
     }
   }
 }

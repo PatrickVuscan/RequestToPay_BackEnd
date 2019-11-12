@@ -20,11 +20,22 @@ export namespace sessionFields {
 export namespace usersFields {
     export type username = string;
     export type password = string;
-
 }
 
 export interface users {
     uname: usersFields.username;
     password: usersFields.password;
 
+}
+
+export namespace invoiceFields {
+    export type invoiceId = number;
+    export type nextInId = number;
+    export type deliveryDate = Date;
+}
+
+export interface invoices {
+    InID: invoiceFields.invoiceId;
+    nextInID: invoiceFields.nextInId;
+    DeliveryDate: invoiceFields.deliveryDate;
 }

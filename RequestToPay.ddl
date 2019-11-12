@@ -9,7 +9,8 @@ set search_path to RequestToPay;
 create table Entity (
   EID serial primary key,
   name text not null,
-  billingAddress text not null
+  billingAddress text not null,
+  password text not null
 );
 
 create table Items (
@@ -21,15 +22,16 @@ create table Items (
 
 create table Invoice (
   InID serial primary key,
-  NextInId integer references Invoice(InID)
+  NextInID integer references Invoice(InID),
+  DeliveryDate timestamp not null
 );
 
 create table InvoiceItems (
-  InId integer references Invoice(InId),
+  InID integer references Invoice(InId),
   IID integer references Items(IID),
   price float not null,
   quantity integer not null,
-  primary key (InId, IID)
+  primary key (InID, IID)
 );
 
 create table WarehouseContents (
@@ -41,8 +43,9 @@ create table WarehouseContents (
 
 create table Orders (
   OID serial primary key,
-  InId integer unique not null references Invoice(InID),
+  InID integer unique not null references Invoice(InID),
   DID integer not null,
   SID integer not null references Entity(EID),
-  CID integer not null references Entity(EID)
+  CID integer not null references Entity(EID),
+  OrderDate timestamp not null
 );
