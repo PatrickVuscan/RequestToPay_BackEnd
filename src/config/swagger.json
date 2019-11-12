@@ -71,6 +71,50 @@
           }
         ]
       }
+    },
+    "/invoice": {
+      "get":  {
+        "tags": ["Get a single invoice"],
+        "summary": "Returns an invoice with the matching InID",
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "404": {
+            "description": "No invoices found"
+          },
+          "400": {
+            "description": "Bad request or multiple invoices found"
+          }
+        },
+        "parameters": [
+          {
+            "name": "InID",
+            "in": "query",
+            "description": "Specifies the invoice ID",
+            "required": true,
+            "type": "integer"
+          }
+        ]
+      },
+      "put": {
+        "tags": ["Insert a new endpoint"],
+        "summary": "Inserts a new invoice into the database.",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        },
+        "parameters": [
+          {
+            "name": "DeliveryDate",
+            "in": "query",
+            "description": "The date for the new invoice to be delivered on.",
+            "required": true,
+            "type": "string"
+          }
+        ]
+      }
     }
   }
 }

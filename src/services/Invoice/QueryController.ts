@@ -25,7 +25,7 @@ export const checkInvoiceSetQueryParams = (
     if (!req.query.DeliveryDate) {
         throw new HTTP400Error("Missing DeliveryDate parameter");
     } else if (!checkAscii(req.query.DeliveryDate)) {
-        throw new HTTP400Error("Only alphabetic characters are allowed");
+        throw new HTTP400Error("Only alphanumeric and '-' characters are allowed");
     } else if (!checkDate(req.query.DeliveryDate)) {
         throw new HTTP400Error("Not a valid date string");
     } else {

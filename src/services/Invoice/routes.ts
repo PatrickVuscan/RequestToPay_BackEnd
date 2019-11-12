@@ -8,14 +8,9 @@ export default [
     {
         handler: [
             checkInvoiceSetQueryParams,
-            // if (!req.session) {
-            //     res.status(400);
-            //     throw new Error("No session registered to client");
-            // }
             async (req: Request, res: Response) => {
                 const result = await setInvoice(req.query);
                 res.status(200).send(result);
-                // req.session.privilege = result.privilege;
                 return result;
             },
         ],
