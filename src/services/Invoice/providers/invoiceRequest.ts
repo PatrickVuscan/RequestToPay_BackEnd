@@ -5,7 +5,7 @@ import q from "../../../utils/query";
 type InvoiceByOrderIdGetter = (id: number) => Promise<invoices>;
 
 export const generateGetInvoiceByInvoiceIdString: (InId: number) => string = (InId: number) => {
-    return `select * from invoices where InId = '${InId}';`;
+    return `select * from requesttopay.invoice where InId = '${InId}';`;
 };
 
 export const getInvoiceByInvoiceId: InvoiceByOrderIdGetter = async (InId: number) => {
