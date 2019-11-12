@@ -29,19 +29,13 @@ export interface users {
 }
 
 export namespace invoiceFields {
-    export type orderId = string;
-    export type buyerId = string;
-    export type sellerId = string;
-    export type orderDate = Date;
-    export type deleveryDate = Date;
-    export type orderedItems = any[];
+    export type invoiceId = number;
+    export type nextInId = number;
+    export type deliveryDate = Date;
 }
 
 export interface invoices {
-    oId: invoiceFields.orderId;
-    bId: invoiceFields.buyerId;
-    sId: invoiceFields.sellerId;
-    oDate: invoiceFields.orderDate;
-    dDate: invoiceFields.deleveryDate;
-    items: invoiceFields.orderedItems;
+    InId: invoiceFields.invoiceId;
+    nextInId: invoiceFields.nextInId;
+    DeliveryDate: invoiceFields.deliveryDate;
 }

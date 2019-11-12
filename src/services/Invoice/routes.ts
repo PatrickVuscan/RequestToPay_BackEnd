@@ -2,20 +2,18 @@
 
 import { Request, Response } from "express";
 import {IRoute} from "..";
-import {checkUserQueryParams} from "../../middleware/checks";
-import {createInvoice, getInvoiceByBusinessId, getInvoiceByOrderId} from "./providers/invoiceRequests";
-// import {createInvoice} from "./QueryController";
+import {checkInvoiceGetQueryParams, checkInvoiceSetQueryParams, getInvoice, setInvoice} from "./QueryController";
 
 export default [
     {
         handler: [
-            checkUserQueryParams,
+            checkInvoiceSetQueryParams,
             // if (!req.session) {
             //     res.status(400);
             //     throw new Error("No session registered to client");
             // }
             async (req: Request, res: Response) => {
-                const result = await createInvoice(req.query);
+                const result = await setInvoice(req.query);
                 res.status(200).send(result);
                 // req.session.privilege = result.privilege;
                 return result;
@@ -26,13 +24,13 @@ export default [
     },
     {
         handler: [
-            checkUserQueryParams,
+            checkInvoiceGetQueryParams,
             async (req: Request, res: Response) => {
                 // if (!req.session) {
                 //     res.status(400);
                 //     throw new Error("No session registered to client");
                 // }
-                const result = await getInvoiceByOrderId(req.query.oId);
+                const result = await getInvoice(req.query.InId);
                 res.status(200).send(result);
                 // req.session.privilege = result.privilege;
                 return result;
@@ -40,22 +38,5 @@ export default [
         ],
         method: "get",
         path: "/api/v1/invoice",
-    },
-    {
-        handler: [
-            checkUserQueryParams,
-            async (req: Request, res: Response) => {
-                // if (!req.session) {
-                //     res.status(400);
-                //     throw new Error("No session registered to client");
-                // }
-                const result = await getInvoiceByBusinessId(req.query.bId);
-                res.status(200).send(result);
-                // req.session.privilege = result.privilege;
-                return result;
-            },
-        ],
-        method: "get",
-        path: "/api/v1/invoices",
     },
 ] as IRoute[];

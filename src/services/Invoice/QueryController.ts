@@ -2,14 +2,47 @@
  * objects exported by this service.
  * */
 
-// I Don't understand why this thing is needed? Looks like another layer that isn't necessarily needed.
+import {NextFunction, Request, Response} from "express";
+import {checkAscii, checkDate} from "../../utils/checks";
+import {invoices} from "../../utils/dbTypes";
+import {HTTP400Error} from "../../utils/httpErrors";
+import {createInvoice, getInvoiceByInvoiceId} from "./providers/invoiceRequests";
 
-// import {getUserByName, login} from "./providers/invoiceRequests";
-//
-// export const getUser = async (name: string) => {
-//     return await getUserByName(name);
-// };
-//
-// export const getLogin = async  (name: string, pass: string) => {
-//     return await login(name, pass);
-// };
+export const getInvoice = async (invoiceId: number) => {
+    return await getInvoiceByInvoiceId(invoiceId);
+};
+
+export const setInvoice = async (invoice: invoices) => {
+    return createInvoice(invoice);
+};
+
+export const checkInvoiceSetQueryParams = (
+    req: Request,
+    res: Response,
+    next: NextFunction,
+): void => {
+    if (!req.query.DeliveryDate) {
+        throw new HTTP400Error("Missing DeliveryDate parameter");
+    } else if (!checkAscii(req.query.DeliveryDate)) {
+        throw new HTTP400Error("Only alphabetic characters are allowed");
+    } else if (!checkDate(req.query.DeliveryDate)) {
+        throw new HTTP400Error("Not a valid date string");
+    } else {
+        req.query.DeliveryDate = new Date(Date.parse(req.query.DeliveryDate));
+        next();
+    }
+};
+
+export const checkInvoiceGetQueryParams = (
+    req: Request,
+    res: Response,
+    next: NextFunction,
+): void => {
+    if (!req.query.InID) {
+        throw new HTTP400Error("Missing InID parameter");
+    } else if (!checkAscii(req.query.InID)) {
+        throw new HTTP400Error("Only alphabetic characters are allowed");
+    } else {
+        next();
+    }
+};
