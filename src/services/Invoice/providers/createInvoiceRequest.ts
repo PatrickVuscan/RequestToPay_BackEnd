@@ -2,7 +2,7 @@ import {invoices} from "../../../utils/dbTypes";
 import q from "../../../utils/query";
 
 export const generateSetInvoiceString: (invoice: invoices) => string = (invoice: invoices) => {
-    return `INSERT INTO requesttopay.invoice (InId, nextInId, DeliveryDate) VALUES (default, null,
+    return `INSERT INTO requesttopay.invoice (InID, nextInID, DeliveryDate) VALUES (default, null,
         '${invoice.DeliveryDate}')`;
 };
 

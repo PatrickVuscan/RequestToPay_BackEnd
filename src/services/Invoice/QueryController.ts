@@ -7,10 +7,15 @@ import {checkAscii, checkDate} from "../../utils/checks";
 import {invoices} from "../../utils/dbTypes";
 import {HTTP400Error} from "../../utils/httpErrors";
 import {createInvoice} from "./providers/createInvoiceRequest";
+import {getInvoicesByEntityID} from "./providers/entityInvoicesRequest";
 import {getInvoiceByInvoiceID} from "./providers/invoiceRequest";
 
 export const getInvoice = async (invoiceID: number) => {
     return await getInvoiceByInvoiceID(invoiceID);
+};
+
+export const getEntityInvoices = async (entityID: number) => {
+    return await getInvoicesByEntityID(entityID);
 };
 
 export const setInvoice = async (invoice: invoices) => {
@@ -34,7 +39,7 @@ export const checkInvoiceSetQueryParams = (
     }
 };
 
-export const checkInvoiceGetQueryParams = (
+export const checkInvoiceByInvoiceIDGetQueryParams = (
     req: Request,
     res: Response,
     next: NextFunction,
@@ -42,6 +47,20 @@ export const checkInvoiceGetQueryParams = (
     if (!req.query.InID) {
         throw new HTTP400Error("Missing InID parameter");
     } else if (!checkAscii(req.query.InID)) {
+        throw new HTTP400Error("Only alphabetic characters are allowed");
+    } else {
+        next();
+    }
+};
+
+export const checkInvoicesByEntityIDGetQueryParams = (
+    req: Request,
+    res: Response,
+    next: NextFunction,
+): void => {
+    if (!req.query.EID) {
+        throw new HTTP400Error("Missing EID parameter");
+    } else if (!checkAscii(req.query.EID)) {
         throw new HTTP400Error("Only alphabetic characters are allowed");
     } else {
         next();

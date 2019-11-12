@@ -2,7 +2,14 @@
 
 import { Request, Response } from "express";
 import {IRoute} from "..";
-import {checkInvoiceGetQueryParams, checkInvoiceSetQueryParams, getInvoice, setInvoice} from "./QueryController";
+import {
+    checkInvoiceByInvoiceIDGetQueryParams,
+    checkInvoicesByEntityIDGetQueryParams,
+    checkInvoiceSetQueryParams,
+    getEntityInvoices,
+    getInvoice,
+    setInvoice,
+} from "./QueryController";
 
 export default [
     {
@@ -19,7 +26,7 @@ export default [
     },
     {
         handler: [
-            checkInvoiceGetQueryParams,
+            checkInvoiceByInvoiceIDGetQueryParams,
             async (req: Request, res: Response) => {
                 const result = await getInvoice(req.query.InID);
                 res.status(200).send(result);
@@ -28,5 +35,17 @@ export default [
         ],
         method: "get",
         path: "/api/v1/invoice",
+    },
+    {
+        handler: [
+            checkInvoicesByEntityIDGetQueryParams,
+            async (req: Request, res: Response) => {
+                const result = await getEntityInvoices(req.query.EID);
+                res.status(200).send(result);
+                return result;
+            },
+        ],
+        method: "get",
+        path: "/api/v1/entityInvoices",
     },
 ] as IRoute[];
