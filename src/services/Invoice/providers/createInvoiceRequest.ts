@@ -3,10 +3,10 @@ import q from "../../../utils/query";
 
 export const generateSetInvoiceString: (invoice: invoices) => string = (invoice: invoices) => {
     return `INSERT INTO requesttopay.invoice (InID, nextInID, DeliveryDate) VALUES (default, null,
-        '${invoice.DeliveryDate}')`;
+        '${invoice.DeliveryDate}') RETURNING InID`;
 };
 
 export const createInvoice: (invoice: invoices) => void = async (invoice: invoices) => {
-    await q(generateSetInvoiceString(invoice));
-    return;
+    const res = await q(generateSetInvoiceString(invoice));
+    return res.rows[0].inid;
 };

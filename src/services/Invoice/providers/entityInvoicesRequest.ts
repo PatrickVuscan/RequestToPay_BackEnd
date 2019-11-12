@@ -3,7 +3,8 @@ import {HTTP400Error, HTTP404Error} from "../../../utils/httpErrors";
 import q from "../../../utils/query";
 
 export const generateGetInvoicesByEntityIDString: (EID: number) => string = (EID: number) => {
-    return `select * from requesttopay.orders join requesttopay.invoice on orders.InID = invoice.InID where orders.SID = '${EID}'; or orders.CID = '${EID}' `;
+    return `select * from requesttopay.orders join requesttopay.invoice on orders.InID = invoice.InID where
+        orders.SID = ${EID} or orders.CID = ${EID}`;
 };
 
 export const getInvoicesByEntityID: (EID: number) => Promise<invoices[]> = async (EID: number) => {

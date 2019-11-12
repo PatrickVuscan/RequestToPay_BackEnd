@@ -74,7 +74,7 @@
     },
     "/invoice": {
       "get":  {
-        "tags": ["Get a single invoice"],
+        "tags": ["Invoice Endpoints"],
         "summary": "Returns an invoice with the matching InID",
         "responses": {
           "200": {
@@ -98,11 +98,11 @@
         ]
       },
       "put": {
-        "tags": ["Insert a new endpoint"],
+        "tags": ["Invoice Endpoints"],
         "summary": "Inserts a new invoice into the database.",
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "This is the ID of the newly created invoice."
           }
         },
         "parameters": [
@@ -112,6 +112,29 @@
             "description": "The date for the new invoice to be delivered on.",
             "required": true,
             "type": "string"
+          }
+        ]
+      }
+    },
+    "/entityInvoices": {
+      "get":  {
+        "tags": ["Invoice Endpoints"],
+        "summary": "Returns all invoices with the matching Entity ID.",
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "404": {
+            "description": "No invoices found"
+          }
+        },
+        "parameters": [
+          {
+            "name": "EID",
+            "in": "query",
+            "description": "Specifies the Entity ID",
+            "required": true,
+            "type": "integer"
           }
         ]
       }
