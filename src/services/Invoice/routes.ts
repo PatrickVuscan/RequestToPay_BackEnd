@@ -26,13 +26,8 @@ export default [
         handler: [
             checkInvoiceGetQueryParams,
             async (req: Request, res: Response) => {
-                // if (!req.session) {
-                //     res.status(400);
-                //     throw new Error("No session registered to client");
-                // }
-                const result = await getInvoice(req.query.InId);
+                const result = await getInvoice(req.query.InID);
                 res.status(200).send(result);
-                // req.session.privilege = result.privilege;
                 return result;
             },
         ],
