@@ -1,23 +1,11 @@
-/* This file defines functions that are used by QueryController and subsequently in the IRoute handler method. */
-
 import {invoices} from "../../../utils/dbTypes";
 import {HTTP400Error, HTTP404Error} from "../../../utils/httpErrors";
 import q from "../../../utils/query";
 
 type InvoiceByOrderIdGetter = (id: number) => Promise<invoices>;
-type InvoiceSetter = (invoice: invoices) => void;
-
-export const generateSetInvoiceString: (invoice: invoices) => string = (invoice: invoices) => {
-    return `INSERT INTO invoices (InId, nextInId, DeliveryDate) VALUES (default, null,
-        ${invoice.DeliveryDate})`;
-};
 
 export const generateGetInvoiceByInvoiceIdString: (InId: number) => string = (InId: number) => {
     return `select * from invoices where InId = '${InId}';`;
-};
-
-export const createInvoice: InvoiceSetter = async (invoice: invoices) => {
-    const res = await q(generateSetInvoiceString(invoice));
 };
 
 export const getInvoiceByInvoiceId: InvoiceByOrderIdGetter = async (InId: number) => {

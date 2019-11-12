@@ -6,7 +6,8 @@ import {NextFunction, Request, Response} from "express";
 import {checkAscii, checkDate} from "../../utils/checks";
 import {invoices} from "../../utils/dbTypes";
 import {HTTP400Error} from "../../utils/httpErrors";
-import {createInvoice, getInvoiceByInvoiceId} from "./providers/invoiceRequests";
+import {createInvoice} from "./providers/createInvoiceRequest";
+import {getInvoiceByInvoiceId} from "./providers/invoiceRequest";
 
 export const getInvoice = async (invoiceId: number) => {
     return await getInvoiceByInvoiceId(invoiceId);
