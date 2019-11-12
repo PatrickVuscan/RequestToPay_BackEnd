@@ -35,7 +35,7 @@ export namespace invoiceFields {
 }
 
 export interface invoices {
-    InId: invoiceFields.invoiceId;
-    nextInId: invoiceFields.nextInId;
+    InID: invoiceFields.invoiceId;
+    nextInID: invoiceFields.nextInId;
     DeliveryDate: invoiceFields.deliveryDate;
 }

@@ -7,10 +7,10 @@ import {checkAscii, checkDate} from "../../utils/checks";
 import {invoices} from "../../utils/dbTypes";
 import {HTTP400Error} from "../../utils/httpErrors";
 import {createInvoice} from "./providers/createInvoiceRequest";
-import {getInvoiceByInvoiceId} from "./providers/invoiceRequest";
+import {getInvoiceByInvoiceID} from "./providers/invoiceRequest";
 
-export const getInvoice = async (invoiceId: number) => {
-    return await getInvoiceByInvoiceId(invoiceId);
+export const getInvoice = async (invoiceID: number) => {
+    return await getInvoiceByInvoiceID(invoiceID);
 };
 
 export const setInvoice = async (invoice: invoices) => {
