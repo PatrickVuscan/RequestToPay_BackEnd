@@ -13,9 +13,9 @@ export const checkUserQueryParams = (
     res: Response,
     next: NextFunction,
 ): void => {
-    if (!req.query.u) {
+    if (!req.query.user) {
         throw new HTTP400Error("Missing u parameter");
-    } else if (!checkAscii(req.query.u)) {
+    } else if (!checkAscii(req.query.user)) {
         throw new HTTP400Error("Only alphabetic characters are allowed");
     } else {
         next();
@@ -31,11 +31,11 @@ export const checkLoginParams = (
     res: Response,
     next: NextFunction,
 ) => {
-    if (!req.query.u) {
+    if (!req.query.user) {
         throw new HTTP400Error("Missing u parameter");
-    } else if (!req.query.p) {
+    } else if (!req.query.pass) {
         throw new HTTP400Error("Missing p parameter");
-    } else if (!checkAscii(req.query.u) || !checkAscii(req.query.p)) {
+    } else if (!checkAscii(req.query.user) || !checkAscii(req.query.pass)) {
         throw new HTTP400Error("Only alphabetic characters are allowed");
     } else {
         next();

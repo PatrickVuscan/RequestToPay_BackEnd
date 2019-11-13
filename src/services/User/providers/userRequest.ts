@@ -1,12 +1,12 @@
 /* This file defines functions that are used by QueryController and subsequently in the IRoute handler method. */
 
-import {users} from "../../../utils/dbTypes";
+import {entity} from "../../../utils/dbTypes";
 import {HTTP400Error, HTTP404Error} from "../../../utils/httpErrors";
 import q from "../../../utils/query";
 
-type UserGetter = (name: string) => Promise<users>;
+type UserGetter = (name: string) => Promise<entity>;
 export const generateGetUserString: (uname: string) => string = (uname: string) => {
-    return `select * from users where username = '${uname}';`;
+    return `select * from requesttopay.entity where name = '${uname}';`;
 };
 
 export const getUserByName: UserGetter  = async (uname: string) => {
@@ -20,6 +20,5 @@ export const getUserByName: UserGetter  = async (uname: string) => {
             `Found multiple users with his username: ${uname}.  Query result: ${res}`,
         );
     }
-    return res.rows[0] as users;
+    return res.rows[0] as entity;
 };
-

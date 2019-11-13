@@ -1,4 +1,5 @@
 {
-  "conn": "schemats generate -c postgres://<user>:<password>@<server>/<database>",
+  "conn": "postgres://<user>:<pass>@localhost:5432/<database>",
+  "s": "requesttopay",
   "output": "./src/utils/dbTypes.ts"
 }
