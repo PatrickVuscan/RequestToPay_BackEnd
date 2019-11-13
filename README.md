@@ -50,8 +50,10 @@ and `password: zoomzoom`. _Whether or not this works is __highly__ dependent on 
     * `dev`: Starts a test server that re-compiles the application when a file changes.
     * `start`: Starts a node server referencing `dist/server.js`.
     * `test`: Uses `jest` to run tests on the application. Options are defined in `package.json`.
-    * [buggy]`generate-db-types`: Generates typescript interfaces for objects from database tables. Options are
-        defined in `schemats.json`.
+    * `generate-db-types`: Generates typescript interfaces for objects from database tables. Options are
+        defined in `schemats.json`. Must be run on a postgres database that has imported `RequestToPay.ddl` on a 
+        postgres server hosted on `localhost`. Make sure that the username and password that you use in `schemats.json`
+        connection string have permission to access tables in the `requesttopay` schema.
 * Other notable commands
     * [deprecated] `pg_dump -U <user> -f schema.sql -s <DBNAME>`: dumps the schema for `<DBNAME>` to a `.sql` file.
 
