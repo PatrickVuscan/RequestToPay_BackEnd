@@ -1,17 +1,20 @@
-import {users} from "../../../utils/dbTypes";
+import {entity} from "../../../utils/dbTypes";
 import {HTTP404Error} from "../../../utils/httpErrors";
 import q from "../../../utils/query";
 
-type UserVerify = (name: string, password: string) => Promise<users>;
+type UserVerify = (name: string, password: string) => Promise<entity>;
 export const generateLoginString: (uname: string, pass: string) => string = (uname: string, pass: string) => {
-    return `select * from users where
-            username = '${uname}' and
-            password = '${pass}';`;
+    return `select *
+            from requesttopay.entity
+            where name='${uname}'`;
+    // return `select * from users where
+    //         username = '${uname}' and
+    //         password = '${pass}';`;
 };
 export const loginRequest: UserVerify = async (uname: string, pass: string) => {
     const res = await q(generateLoginString(uname, pass));
     if (res.rows.length !== 1) {
         throw new HTTP404Error(`Could not find user(${uname}) with specified password(${pass})`);
     }
-    return res.rows[0] as users;
+    return res.rows[0] as entity;
 };

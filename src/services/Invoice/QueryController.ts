@@ -4,7 +4,7 @@
 
 import {NextFunction, Request, Response} from "express";
 import {checkAscii, checkDate} from "../../utils/checks";
-import {invoices} from "../../utils/dbTypes";
+import {invoice} from "../../utils/dbTypes";
 import {HTTP400Error} from "../../utils/httpErrors";
 import {createInvoice} from "./providers/createInvoiceRequest";
 import {getInvoicesByEntityID} from "./providers/entityInvoicesRequest";
@@ -18,8 +18,8 @@ export const getEntityInvoices = async (entityID: number) => {
     return await getInvoicesByEntityID(entityID);
 };
 
-export const setInvoice = async (invoice: invoices) => {
-    return createInvoice(invoice);
+export const setInvoice = async (inv: invoice) => {
+    return createInvoice(inv);
 };
 
 export const checkInvoiceSetQueryParams = (
