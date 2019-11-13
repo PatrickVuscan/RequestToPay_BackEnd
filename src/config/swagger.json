@@ -33,14 +33,14 @@
         },
         "parameters": [
           {
-            "name": "u",
+            "name": "user",
             "in": "query",
             "description": "Specifies the username",
             "required": true,
             "type": "string"
           },
           {
-            "name": "p",
+            "name": "pass",
             "in": "query",
             "description": "Specifies the password",
             "required": true,
@@ -63,7 +63,7 @@
         },
         "parameters": [
           {
-            "name": "u",
+            "name": "user",
             "in": "query",
             "description": "Specifies the username",
             "required": true,

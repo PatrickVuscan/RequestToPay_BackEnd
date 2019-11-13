@@ -10,7 +10,7 @@ export default [
         handler: [
             checkUserQueryParams,
             async ({ query }: Request, res: Response) => {
-                const result = await getUser(query.u);
+                const result = await getUser(query.user);
                 res.status(200).send(result);
                 return result;
             },
@@ -22,13 +22,8 @@ export default [
         handler: [
             checkLoginParams,
             async (req: Request, res: Response) => {
-                // if (!req.session) {
-                //     res.status(400);
-                //     throw new Error("No session registered to client");
-                // }
-                const result = await getLogin(req.query.u, req.query.p);
+                const result = await getLogin(req.query.user, req.query.pass);
                 res.status(200).send(result);
-                // req.session.privelage = result.privelage;
                 return result;
             },
         ],

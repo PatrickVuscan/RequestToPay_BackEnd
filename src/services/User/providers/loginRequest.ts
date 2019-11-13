@@ -6,10 +6,8 @@ type UserVerify = (name: string, password: string) => Promise<entity>;
 export const generateLoginString: (uname: string, pass: string) => string = (uname: string, pass: string) => {
     return `select *
             from requesttopay.entity
-            where name='${uname}'`;
-    // return `select * from users where
-    //         username = '${uname}' and
-    //         password = '${pass}';`;
+            where name='${uname}' and
+                  password='${pass}'`;
 };
 export const loginRequest: UserVerify = async (uname: string, pass: string) => {
     const res = await q(generateLoginString(uname, pass));
