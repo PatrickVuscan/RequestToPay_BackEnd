@@ -125,6 +125,9 @@ and `password: zoomzoom`. _Whether or not this works is __highly__ dependent on 
     - `billingAddress`: Billing address of the entity
         - Type: `text`
         - Not null
+    - `password`: Password for the entities account.
+        - Type: `text`
+        - Not null
 - `Items`: Contains current price information about items
     - `IID`: Id of the item
         - Type: `integer`
