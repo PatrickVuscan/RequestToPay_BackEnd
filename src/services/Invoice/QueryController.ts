@@ -19,6 +19,7 @@ export const getEntityInvoices = async (entityID: number) => {
 };
 
 export const setInvoice = async (inv: invoice) => {
+
     return createInvoice(inv);
 };
 
@@ -29,12 +30,13 @@ export const checkInvoiceSetQueryParams = (
 ): void => {
     if (!req.query.DeliveryDate) {
         throw new HTTP400Error("Missing DeliveryDate parameter");
-    } else if (!checkAscii(req.query.DeliveryDate)) {
+    } else if (!checkAscii(req.query.DeliveryDate) || (req.query.NextInID && !checkAscii(req.query.NextInID))) {
         throw new HTTP400Error("Only alphanumeric and '-' characters are allowed");
     } else if (!checkDate(req.query.DeliveryDate)) {
         throw new HTTP400Error("Not a valid date string");
     } else {
         req.query.DeliveryDate = new Date(Date.parse(req.query.DeliveryDate));
+        req.query.NextInId = (req.query.NextInId) ? req.query.NextInId : null;
         next();
     }
 };

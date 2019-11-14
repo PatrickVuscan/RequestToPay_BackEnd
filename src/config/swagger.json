@@ -112,6 +112,13 @@
             "description": "The date for the new invoice to be delivered on.",
             "required": true,
             "type": "string"
+          },
+          {
+            "name": "NextInID",
+            "in": "query",
+            "description": "The date for the new invoice to be delivered on.",
+            "required": false,
+            "type": "number"
           }
         ]
       }
