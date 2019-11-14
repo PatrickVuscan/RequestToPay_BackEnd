@@ -2,6 +2,7 @@
 
 import { Request, Response } from "express";
 import {IRoute} from "..";
+import {invoice} from "../../utils/dbTypes";
 import {
     checkInvoiceByInvoiceIDGetQueryParams,
     checkInvoicesByEntityIDGetQueryParams,
@@ -16,7 +17,12 @@ export default [
         handler: [
             checkInvoiceSetQueryParams,
             async (req: Request, res: Response) => {
-                const result = await setInvoice(req.query);
+                const inv: invoice = {
+                        inid: -1,
+                        deliverydate: new Date(Date.parse(req.query.DeliveryDate)),
+                        nextinid: (req.query.NextInID ? req.query.NextInID : "null"),
+                    };
+                const result = await setInvoice(inv);
                 res.status(200).send(result);
                 return result;
             },

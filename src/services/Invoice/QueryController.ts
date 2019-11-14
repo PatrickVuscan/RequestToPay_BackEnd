@@ -9,6 +9,7 @@ import {HTTP400Error} from "../../utils/httpErrors";
 import {createInvoice} from "./providers/createInvoiceRequest";
 import {getInvoicesByEntityID} from "./providers/entityInvoicesRequest";
 import {getInvoiceByInvoiceID} from "./providers/invoiceRequest";
+import {isUndefined} from "util";
 
 export const getInvoice = async (invoiceID: number) => {
     return await getInvoiceByInvoiceID(invoiceID);
@@ -19,7 +20,6 @@ export const getEntityInvoices = async (entityID: number) => {
 };
 
 export const setInvoice = async (inv: invoice) => {
-
     return createInvoice(inv);
 };
 
@@ -35,8 +35,6 @@ export const checkInvoiceSetQueryParams = (
     } else if (!checkDate(req.query.DeliveryDate)) {
         throw new HTTP400Error("Not a valid date string");
     } else {
-        req.query.DeliveryDate = new Date(Date.parse(req.query.DeliveryDate));
-        req.query.NextInId = (req.query.NextInId) ? req.query.NextInId : null;
         next();
     }
 };
