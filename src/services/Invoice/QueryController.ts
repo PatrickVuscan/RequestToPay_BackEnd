@@ -9,6 +9,7 @@ import {HTTP400Error} from "../../utils/httpErrors";
 import {createInvoice} from "./providers/createInvoiceRequest";
 import {getInvoicesByEntityID} from "./providers/entityInvoicesRequest";
 import {getInvoiceByInvoiceID} from "./providers/invoiceRequest";
+import {isUndefined} from "util";
 
 export const getInvoice = async (invoiceID: number) => {
     return await getInvoiceByInvoiceID(invoiceID);
@@ -29,12 +30,11 @@ export const checkInvoiceSetQueryParams = (
 ): void => {
     if (!req.query.DeliveryDate) {
         throw new HTTP400Error("Missing DeliveryDate parameter");
-    } else if (!checkAscii(req.query.DeliveryDate)) {
+    } else if (!checkAscii(req.query.DeliveryDate) || (req.query.NextInID && !checkAscii(req.query.NextInID))) {
         throw new HTTP400Error("Only alphanumeric and '-' characters are allowed");
     } else if (!checkDate(req.query.DeliveryDate)) {
         throw new HTTP400Error("Not a valid date string");
     } else {
-        req.query.DeliveryDate = new Date(Date.parse(req.query.DeliveryDate));
         next();
     }
 };

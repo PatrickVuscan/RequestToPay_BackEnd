@@ -127,7 +127,7 @@ and `password: zoomzoom`. _Whether or not this works is __highly__ dependent on 
         - Not null
     - `password`: Password for the entities account.
         - Type: `text`
-        - Not null
+        - Not nullit 
 - `Items`: Contains current price information about items
     - `IID`: Id of the item
         - Type: `integer`

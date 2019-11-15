@@ -20,13 +20,13 @@
       ".+\\.tsx?$": "ts-jest"
     },
     "testPathIgnorePatterns": [
-      "/dist/",
-      "/node_modules/"
+      "dist",
+      "node_modules"
     ],
     "setupFiles": [
-      "<rootDir>\\src\\config\\jestSetup.ts"
+      "<rootDir>/src/config/jestSetup.ts"
     ],
-    "testRegex": "(src\\\\).*(test)\\.(ts)",
+    "testRegex": "src/.*\\.test\\.ts",
     "moduleFileExtensions": [
       "ts",
       "tsx",
