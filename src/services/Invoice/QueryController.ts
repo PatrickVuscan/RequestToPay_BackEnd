@@ -11,6 +11,10 @@ import {getInvoicesByEntityID} from "./providers/entityInvoicesByIDRequest";
 import {getInvoicesByEntityName} from "./providers/entityInvoicesByNameRequest";
 import {getInvoiceByInvoiceID} from "./providers/invoiceRequest";
 
+export const setInvoice = async (inv: invoice) => {
+    return createInvoice(inv);
+};
+
 export const getInvoice = async (invoiceID: number) => {
     return await getInvoiceByInvoiceID(invoiceID);
 };
@@ -21,10 +25,6 @@ export const getEntityInvoicesById = async (entityID: number) => {
 
 export const getEntityInvoicesByName = async (name: string) => {
     return await getInvoicesByEntityName(name);
-};
-
-export const setInvoice = async (inv: invoice) => {
-    return createInvoice(inv);
 };
 
 export const checkInvoiceSetQueryParams = (

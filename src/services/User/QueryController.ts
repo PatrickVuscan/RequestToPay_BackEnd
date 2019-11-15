@@ -32,9 +32,9 @@ export const checkLoginParams = (
     next: NextFunction,
 ) => {
     if (!req.query.user) {
-        throw new HTTP400Error("Missing u parameter");
+        throw new HTTP400Error("Missing username parameter");
     } else if (!req.query.pass) {
-        throw new HTTP400Error("Missing p parameter");
+        throw new HTTP400Error("Missing password parameter");
     } else if (!checkAscii(req.query.user) || !checkAscii(req.query.pass)) {
         throw new HTTP400Error("Only alphabetic characters are allowed");
     } else {

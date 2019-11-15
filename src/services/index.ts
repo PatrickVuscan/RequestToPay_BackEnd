@@ -4,6 +4,7 @@
 
 import {NextFunction, Request, Response} from "express";
 import invoiceRoutes from "./Invoice/routes";
+import orderRoutes from "./Order/routes";
 import userRoutes from "./User/routes";
 
 /* This is the interface that each route must implement */
@@ -17,4 +18,5 @@ export interface IRoute {
 export default [
     ...userRoutes,
     ...invoiceRoutes,
+    ...orderRoutes,
 ] as [IRoute];

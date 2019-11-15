@@ -12,8 +12,8 @@ not specifically desired right now, as we only want the invoice. Kept this for r
  */
 
 export const generateGetInvoicesByEntityIDString: (EID: number) => string = (EID: number) => {
-    return `select requesttopay.invoice.* from requesttopay.orders join requesttopay.invoice on orders.InID = invoice.InID where
-        orders.SID = ${EID} or orders.CID = ${EID}`;
+    return `select "RequestToPay"."Invoice".* from "RequestToPay"."Order" join "RequestToPay"."Invoice" on
+        "Order"."InID" = "Invoice"."InID" where "Order"."SID" = ${EID} or "Order"."CID" = ${EID}`;
 };
 
 export const getInvoicesByEntityID: (EID: number) => Promise<invoice[]> = async (EID: number) => {

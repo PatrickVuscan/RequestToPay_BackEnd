@@ -1,4 +1,4 @@
-/* Defines the routes and functions called in that route for the user service. */
+/** Defines the routes and endpoints available for invoices. */
 
 import { Request, Response } from "express";
 import {IRoute} from "..";
@@ -20,9 +20,9 @@ export default [
             checkInvoiceSetQueryParams,
             async (req: Request, res: Response) => {
                 const inv: invoice = {
-                        inid: -1,
-                        deliverydate: new Date(Date.parse(req.query.DeliveryDate)),
-                        nextinid: (req.query.NextInID ? req.query.NextInID : "null"),
+                        InID: -1,
+                        DeliveryDate: new Date(Date.parse(req.query.DeliveryDate)),
+                        NextInID: (req.query.NextInID ? req.query.NextInID : "null"),
                     };
                 const result = await setInvoice(inv);
                 res.status(200).send(result);

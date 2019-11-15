@@ -6,7 +6,7 @@ import q from "../../../utils/query";
 
 type UserGetter = (name: string) => Promise<entity>;
 export const generateGetUserString: (uname: string) => string = (uname: string) => {
-    return `select * from requesttopay.entity where name = '${uname}';`;
+    return `select * from "RequestToPay"."Entity" where "Name" = '${uname}';`;
 };
 
 export const getUserByName: UserGetter  = async (uname: string) => {
