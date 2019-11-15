@@ -1,7 +1,10 @@
 # documentation label
 documentation:
-  - README.md
+  - ./README.md
 
 # adds the test label
 test:
-  - src/*.test.ts
+  - src/**/*.test.ts
+
+enhancement:
+  - src/**/*
