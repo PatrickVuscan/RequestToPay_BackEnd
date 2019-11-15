@@ -57,6 +57,40 @@
         ]
       }
     },
+    "/entity": {
+      "put": {
+        "tags": ["Entity Endpoints"],
+        "summary": "Inserts a new entity into the database.",
+        "responses": {
+          "200": {
+            "description": "This is the EntityID of the newly created entity."
+          }
+        },
+        "parameters": [
+          {
+            "name": "Name",
+            "in": "query",
+            "description": "The name of the Entity.",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "Password",
+            "in": "query",
+            "description": "The password of entity, for logging in.",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "BillingAddress",
+            "in": "query",
+            "description": "The billing address of the entity.",
+            "required": true,
+            "type": "string"
+          }
+        ]
+      }
+    },
     "/entityByID": {
       "get": {
         "tags": ["Entity Endpoints"],

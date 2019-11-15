@@ -2,7 +2,7 @@ import {invoice} from "../../../utils/dbTypes";
 import {HTTP400Error, HTTP404Error} from "../../../utils/httpErrors";
 import q from "../../../utils/query";
 
-export const generateSetInvoiceString: (invoice: invoice) => string = (inv: invoice) => {
+export const generateCreateInvoiceString: (invoice: invoice) => string = (inv: invoice) => {
     return `INSERT INTO "RequestToPay"."Invoice" ("InID", "NextInID", "DeliveryDate") VALUES
         (default, ${inv.NextInID}, '${inv.DeliveryDate.toISOString()}') RETURNING "InID"`;
 };
@@ -10,7 +10,7 @@ export const generateSetInvoiceString: (invoice: invoice) => string = (inv: invo
 export const createInvoice: (inv: invoice) => void = async (inv: invoice) => {
     let res = null;
     try {
-        res = await q(generateSetInvoiceString(inv));
+        res = await q(generateCreateInvoiceString(inv));
     } catch (e) {
         throw new HTTP400Error("SQL Error");
     }

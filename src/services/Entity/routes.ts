@@ -2,12 +2,15 @@
 
 import { Request, Response } from "express";
 import {IRoute} from "..";
+import {entity} from "../../utils/dbTypes";
 import {
     checkEntityByIDQueryParams,
     checkEntityByNameQueryParams,
-    checkLoginParams, getEntityByID,
+    checkEntitySetQueryParams,
+    checkLoginParams,
+    getEntityByID,
     getEntityByName,
-    getLogin,
+    getLogin, setEntity,
 } from "./QueryController";
 
 export default [
@@ -22,6 +25,24 @@ export default [
         ],
         method: "get",
         path: "/api/v1/login",
+    },
+    {
+        handler: [
+            checkEntitySetQueryParams,
+            async (req: Request, res: Response) => {
+                const ent: entity = {
+                    EID: -1,
+                    Name: req.query.Name,
+                    BillingAddress: req.query.BillingAddress,
+                    Password: req.query.Password,
+                };
+                const result = await setEntity(ent);
+                res.status(200).send(result);
+                return result;
+            },
+        ],
+        method: "put",
+        path: "/api/v1/entity",
     },
     {
         handler: [
