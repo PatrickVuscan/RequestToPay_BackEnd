@@ -6,8 +6,10 @@ import {invoice} from "../../utils/dbTypes";
 import {
     checkInvoiceByInvoiceIDGetQueryParams,
     checkInvoicesByEntityIDGetQueryParams,
+    checkInvoicesByEntityNameGetQueryParams,
     checkInvoiceSetQueryParams,
-    getEntityInvoices,
+    getEntityInvoicesById,
+    getEntityInvoicesByName,
     getInvoice,
     setInvoice,
 } from "./QueryController";
@@ -46,12 +48,24 @@ export default [
         handler: [
             checkInvoicesByEntityIDGetQueryParams,
             async (req: Request, res: Response) => {
-                const result = await getEntityInvoices(req.query.EID);
+                const result = await getEntityInvoicesById(req.query.EID);
                 res.status(200).send(result);
                 return result;
             },
         ],
         method: "get",
-        path: "/api/v1/entityInvoices",
+        path: "/api/v1/entityInvoicesByID",
+    },
+    {
+        handler: [
+            checkInvoicesByEntityNameGetQueryParams,
+            async (req: Request, res: Response) => {
+                const result = await getEntityInvoicesByName(req.query.Name);
+                res.status(200).send(result);
+                return result;
+            },
+        ],
+        method: "get",
+        path: "/api/v1/entityInvoicesByName",
     },
 ] as IRoute[];

@@ -4,7 +4,7 @@ import q from "../../../utils/query";
 
 export const generateSetInvoiceString: (invoice: invoice) => string = (inv: invoice) => {
     return `INSERT INTO requesttopay.invoice (InID, nextInID, DeliveryDate) VALUES
-               (default, ${inv.nextinid}, '${inv.deliverydate.toISOString()}') RETURNING InID`;
+        (default, ${inv.nextinid}, '${inv.deliverydate.toISOString()}') RETURNING InID`;
 };
 
 export const createInvoice: (inv: invoice) => void = async (inv: invoice) => {

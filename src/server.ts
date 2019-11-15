@@ -21,6 +21,6 @@ const server = http.createServer(router);
 server.listen(PORT, () => {
     logger.info({
         file: "server.ts",
-        message: `Server is running http://localhost:${PORT}...`,
+        message: `Server is running http://localhost:${PORT}... Click http://localhost:${PORT}/api-docs/ for Swagger!`,
     });
 });

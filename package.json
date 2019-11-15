@@ -1,7 +1,7 @@
 {
   "name": "backend",
   "version": "1.0.0",
-  "description": "Backend application for scotia bank project",
+  "description": "Backend application for Scotiabank project",
   "main": "src/server.ts",
   "scripts": {
     "postinstall": "npx tsc",
