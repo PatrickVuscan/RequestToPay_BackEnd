@@ -1,4 +1,7 @@
+# documentation label
 documentation:
   - README.md
+
+# adds the test label
 test:
   - src/*.test.ts
