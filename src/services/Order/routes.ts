@@ -9,8 +9,12 @@ import {
 } from "../Invoice/QueryController";
 import {
     checkOrderByOrderIDGetQueryParams,
-    checkOrderSetQueryParams, getEntityOrdersById, getEntityOrdersByName,
+    checkOrderSetQueryParams,
+    getEntityOrdersById,
+    getEntityOrdersByName,
     getOrder,
+    getOrderUInvoice,
+    getOrderUInvoiceUEntity,
     setOrder,
 } from "./QueryController";
 
@@ -48,6 +52,30 @@ export default [
         ],
         method: "get",
         path: "/api/v1/order",
+    },
+    {
+        handler: [
+            checkOrderByOrderIDGetQueryParams,
+            async (req: Request, res: Response) => {
+                const result = await getOrderUInvoice(req.query.OID);
+                res.status(200).send(result);
+                return result;
+            },
+        ],
+        method: "get",
+        path: "/api/v1/orderUInvoice",
+    },
+    {
+        handler: [
+            checkOrderByOrderIDGetQueryParams,
+            async (req: Request, res: Response) => {
+                const result = await getOrderUInvoiceUEntity(req.query.OID);
+                res.status(200).send(result);
+                return result;
+            },
+        ],
+        method: "get",
+        path: "/api/v1/orderUInvoiceUEntity",
     },
     {
         handler: [

@@ -10,6 +10,8 @@ import {createOrder} from "./providers/createOrderRequest";
 import {getOrdersByEntityID} from "./providers/entityOrdersByIDRequest";
 import {getOrdersByEntityName} from "./providers/entityOrdersByNameRequest";
 import {getOrderByOrderID} from "./providers/orderRequest";
+import {getOrderUInvoiceByOrderID} from "./providers/orderUInvoiceRequest";
+import {getOrderUInvoiceUEntityByOrderID} from "./providers/orderUInvoiceUEntityRequest";
 
 export const setOrder = async (inv: order, delDate: Date) => {
     return createOrder(inv, delDate);
@@ -17,6 +19,14 @@ export const setOrder = async (inv: order, delDate: Date) => {
 
 export const getOrder = async (invoiceID: number) => {
     return await getOrderByOrderID(invoiceID);
+};
+
+export const getOrderUInvoice = async (invoiceID: number) => {
+    return await getOrderUInvoiceByOrderID(invoiceID);
+};
+
+export const getOrderUInvoiceUEntity = async (invoiceID: number) => {
+    return await getOrderUInvoiceUEntityByOrderID(invoiceID);
 };
 
 export const getEntityOrdersById = async (entityID: number) => {

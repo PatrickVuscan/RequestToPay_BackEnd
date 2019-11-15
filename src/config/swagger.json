@@ -241,6 +241,58 @@
         ]
       }
     },
+    "/orderUInvoice": {
+      "get":  {
+        "tags": ["Order Endpoints"],
+        "summary": "Returns an order with the matching OrderID, joined with its corresponding Invoice.",
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "404": {
+            "description": "No orders found."
+          },
+          "400": {
+            "description": "Bad request or multiple orders found"
+          }
+        },
+        "parameters": [
+          {
+            "name": "OID",
+            "in": "query",
+            "description": "Specifies the Order ID.",
+            "required": true,
+            "type": "integer"
+          }
+        ]
+      }
+    },
+    "/orderUInvoiceUEntity": {
+      "get":  {
+        "tags": ["Order Endpoints"],
+        "summary": "Returns an order with the matching OrderID, joined with its corresponding Invoice and entities.",
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "404": {
+            "description": "No orders found."
+          },
+          "400": {
+            "description": "Bad request or multiple orders found"
+          }
+        },
+        "parameters": [
+          {
+            "name": "OID",
+            "in": "query",
+            "description": "Specifies the Order ID.",
+            "required": true,
+            "type": "integer"
+          }
+        ]
+      }
+    },
     "/entityOrdersById": {
       "get":  {
         "tags": ["Order Endpoints"],
