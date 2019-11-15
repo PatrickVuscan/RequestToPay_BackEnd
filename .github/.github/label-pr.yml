@@ -1,0 +1,4 @@
+documentation:
+  - README.md
+test:
+  - src/*.test.ts
