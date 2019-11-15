@@ -22,18 +22,18 @@ describe("routes", () => {
 
     // users -------------------------------------------------------------------------------------------
     // the test to be run with a description
-    test("users: test a valid API call", async () => {
-        const response = await request(router).get("/api/v1/users?u=one");
+    test("entity: test a valid API call", async () => {
+        const response = await request(router).get("/api/v1/entityByName?u=one");
         expect(response.status).toEqual(200);
     });
 
-    test("users: test no users returned", async () => {
-        const response = await request(router).get("/api/v1/users?u=zero");
+    test("entity: test no users returned", async () => {
+        const response = await request(router).get("/api/v1/entityByName?u=zero");
         expect(response.status).toEqual(404);
     });
 
-    test("users: invalid symbol in u parameter", async () => {
-        const response = await request(router).get("/api/v1/users?u=asd(-)dsa");
+    test("entity: invalid symbol in u parameter", async () => {
+        const response = await request(router).get("/api/v1/entityByName?u=asd(-)dsa");
         expect(response.status).toEqual(400);
     });
 

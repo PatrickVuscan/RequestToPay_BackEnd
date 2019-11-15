@@ -14,15 +14,23 @@
   "produces": ["application/json"],
   "tags": [
     {
-      "name": "User Endpoints",
-      "description": "This is where to get information about the users from the database."
+      "name": "Entity Endpoints",
+      "description": "This is where to get information about entities from the database."
+    },
+    {
+      "name": "Invoice Endpoints",
+      "description": "This is where to get information about invoices from the database."
+    },
+    {
+      "name": "Order Endpoints",
+      "description": "This is where to get information about orders from the database."
     }
   ],
   "paths": {
     "/login": {
       "get": {
-        "tags": ["User Endpoints"],
-        "summary": "Returns user information if user exists in database with given password.",
+        "tags": ["Entity Endpoints"],
+        "summary": "Returns entity information if user exists in database with given password.",
         "responses": {
           "200": {
             "description": "OK"
@@ -49,10 +57,33 @@
         ]
       }
     },
-    "/users": {
+    "/entityByID": {
       "get": {
-        "tags": ["User Endpoints"],
-        "summary": "Returns user information if user exists in database.",
+        "tags": ["Entity Endpoints"],
+        "summary": "Returns entity information if EntityID exists in database.",
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad request"
+          }
+        },
+        "parameters": [
+          {
+            "name": "EID",
+            "in": "query",
+            "description": "Specifies the EntityID",
+            "required": true,
+            "type": "number"
+          }
+        ]
+      }
+    },
+    "/entityByName": {
+      "get": {
+        "tags": ["Entity Endpoints"],
+        "summary": "Returns entity information if entity exists in database.",
         "responses": {
           "200": {
             "description": "OK"

@@ -12,7 +12,7 @@ describe("query", () => {
     test("loginRequest: test no users", async () => {
         // get get the result of what we are testing. the mocked q should 'know' this query
         // assert that the request raises an error
-        expect(Provider.loginRequest("zero", "zero")).rejects.toEqual(new HTTP404Error(
+        await expect(Provider.loginRequest("zero", "zero")).rejects.toEqual(new HTTP404Error(
             "Could not find user(zero) with specified password(zero)",
         ));
     });

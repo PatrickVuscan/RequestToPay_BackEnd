@@ -4,13 +4,12 @@ import {entity} from "../../../utils/dbTypes";
 import {HTTP400Error, HTTP404Error} from "../../../utils/httpErrors";
 import q from "../../../utils/query";
 
-type UserGetter = (name: string) => Promise<entity>;
-export const generateGetUserString: (uname: string) => string = (uname: string) => {
+export const generateGetEntityByNameString: (uname: string) => string = (uname: string) => {
     return `select * from "RequestToPay"."Entity" where "Name" = '${uname}';`;
 };
 
-export const getUserByName: UserGetter  = async (uname: string) => {
-    const res = await q(generateGetUserString(uname));
+export const getEntityByEntityName: (name: string) => Promise<entity> = async (uname: string) => {
+    const res = await q(generateGetEntityByNameString(uname));
     if (res.rows.length === 0) {
         throw new HTTP404Error(
             `Found no users with his username: ${uname}.  Query result: ${res}`,
