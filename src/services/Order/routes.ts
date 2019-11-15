@@ -4,8 +4,12 @@ import { Request, Response } from "express";
 import {IRoute} from "..";
 import {order} from "../../utils/dbTypes";
 import {
+    checkInvoicesByEntityIDGetQueryParams,
+    checkInvoicesByEntityNameGetQueryParams,
+} from "../Invoice/QueryController";
+import {
     checkOrderByOrderIDGetQueryParams,
-    checkOrderSetQueryParams,
+    checkOrderSetQueryParams, getEntityOrdersById, getEntityOrdersByName,
     getOrder,
     setOrder,
 } from "./QueryController";
@@ -44,5 +48,29 @@ export default [
         ],
         method: "get",
         path: "/api/v1/order",
+    },
+    {
+        handler: [
+            checkInvoicesByEntityIDGetQueryParams,
+            async (req: Request, res: Response) => {
+                const result = await getEntityOrdersById(req.query.EID);
+                res.status(200).send(result);
+                return result;
+            },
+        ],
+        method: "get",
+        path: "/api/v1/entityOrdersByID",
+    },
+    {
+        handler: [
+            checkInvoicesByEntityNameGetQueryParams,
+            async (req: Request, res: Response) => {
+                const result = await getEntityOrdersByName(req.query.Name);
+                res.status(200).send(result);
+                return result;
+            },
+        ],
+        method: "get",
+        path: "/api/v1/entityOrdersByName",
     },
 ] as IRoute[];

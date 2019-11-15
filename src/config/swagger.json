@@ -240,6 +240,52 @@
           }
         ]
       }
+    },
+    "/entityOrdersById": {
+      "get":  {
+        "tags": ["Order Endpoints"],
+        "summary": "Returns all orders with the matching Entity ID.",
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "404": {
+            "description": "No orders found"
+          }
+        },
+        "parameters": [
+          {
+            "name": "EID",
+            "in": "query",
+            "description": "Specifies the Entity ID",
+            "required": true,
+            "type": "integer"
+          }
+        ]
+      }
+    },
+    "/entityOrdersByName": {
+      "get":  {
+        "tags": ["Order Endpoints"],
+        "summary": "Returns all orders with the matching Entity Name.",
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "404": {
+            "description": "No invoices found"
+          }
+        },
+        "parameters": [
+          {
+            "name": "Name",
+            "in": "query",
+            "description": "Specifies the Entity Name",
+            "required": true,
+            "type": "string"
+          }
+        ]
+      }
     }
   }
 }

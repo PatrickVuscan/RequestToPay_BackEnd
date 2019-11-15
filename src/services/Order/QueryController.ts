@@ -7,6 +7,8 @@ import {checkAscii, checkDate} from "../../utils/checks";
 import {order} from "../../utils/dbTypes";
 import {HTTP400Error} from "../../utils/httpErrors";
 import {createOrder} from "./providers/createOrderRequest";
+import {getOrdersByEntityID} from "./providers/entityOrdersByIDRequest";
+import {getOrdersByEntityName} from "./providers/entityOrdersByNameRequest";
 import {getOrderByOrderID} from "./providers/orderRequest";
 
 export const setOrder = async (inv: order, delDate: Date) => {
@@ -15,6 +17,14 @@ export const setOrder = async (inv: order, delDate: Date) => {
 
 export const getOrder = async (invoiceID: number) => {
     return await getOrderByOrderID(invoiceID);
+};
+
+export const getEntityOrdersById = async (entityID: number) => {
+    return await getOrdersByEntityID(entityID);
+};
+
+export const getEntityOrdersByName = async (name: string) => {
+    return await getOrdersByEntityName(name);
 };
 
 export const checkOrderSetQueryParams = (
@@ -50,6 +60,34 @@ export const checkOrderByOrderIDGetQueryParams = (
     if (!req.query.OID) {
         throw new HTTP400Error("Missing OID parameter");
     } else if (!checkAscii(req.query.OID)) {
+        throw new HTTP400Error("Only alphabetic characters are allowed");
+    } else {
+        next();
+    }
+};
+
+export const checkOrdersByEntityIDGetQueryParams = (
+    req: Request,
+    res: Response,
+    next: NextFunction,
+): void => {
+    if (!req.query.EID) {
+        throw new HTTP400Error("Missing EID parameter");
+    } else if (!checkAscii(req.query.EID)) {
+        throw new HTTP400Error("Only alphabetic characters are allowed");
+    } else {
+        next();
+    }
+};
+
+export const checkOrdersByEntityNameGetQueryParams = (
+    req: Request,
+    res: Response,
+    next: NextFunction,
+): void => {
+    if (!req.query.Name) {
+        throw new HTTP400Error("Missing Name parameter");
+    } else if (!checkAscii(req.query.Name)) {
         throw new HTTP400Error("Only alphabetic characters are allowed");
     } else {
         next();
