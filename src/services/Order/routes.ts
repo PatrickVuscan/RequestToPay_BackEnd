@@ -2,7 +2,7 @@
 
 import { Request, Response } from "express";
 import {IRoute} from "..";
-import {order} from "../../utils/dbTypes";
+import {Order} from "../../utils/dbTypes";
 import {
     checkInvoicesByEntityIDGetQueryParams,
     checkInvoicesByEntityNameGetQueryParams,
@@ -23,7 +23,7 @@ export default [
         handler: [
             checkOrderSetQueryParams,
             async (req: Request, res: Response) => {
-                const ord: order = {
+                const ord: Order = {
                     OID: -1,
                     InID: 1,
                     SID: req.query.SID,

@@ -4,14 +4,14 @@
 
 import {NextFunction, Request, Response} from "express";
 import {checkAscii, checkDate} from "../../utils/checks";
-import {entity} from "../../utils/dbTypes";
+import {Entity} from "../../utils/dbTypes";
 import {HTTP400Error} from "../../utils/httpErrors";
 import {createEntity} from "./providers/createEntityRequest";
 import {getEntityByEntityID} from "./providers/entityByIDRequest";
 import {getEntityByEntityName} from "./providers/entityByNameRequest";
 import {loginRequest} from "./providers/loginRequest";
 
-export const setEntity = async (ent: entity) => {
+export const setEntity = async (ent: Entity) => {
     return createEntity(ent);
 };
 

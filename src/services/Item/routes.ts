@@ -1,8 +1,8 @@
-/** Defines the routes and endpoints available for invoices. */
+/** Defines the routes and endpoints available for Items. */
 
 import { Request, Response } from "express";
 import {IRoute} from "..";
-import {Invoice} from "../../utils/dbTypes";
+import {Item} from "../../utils/dbTypes";
 import {
     checkInvoiceByInvoiceIDGetQueryParams,
     checkInvoicesByEntityIDGetQueryParams,
@@ -19,10 +19,11 @@ export default [
         handler: [
             checkInvoiceSetQueryParams,
             async (req: Request, res: Response) => {
-                const inv: Invoice = {
-                        InID: -1,
-                        DeliveryDate: new Date(Date.parse(req.query.DeliveryDate)),
-                        NextInID: (req.query.NextInID ? req.query.NextInID : "null"),
+                const inv: Item = {
+                        IID: req.query.IID,
+                        Name: req.query.Name,
+                        SID: req.query.SID,
+                        Price: req.query.Price,
                     };
                 const result = await setInvoice(inv);
                 res.status(200).send(result);
@@ -30,7 +31,7 @@ export default [
             },
         ],
         method: "put",
-        path: "/api/v1/invoice",
+        path: "/api/v1/item",
     },
     {
         handler: [
@@ -42,7 +43,7 @@ export default [
             },
         ],
         method: "get",
-        path: "/api/v1/invoice",
+        path: "/api/v1/item",
     },
     {
         handler: [

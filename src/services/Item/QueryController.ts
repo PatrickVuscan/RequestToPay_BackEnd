@@ -6,10 +6,10 @@ import {NextFunction, Request, Response} from "express";
 import {checkAscii, checkDate} from "../../utils/checks";
 import {Invoice} from "../../utils/dbTypes";
 import {HTTP400Error} from "../../utils/httpErrors";
-import {createInvoice} from "./providers/createInvoiceRequest";
-import {getInvoicesByEntityID} from "./providers/entityInvoicesByIDRequest";
-import {getInvoicesByEntityName} from "./providers/entityInvoicesByNameRequest";
-import {getInvoiceByInvoiceID} from "./providers/invoiceRequest";
+import {createInvoice} from "./providers/createItemRequest";
+import {getInvoicesByEntityID} from "./providers/entityItemsByIDRequest";
+import {getInvoicesByEntityName} from "./providers/itemByNameRequest";
+import {getInvoiceByInvoiceID} from "./providers/itemRequest";
 
 export const setInvoice = async (inv: Invoice) => {
     return createInvoice(inv);

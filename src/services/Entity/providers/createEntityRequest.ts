@@ -1,13 +1,13 @@
-import {entity} from "../../../utils/dbTypes";
+import {Entity} from "../../../utils/dbTypes";
 import {HTTP400Error, HTTP404Error} from "../../../utils/httpErrors";
 import q from "../../../utils/query";
 
-export const generateCreateEntityString: (entity: entity) => string = (ent: entity) => {
+export const generateCreateEntityString: (entity: Entity) => string = (ent: Entity) => {
     return `INSERT INTO "RequestToPay"."Entity" ("EID", "Name", "Password", "BillingAddress") VALUES
         (default, '${ent.Name}', '${ent.Password}', '${ent.BillingAddress}') RETURNING "EID"`;
 };
 
-export const createEntity: (ent: entity) => void = async (ent: entity) => {
+export const createEntity: (ent: Entity) => void = async (ent: Entity) => {
     let res = null;
     try {
         res = await q(generateCreateEntityString(ent));

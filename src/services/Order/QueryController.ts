@@ -4,7 +4,7 @@
 
 import {NextFunction, Request, Response} from "express";
 import {checkAscii, checkDate} from "../../utils/checks";
-import {order} from "../../utils/dbTypes";
+import {Order} from "../../utils/dbTypes";
 import {HTTP400Error} from "../../utils/httpErrors";
 import {createOrder} from "./providers/createOrderRequest";
 import {getOrdersByEntityID} from "./providers/entityOrdersByIDRequest";
@@ -13,7 +13,7 @@ import {getOrderByOrderID} from "./providers/orderRequest";
 import {getOrderUInvoiceByOrderID} from "./providers/orderUInvoiceRequest";
 import {getOrderUInvoiceUEntityByOrderID} from "./providers/orderUInvoiceUEntityRequest";
 
-export const setOrder = async (inv: order, delDate: Date) => {
+export const setOrder = async (inv: Order, delDate: Date) => {
     return createOrder(inv, delDate);
 };
 

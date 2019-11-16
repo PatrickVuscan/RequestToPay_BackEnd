@@ -1,6 +1,6 @@
 /** This is for querying an order by its OrderID, but including all the information in its invoice as well. */
 
-import {order} from "../../../utils/dbTypes";
+import {Order} from "../../../utils/dbTypes";
 import {HTTP400Error, HTTP404Error} from "../../../utils/httpErrors";
 import q from "../../../utils/query";
 
@@ -9,7 +9,7 @@ export const generateGetOrderUInvoiceByOrderIDString: (OID: number) => string = 
         where "OID" = ${OID};`;
 };
 
-export const getOrderUInvoiceByOrderID: (OID: number) => Promise<order> = async (OID: number) => {
+export const getOrderUInvoiceByOrderID: (OID: number) => Promise<Order> = async (OID: number) => {
     const res = await q(generateGetOrderUInvoiceByOrderIDString(OID));
     if (res.rows.length === 0) {
         throw new HTTP404Error(

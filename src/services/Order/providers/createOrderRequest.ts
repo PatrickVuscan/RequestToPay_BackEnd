@@ -1,14 +1,14 @@
-import {order} from "../../../utils/dbTypes";
+import {Order} from "../../../utils/dbTypes";
 import {HTTP400Error, HTTP404Error} from "../../../utils/httpErrors";
 import q from "../../../utils/query";
 
-export const generateCreateOrderString: (order: order) => string = (ord: order) => {
+export const generateCreateOrderString: (order: Order) => string = (ord: Order) => {
     return `INSERT INTO "RequestToPay"."Order" ("OID", "InID", "SID", "CID", "DID", "OrderDate") VALUES
         (default, ${ord.OID}, ${ord.InID}, ${ord.SID}, ${ord.CID}, ${ord.DID}, '${ord.OrderDate.toISOString()}')
         RETURNING "OID"`;
 };
 
-export const createOrder: (ord: order, delDate: Date) => void = async (ord: order, delDate: Date) => {
+export const createOrder: (ord: Order, delDate: Date) => void = async (ord: Order, delDate: Date) => {
     let res = null;
     try {
         res = await q(generateCreateOrderString(ord));
