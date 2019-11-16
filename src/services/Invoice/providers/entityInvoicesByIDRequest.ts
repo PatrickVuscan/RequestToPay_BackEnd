@@ -1,4 +1,4 @@
-import {invoice} from "../../../utils/dbTypes";
+import {Invoice} from "../../../utils/dbTypes";
 import {HTTP400Error, HTTP404Error} from "../../../utils/httpErrors";
 import q from "../../../utils/query";
 
@@ -16,7 +16,7 @@ export const generateGetInvoicesByEntityIDString: (EID: number) => string = (EID
         "Order"."InID" = "Invoice"."InID" where "Order"."SID" = ${EID} or "Order"."CID" = ${EID}`;
 };
 
-export const getInvoicesByEntityID: (EID: number) => Promise<invoice[]> = async (EID: number) => {
+export const getInvoicesByEntityID: (EID: number) => Promise<Invoice[]> = async (EID: number) => {
     const res = await q(generateGetInvoicesByEntityIDString(EID));
     if (res.rows.length === 0) {
         throw new HTTP404Error(

@@ -2,7 +2,7 @@
 
 import { Request, Response } from "express";
 import {IRoute} from "..";
-import {entity} from "../../utils/dbTypes";
+import {Entity} from "../../utils/dbTypes";
 import {
     checkEntityByIDQueryParams,
     checkEntityByNameQueryParams,
@@ -30,10 +30,11 @@ export default [
         handler: [
             checkEntitySetQueryParams,
             async (req: Request, res: Response) => {
-                const ent: entity = {
+                const ent: Entity = {
                     EID: -1,
                     Name: req.query.Name,
                     BillingAddress: req.query.BillingAddress,
+                    Username: req.query.Username,
                     Password: req.query.Password,
                 };
                 const result = await setEntity(ent);

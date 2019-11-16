@@ -4,17 +4,19 @@
 
 import {NextFunction, Request, Response} from "express";
 import {checkAscii, checkDate} from "../../utils/checks";
-import {order} from "../../utils/dbTypes";
+import {Order} from "../../utils/dbTypes";
 import {HTTP400Error} from "../../utils/httpErrors";
 import {createOrder} from "./providers/createOrderRequest";
 import {getOrdersByEntityID} from "./providers/entityOrdersByIDRequest";
 import {getOrdersByEntityName} from "./providers/entityOrdersByNameRequest";
+import {getOrdersUInvoiceUEntityByEntityID} from "./providers/entityOrdersUInvoiceUEntityByIDRequest";
+import {getOrdersUInvoiceUEntityByEntityIDAndPersona} from "./providers/entityOrdersUInvoiceUEntityByIDRequestAndPersona";
 import {getOrderByOrderID} from "./providers/orderRequest";
 import {getOrderUInvoiceByOrderID} from "./providers/orderUInvoiceRequest";
 import {getOrderUInvoiceUEntityByOrderID} from "./providers/orderUInvoiceUEntityRequest";
 
-export const setOrder = async (inv: order, delDate: Date) => {
-    return createOrder(inv, delDate);
+export const setOrder = async (inv: Order) => {
+    return createOrder(inv);
 };
 
 export const getOrder = async (invoiceID: number) => {
@@ -31,6 +33,14 @@ export const getOrderUInvoiceUEntity = async (invoiceID: number) => {
 
 export const getEntityOrdersById = async (entityID: number) => {
     return await getOrdersByEntityID(entityID);
+};
+
+export const getEntityOrdersUInvoiceUEntityById = async (entityID: number) => {
+    return await getOrdersUInvoiceUEntityByEntityID(entityID);
+};
+
+export const getEntityOrdersUInvoiceUEntityByIdAndPersona = async (entityID: number, persona: string) => {
+    return await getOrdersUInvoiceUEntityByEntityIDAndPersona(entityID, persona);
 };
 
 export const getEntityOrdersByName = async (name: string) => {
@@ -84,6 +94,22 @@ export const checkOrdersByEntityIDGetQueryParams = (
     if (!req.query.EID) {
         throw new HTTP400Error("Missing EID parameter");
     } else if (!checkAscii(req.query.EID)) {
+        throw new HTTP400Error("Only alphabetic characters are allowed");
+    } else {
+        next();
+    }
+};
+
+export const checkOrdersByEntityIDAndPersonaGetQueryParams = (
+    req: Request,
+    res: Response,
+    next: NextFunction,
+): void => {
+    if (!req.query.EID) {
+        throw new HTTP400Error("Missing EID parameter");
+    } else if (!req.query.Persona) {
+        throw new HTTP400Error("Missing Persona parameter");
+    } else if (!checkAscii(req.query.EID) || !checkAscii(req.query.Persona)) {
         throw new HTTP400Error("Only alphabetic characters are allowed");
     } else {
         next();

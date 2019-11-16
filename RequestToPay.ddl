@@ -10,6 +10,7 @@ create table "Entity" (
   "EID" serial primary key,
   "Name" text not null,
   "BillingAddress" text not null,
+  "Username" text not null,
   "Password" text not null
 );
 
@@ -46,6 +47,9 @@ create table "Order" (
   "InID" integer unique not null references "Invoice"("InID"),
   "SID" integer not null references "Entity"("EID"),
   "CID" integer not null references "Entity"("EID"),
-  "DID" integer not null,
-  "OrderDate" timestamp not null
+  "DID" integer not null references "Entity"("EID"),
+  "OrderDate" timestamp not null,
+  "PaidStatus" boolean not null,
+  "ArrivedStatus" boolean not null,
+  "DeliveredStatus" boolean not null
 );

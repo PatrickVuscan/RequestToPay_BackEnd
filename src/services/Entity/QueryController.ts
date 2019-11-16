@@ -4,14 +4,14 @@
 
 import {NextFunction, Request, Response} from "express";
 import {checkAscii, checkDate} from "../../utils/checks";
-import {entity} from "../../utils/dbTypes";
+import {Entity} from "../../utils/dbTypes";
 import {HTTP400Error} from "../../utils/httpErrors";
 import {createEntity} from "./providers/createEntityRequest";
 import {getEntityByEntityID} from "./providers/entityByIDRequest";
 import {getEntityByEntityName} from "./providers/entityByNameRequest";
 import {loginRequest} from "./providers/loginRequest";
 
-export const setEntity = async (ent: entity) => {
+export const setEntity = async (ent: Entity) => {
     return createEntity(ent);
 };
 
@@ -34,13 +34,14 @@ export const checkEntitySetQueryParams = (
 ): void => {
     if (!req.query.Name) {
         throw new HTTP400Error("Missing Name parameter");
+    } else if (!req.query.Username) {
+        throw new HTTP400Error("Missing Username parameter");
     } else if (!req.query.Password) {
         throw new HTTP400Error("Missing Password parameter");
     } else if (!req.query.BillingAddress) {
         throw new HTTP400Error("Missing BillingAddress parameter");
-    } else if (!checkAscii(req.query.Name) || !checkAscii(req.query.Password) ||
+    } else if (!checkAscii(req.query.Name) || !checkAscii(req.query.Username) || !checkAscii(req.query.Password) ||
         !checkAscii(req.query.BillingAddress)) {
-        console.log(req.query);
         throw new HTTP400Error("Only alphanumeric and '-' characters are allowed");
     } else {
         next();

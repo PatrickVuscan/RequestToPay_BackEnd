@@ -1,4 +1,4 @@
-import {invoice} from "../../../utils/dbTypes";
+import {Invoice} from "../../../utils/dbTypes";
 import {HTTP400Error, HTTP404Error} from "../../../utils/httpErrors";
 import q from "../../../utils/query";
 
@@ -6,7 +6,7 @@ export const generateGetInvoiceByInvoiceIDString: (InID: number) => string = (In
     return `select * from "RequestToPay"."Invoice" where "InID" = ${InID};`;
 };
 
-export const getInvoiceByInvoiceID: (InID: number) => Promise<invoice> = async (InID: number) => {
+export const getInvoiceByInvoiceID: (InID: number) => Promise<Invoice> = async (InID: number) => {
     const res = await q(generateGetInvoiceByInvoiceIDString(InID));
     if (res.rows.length === 0) {
         throw new HTTP404Error(

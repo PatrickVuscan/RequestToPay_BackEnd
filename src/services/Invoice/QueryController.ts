@@ -4,14 +4,14 @@
 
 import {NextFunction, Request, Response} from "express";
 import {checkAscii, checkDate} from "../../utils/checks";
-import {invoice} from "../../utils/dbTypes";
+import {Invoice} from "../../utils/dbTypes";
 import {HTTP400Error} from "../../utils/httpErrors";
 import {createInvoice} from "./providers/createInvoiceRequest";
 import {getInvoicesByEntityID} from "./providers/entityInvoicesByIDRequest";
 import {getInvoicesByEntityName} from "./providers/entityInvoicesByNameRequest";
 import {getInvoiceByInvoiceID} from "./providers/invoiceRequest";
 
-export const setInvoice = async (inv: invoice) => {
+export const setInvoice = async (inv: Invoice) => {
     return createInvoice(inv);
 };
 

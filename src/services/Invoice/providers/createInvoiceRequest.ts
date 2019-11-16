@@ -1,13 +1,13 @@
-import {invoice} from "../../../utils/dbTypes";
+import {Invoice} from "../../../utils/dbTypes";
 import {HTTP400Error, HTTP404Error} from "../../../utils/httpErrors";
 import q from "../../../utils/query";
 
-export const generateCreateInvoiceString: (invoice: invoice) => string = (inv: invoice) => {
+export const generateCreateInvoiceString: (invoice: Invoice) => string = (inv: Invoice) => {
     return `INSERT INTO "RequestToPay"."Invoice" ("InID", "NextInID", "DeliveryDate") VALUES
         (default, ${inv.NextInID}, '${inv.DeliveryDate.toISOString()}') RETURNING "InID"`;
 };
 
-export const createInvoice: (inv: invoice) => void = async (inv: invoice) => {
+export const createInvoice: (inv: Invoice) => Promise<number> = async (inv: Invoice) => {
     let res = null;
     try {
         res = await q(generateCreateInvoiceString(inv));

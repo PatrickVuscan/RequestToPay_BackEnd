@@ -1,14 +1,14 @@
 /* This file defines functions that are used by QueryController and subsequently in the IRoute handler method. */
 
-import {entity} from "../../../utils/dbTypes";
+import {Entity} from "../../../utils/dbTypes";
 import {HTTP400Error, HTTP404Error} from "../../../utils/httpErrors";
 import q from "../../../utils/query";
 
 export const generateGetEntityByNameString: (uname: string) => string = (uname: string) => {
-    return `select * from "RequestToPay"."Entity" where "Name" = '${uname}';`;
+    return `select * from "RequestToPay"."Entity" where "Username" = '${uname}';`;
 };
 
-export const getEntityByEntityName: (name: string) => Promise<entity> = async (uname: string) => {
+export const getEntityByEntityName: (name: string) => Promise<Entity> = async (uname: string) => {
     const res = await q(generateGetEntityByNameString(uname));
     if (res.rows.length === 0) {
         throw new HTTP404Error(
@@ -19,5 +19,5 @@ export const getEntityByEntityName: (name: string) => Promise<entity> = async (u
             `Found multiple users with his username: ${uname}.  Query result: ${res}`,
         );
     }
-    return res.rows[0] as entity;
+    return res.rows[0] as Entity;
 };
