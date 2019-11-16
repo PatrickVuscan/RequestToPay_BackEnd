@@ -2,10 +2,11 @@
 
 import { Request, Response } from "express";
 import {IRoute} from "..";
-import {Order} from "../../utils/dbTypes";
+import {Invoice, Order} from "../../utils/dbTypes";
 import {
     checkInvoicesByEntityIDGetQueryParams,
     checkInvoicesByEntityNameGetQueryParams,
+    setInvoice,
 } from "../Invoice/QueryController";
 import {
     checkOrderByOrderIDGetQueryParams,
@@ -23,17 +24,21 @@ export default [
         handler: [
             checkOrderSetQueryParams,
             async (req: Request, res: Response) => {
+                const inv: Invoice = {
+                    InID: -1,
+                    DeliveryDate: new Date(Date.parse(req.query.DeliveryDate)),
+                    NextInID: null,
+                };
+                const InvID = await setInvoice(inv);
                 const ord: Order = {
                     OID: -1,
-                    InID: 1,
+                    InID: InvID,
                     SID: req.query.SID,
                     CID: req.query.CID,
                     DID: req.query.DID,
                     OrderDate: new Date(Date.parse(req.query.OrderDate)),
                 };
                 const result = await setOrder(ord, new Date(Date.parse(req.query.DeliveryDate)));
-                // TODO Either find the InID to be passed into InID above, or created and changed in the setOrder
-                // function... Should be able to do this by calling the Invoice endpoint?
                 res.status(200).send(result);
                 return result;
             },

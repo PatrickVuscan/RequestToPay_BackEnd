@@ -1,4 +1,5 @@
-/** Defines the routes and endpoints available for Items. */
+/*
+/!** Defines the routes and endpoints available for Items. *!/
 
 import { Request, Response } from "express";
 import {IRoute} from "..";
@@ -70,3 +71,4 @@ export default [
         path: "/api/v1/entityInvoicesByName",
     },
 ] as IRoute[];
+*/

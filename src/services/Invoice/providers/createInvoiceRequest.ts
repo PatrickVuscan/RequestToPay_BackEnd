@@ -7,7 +7,7 @@ export const generateCreateInvoiceString: (invoice: Invoice) => string = (inv: I
         (default, ${inv.NextInID}, '${inv.DeliveryDate.toISOString()}') RETURNING "InID"`;
 };
 
-export const createInvoice: (inv: Invoice) => void = async (inv: Invoice) => {
+export const createInvoice: (inv: Invoice) => Promise<number> = async (inv: Invoice) => {
     let res = null;
     try {
         res = await q(generateCreateInvoiceString(inv));

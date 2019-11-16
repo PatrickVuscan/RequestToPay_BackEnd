@@ -8,6 +8,7 @@ import q from "../../../utils/query";
 export const generateGetOrderUInvoiceUEntityByOrderIDString: (OID: number) => string = (OID: number) => {
     return `select
         "O".*,
+        "I"."DeliveryDate",
         "S"."Name" as "SellerName",
         "S"."BillingAddress" as "SellerBillingAddress",
         "C"."Name" as "CustomerName",

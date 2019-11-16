@@ -22,7 +22,7 @@ export default [
                 const inv: Invoice = {
                         InID: -1,
                         DeliveryDate: new Date(Date.parse(req.query.DeliveryDate)),
-                        NextInID: (req.query.NextInID ? req.query.NextInID : "null"),
+                        NextInID: (req.query.NextInID ? req.query.NextInID : null),
                     };
                 const result = await setInvoice(inv);
                 res.status(200).send(result);
