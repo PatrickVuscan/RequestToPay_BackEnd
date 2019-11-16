@@ -1,18 +1,21 @@
-import {Invoice} from "../../../utils/dbTypes";
+import {Item} from "../../../utils/dbTypes";
 import {HTTP400Error, HTTP404Error} from "../../../utils/httpErrors";
 import q from "../../../utils/query";
 
-export const generateGetInvoicesByEntityNameString: (Name: string) => string = (Name: string) => {
-    return `select "RequestToPay"."Invoice".* from "RequestToPay"."Order" join "RequestToPay"."Invoice" on
-        "Order"."InID" = "Invoice"."InID" join "RequestToPay"."Entity" on "Order"."CID" = "Entity"."EID" or
-        "Order"."SID" = "Entity"."EID" where "Entity"."Name" = '${Name}'`;
+export const generateGetItemsByEntityNameString: (name: string) => string = (name: string) => {
+    return `select
+        "I".*,
+        "S"."Name" as "SellerName"
+        from "RequestToPay"."Item" as "I"
+        join "RequestToPay"."Entity" as "S" on "I"."SID" = "S"."EID"
+        where "Item"."Name" = '${name}'`;
 };
 
-export const getInvoicesByEntityName: (Name: string) => Promise<Invoice[]> = async (Name: string) => {
-    const res = await q(generateGetInvoicesByEntityNameString(Name));
+export const getItemsByName: (name: string) => Promise<Item[]> = async (name: string) => {
+    const res = await q(generateGetItemsByEntityNameString(name));
     if (res.rows.length === 0) {
         throw new HTTP404Error(
-            `Found no invoices with the Entity Name: ${Name}.  Query result: ${res}`,
+            `Found no items by the name: ${name}.  Query result: ${res}`,
         );
     }
     return res.rows;

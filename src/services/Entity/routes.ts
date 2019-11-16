@@ -34,6 +34,7 @@ export default [
                     EID: -1,
                     Name: req.query.Name,
                     BillingAddress: req.query.BillingAddress,
+                    Username: req.query.Username,
                     Password: req.query.Password,
                 };
                 const result = await setEntity(ent);

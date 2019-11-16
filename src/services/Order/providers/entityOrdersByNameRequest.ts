@@ -4,7 +4,8 @@ import q from "../../../utils/query";
 
 export const generateGetOrdersByEntityNameString: (Name: string) => string = (Name: string) => {
     return `select "RequestToPay"."Order".* from "RequestToPay"."Order" join "RequestToPay"."Entity" on
-        "Order"."CID" = "Entity"."EID" or "Order"."SID" = "Entity"."EID" where "Entity"."Name" = '${Name}'`;
+        "Order"."CID" = "Entity"."EID" or "Order"."SID" = "Entity"."EID" or "Order"."DID" = "Entity"."EID"
+        where "Entity"."Name" = '${Name}'`;
 };
 
 export const getOrdersByEntityName: (Name: string) => Promise<Order[]> = async (Name: string) => {

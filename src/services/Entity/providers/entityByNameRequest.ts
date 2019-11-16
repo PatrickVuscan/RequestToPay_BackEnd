@@ -5,7 +5,7 @@ import {HTTP400Error, HTTP404Error} from "../../../utils/httpErrors";
 import q from "../../../utils/query";
 
 export const generateGetEntityByNameString: (uname: string) => string = (uname: string) => {
-    return `select * from "RequestToPay"."Entity" where "Name" = '${uname}';`;
+    return `select * from "RequestToPay"."Entity" where "Username" = '${uname}';`;
 };
 
 export const getEntityByEntityName: (name: string) => Promise<Entity> = async (uname: string) => {

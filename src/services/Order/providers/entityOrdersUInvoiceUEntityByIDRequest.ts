@@ -1,11 +1,8 @@
-/* This is for querying an order by its OrderID, but including all the information in its invoice and the entities that
- * are included as well. */
-
 import {Order} from "../../../utils/dbTypes";
 import {HTTP400Error, HTTP404Error} from "../../../utils/httpErrors";
 import q from "../../../utils/query";
 
-export const generateGetOrderUInvoiceUEntityByOrderIDString: (OID: number) => string = (OID: number) => {
+export const generateGetOrdersUInvoiceUEntityByEntityIDString: (EID: number) => string = (EID: number) => {
     return `select
         "O".*,
         "I"."DeliveryDate",
@@ -17,19 +14,15 @@ export const generateGetOrderUInvoiceUEntityByOrderIDString: (OID: number) => st
         join "RequestToPay"."Invoice" as "I" on "O"."InID" = "I"."InID"
         join "RequestToPay"."Entity" as "S" on "O"."SID" = "S"."EID"
         join "RequestToPay"."Entity" as "C" on "O"."CID" = "C"."EID"
-        where "OID" = ${OID};`;
+        where "O"."SID" = ${EID} or "O"."CID" = ${EID} or "O"."DID" = ${EID};`;
 };
 
-export const getOrderUInvoiceUEntityByOrderID: (OID: number) => Promise<Order> = async (OID: number) => {
-    const res = await q(generateGetOrderUInvoiceUEntityByOrderIDString(OID));
+export const getOrdersUInvoiceUEntityByEntityID: (EID: number) => Promise<Order[]> = async (EID: number) => {
+    const res = await q(generateGetOrdersUInvoiceUEntityByEntityIDString(EID));
     if (res.rows.length === 0) {
         throw new HTTP404Error(
-            `Found no orders with this OrderID: ${OID}.  Query result: ${res}`,
-        );
-    } else if (res.rows.length > 1) {
-        throw new HTTP400Error(
-            `Found multiple orders with this OrderID: ${OID}.  Query result: ${res}`,
+            `Found no invoices with this EntityID: ${EID}.  Query result: ${res}`,
         );
     }
-    return res.rows[0];
+    return res.rows;
 };

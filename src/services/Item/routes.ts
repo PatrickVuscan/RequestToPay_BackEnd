@@ -1,32 +1,28 @@
-/*
-/!** Defines the routes and endpoints available for Items. *!/
+/** Defines the routes and endpoints available for Items. */
 
 import { Request, Response } from "express";
 import {IRoute} from "..";
 import {Item} from "../../utils/dbTypes";
 import {
-    checkInvoiceByInvoiceIDGetQueryParams,
-    checkInvoicesByEntityIDGetQueryParams,
-    checkInvoicesByEntityNameGetQueryParams,
-    checkInvoiceSetQueryParams,
-    getEntityInvoicesById,
-    getEntityInvoicesByName,
-    getInvoice,
-    setInvoice,
+    checkItemByItemIDGetQueryParams,
+    checkItemByItemNameGetQueryParams,
+    checkItemSetQueryParams,
+    getItem, getItemByName,
+    setItem,
 } from "./QueryController";
 
 export default [
     {
         handler: [
-            checkInvoiceSetQueryParams,
+            checkItemSetQueryParams,
             async (req: Request, res: Response) => {
-                const inv: Item = {
+                const item: Item = {
                         IID: req.query.IID,
                         Name: req.query.Name,
                         SID: req.query.SID,
                         Price: req.query.Price,
                     };
-                const result = await setInvoice(inv);
+                const result = await setItem(item);
                 res.status(200).send(result);
                 return result;
             },
@@ -36,9 +32,9 @@ export default [
     },
     {
         handler: [
-            checkInvoiceByInvoiceIDGetQueryParams,
+            checkItemByItemIDGetQueryParams,
             async (req: Request, res: Response) => {
-                const result = await getInvoice(req.query.InID);
+                const result = await getItem(req.query.IID);
                 res.status(200).send(result);
                 return result;
             },
@@ -48,27 +44,14 @@ export default [
     },
     {
         handler: [
-            checkInvoicesByEntityIDGetQueryParams,
+            checkItemByItemNameGetQueryParams,
             async (req: Request, res: Response) => {
-                const result = await getEntityInvoicesById(req.query.EID);
+                const result = await getItemByName(req.query.Name);
                 res.status(200).send(result);
                 return result;
             },
         ],
         method: "get",
-        path: "/api/v1/entityInvoicesByID",
-    },
-    {
-        handler: [
-            checkInvoicesByEntityNameGetQueryParams,
-            async (req: Request, res: Response) => {
-                const result = await getEntityInvoicesByName(req.query.Name);
-                res.status(200).send(result);
-                return result;
-            },
-        ],
-        method: "get",
-        path: "/api/v1/entityInvoicesByName",
+        path: "/api/v1/itemsByName",
     },
 ] as IRoute[];
-*/

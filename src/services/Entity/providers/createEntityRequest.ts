@@ -3,8 +3,8 @@ import {HTTP400Error, HTTP404Error} from "../../../utils/httpErrors";
 import q from "../../../utils/query";
 
 export const generateCreateEntityString: (entity: Entity) => string = (ent: Entity) => {
-    return `INSERT INTO "RequestToPay"."Entity" ("EID", "Name", "Password", "BillingAddress") VALUES
-        (default, '${ent.Name}', '${ent.Password}', '${ent.BillingAddress}') RETURNING "EID"`;
+    return `INSERT INTO "RequestToPay"."Entity" ("EID", "Name", "Username", "Password", "BillingAddress") VALUES
+        (default, '${ent.Name}', '${ent.Username}', '${ent.Password}', '${ent.BillingAddress}') RETURNING "EID"`;
 };
 
 export const createEntity: (ent: Entity) => void = async (ent: Entity) => {

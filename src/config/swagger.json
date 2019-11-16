@@ -24,6 +24,10 @@
     {
       "name": "Order Endpoints",
       "description": "This is where to get information about orders from the database."
+    },
+    {
+      "name": "Item Endpoints",
+      "description": "This is where to get information about items from the database."
     }
   ],
   "paths": {
@@ -70,7 +74,14 @@
           {
             "name": "Name",
             "in": "query",
-            "description": "The name of the Entity.",
+            "description": "The name of the Entity to display.",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "Username",
+            "in": "query",
+            "description": "The username of entity, for logging in.",
             "required": true,
             "type": "string"
           },
@@ -381,6 +392,59 @@
         ]
       }
     },
+    "/entityOrdersUInvoiceUEntityById": {
+      "get":  {
+        "tags": ["Order Endpoints"],
+        "summary": "Returns all orders with the matching Entity ID, with Invoices and Entity columns mixed in.",
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "404": {
+            "description": "No orders found"
+          }
+        },
+        "parameters": [
+          {
+            "name": "EID",
+            "in": "query",
+            "description": "Specifies the Entity ID",
+            "required": true,
+            "type": "integer"
+          }
+        ]
+      }
+    },
+    "/entityOrdersUInvoiceUEntityByIdAndPersona": {
+      "get":  {
+        "tags": ["Order Endpoints"],
+        "summary": "Returns all orders with the matching Entity ID and where that Entity is acting as the specified Persona, with the Invoice and Entity columns mixed in.",
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "404": {
+            "description": "No orders found"
+          }
+        },
+        "parameters": [
+          {
+            "name": "EID",
+            "in": "query",
+            "description": "Specifies the Entity ID",
+            "required": true,
+            "type": "integer"
+          },
+          {
+            "name": "Persona",
+            "in": "query",
+            "description": "Specifies the Persona the Entity is acting as in the order. For Customer, you can use Customer, customer, c as accepted strings. For Seller, you can use Seller, seller, s, as accepted strings. For Driver, you can use Driver, driver, d as accepted strings.",
+            "required": true,
+            "type": "string"
+          }
+        ]
+      }
+    },
     "/entityOrdersByName": {
       "get":  {
         "tags": ["Order Endpoints"],
@@ -398,6 +462,87 @@
             "name": "Name",
             "in": "query",
             "description": "Specifies the Entity Name",
+            "required": true,
+            "type": "string"
+          }
+        ]
+      }
+    },
+    "/item": {
+      "get":  {
+        "tags": ["Item Endpoints"],
+        "summary": "Returns an item with the matching ItemID",
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "404": {
+            "description": "No invoices found"
+          },
+          "400": {
+            "description": "Bad request or multiple items found"
+          }
+        },
+        "parameters": [
+          {
+            "name": "IID",
+            "in": "query",
+            "description": "Specifies the item ID",
+            "required": true,
+            "type": "integer"
+          }
+        ]
+      },
+      "put": {
+        "tags": ["Item Endpoints"],
+        "summary": "Inserts a new item into the database.",
+        "responses": {
+          "200": {
+            "description": "This is the ID of the newly created item."
+          }
+        },
+        "parameters": [
+          {
+            "name": "Name",
+            "in": "query",
+            "description": "The name of the item.",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "SID",
+            "in": "query",
+            "description": "The ID of the seller entity.",
+            "required": true,
+            "type": "number"
+          },
+          {
+            "name": "Price",
+            "in": "query",
+            "description": "The price of the item.",
+            "required": true,
+            "type": "number"
+          }
+        ]
+      }
+    },
+    "/itemsByName": {
+      "get":  {
+        "tags": ["Item Endpoints"],
+        "summary": "Returns the items with the matching name.",
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "404": {
+            "description": "No items found"
+          }
+        },
+        "parameters": [
+          {
+            "name": "Name",
+            "in": "query",
+            "description": "Specifies the item Name",
             "required": true,
             "type": "string"
           }

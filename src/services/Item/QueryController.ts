@@ -4,30 +4,25 @@
 
 import {NextFunction, Request, Response} from "express";
 import {checkAscii, checkDate} from "../../utils/checks";
-import {Invoice} from "../../utils/dbTypes";
+import {Item} from "../../utils/dbTypes";
 import {HTTP400Error} from "../../utils/httpErrors";
-import {createInvoice} from "./providers/createItemRequest";
-import {getInvoicesByEntityID} from "./providers/entityItemsByIDRequest";
-import {getInvoicesByEntityName} from "./providers/itemByNameRequest";
-import {getInvoiceByInvoiceID} from "./providers/itemRequest";
+import {createItem} from "./providers/createItemRequest";
+import {getItemsByName} from "./providers/itemByNameRequest";
+import {getItemByItemID} from "./providers/itemRequest";
 
-export const setInvoice = async (inv: Invoice) => {
-    return createInvoice(inv);
+export const setItem = async (item: Item) => {
+    return createItem(item);
 };
 
-export const getInvoice = async (invoiceID: number) => {
-    return await getInvoiceByInvoiceID(invoiceID);
+export const getItem = async (itemID: number) => {
+    return await getItemByItemID(itemID);
 };
 
-export const getEntityInvoicesById = async (entityID: number) => {
-    return await getInvoicesByEntityID(entityID);
+export const getItemByName = async (name: string) => {
+    return await getItemsByName(name);
 };
 
-export const getEntityInvoicesByName = async (name: string) => {
-    return await getInvoicesByEntityName(name);
-};
-
-export const checkInvoiceSetQueryParams = (
+export const checkItemSetQueryParams = (
     req: Request,
     res: Response,
     next: NextFunction,
@@ -43,35 +38,21 @@ export const checkInvoiceSetQueryParams = (
     }
 };
 
-export const checkInvoiceByInvoiceIDGetQueryParams = (
+export const checkItemByItemIDGetQueryParams = (
     req: Request,
     res: Response,
     next: NextFunction,
 ): void => {
-    if (!req.query.InID) {
-        throw new HTTP400Error("Missing InID parameter");
-    } else if (!checkAscii(req.query.InID)) {
+    if (!req.query.IID) {
+        throw new HTTP400Error("Missing IID parameter");
+    } else if (!checkAscii(req.query.IID)) {
         throw new HTTP400Error("Only alphabetic characters are allowed");
     } else {
         next();
     }
 };
 
-export const checkInvoicesByEntityIDGetQueryParams = (
-    req: Request,
-    res: Response,
-    next: NextFunction,
-): void => {
-    if (!req.query.EID) {
-        throw new HTTP400Error("Missing EID parameter");
-    } else if (!checkAscii(req.query.EID)) {
-        throw new HTTP400Error("Only alphabetic characters are allowed");
-    } else {
-        next();
-    }
-};
-
-export const checkInvoicesByEntityNameGetQueryParams = (
+export const checkItemByItemNameGetQueryParams = (
     req: Request,
     res: Response,
     next: NextFunction,
