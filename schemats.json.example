@@ -1,5 +1,5 @@
 {
   "conn": "postgres://<user>:<pass>@localhost:5432/<database>",
-  "s": "requesttopay",
+  "s": "RequestToPay",
   "output": "./src/utils/dbTypes.ts"
 }

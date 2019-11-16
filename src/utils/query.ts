@@ -26,7 +26,7 @@ pool.on("error", (err: Error) => {
 
 pool.on("acquire", () => {
     logger.info({
-        file: "userRequest.ts",
+        file: "entityByNameRequest.ts",
         method: "pool.on('acquire')",
     });
 });
@@ -46,7 +46,7 @@ export default async (q: string): Promise<QueryResult> => {
         // log the error. We'll return the empty res
         logger.error({
             error: e,
-            file: "userRequest.ts",
+            file: "entityByNameRequest.ts",
         });
     }
     return res;

@@ -53,7 +53,7 @@ and `password: zoomzoom`. _Whether or not this works is __highly__ dependent on 
     * `generate-db-types`: Generates typescript interfaces for objects from database tables. Options are
         defined in `schemats.json`. Must be run on a postgres database that has imported `RequestToPay.ddl` on a 
         postgres server hosted on `localhost`. Make sure that the username and password that you use in `schemats.json`
-        connection string have permission to access tables in the `requesttopay` schema.
+        connection string have permission to access tables in the `RequestToPay` schema.
 * Other notable commands
     * [deprecated] `pg_dump -U <user> -f schema.sql -s <DBNAME>`: dumps the schema for `<DBNAME>` to a `.sql` file.
 

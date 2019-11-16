@@ -17,10 +17,10 @@ export namespace invoiceitemsFields {
 }
 
 export interface invoiceitems {
-    inid: invoiceitemsFields.inid;
-    iid: invoiceitemsFields.iid;
-    price: invoiceitemsFields.price;
-    quantity: invoiceitemsFields.quantity;
+    InID: invoiceitemsFields.inid;
+    IID: invoiceitemsFields.iid;
+    Price: invoiceitemsFields.price;
+    Quantity: invoiceitemsFields.quantity;
 
 }
 
@@ -33,10 +33,10 @@ export namespace itemsFields {
 }
 
 export interface items {
-    iid: itemsFields.iid;
-    name: itemsFields.name;
-    sid: itemsFields.sid;
-    price: itemsFields.price;
+    IID: itemsFields.iid;
+    Name: itemsFields.name;
+    SID: itemsFields.sid;
+    Price: itemsFields.price;
 
 }
 
@@ -48,9 +48,9 @@ export namespace invoiceFields {
 }
 
 export interface invoice {
-    inid: invoiceFields.inid;
-    nextinid: invoiceFields.nextinid;
-    deliverydate: invoiceFields.deliverydate;
+    InID: invoiceFields.inid;
+    NextInID: invoiceFields.nextinid;
+    DeliveryDate: invoiceFields.deliverydate;
 
 }
 
@@ -63,10 +63,10 @@ export namespace entityFields {
 }
 
 export interface entity {
-    eid: entityFields.eid;
-    name: entityFields.name;
-    billingaddress: entityFields.billingaddress;
-    password: entityFields.password;
+    EID: entityFields.eid;
+    Name: entityFields.name;
+    BillingAddress: entityFields.billingaddress;
+    Password: entityFields.password;
 
 }
 
@@ -79,14 +79,14 @@ export namespace warehousecontentsFields {
 }
 
 export interface warehousecontents {
-    sid: warehousecontentsFields.sid;
-    iid: warehousecontentsFields.iid;
-    location: warehousecontentsFields.location;
-    quantity: warehousecontentsFields.quantity;
+    SID: warehousecontentsFields.sid;
+    IID: warehousecontentsFields.iid;
+    Location: warehousecontentsFields.location;
+    Quantity: warehousecontentsFields.quantity;
 
 }
 
-export namespace ordersFields {
+export namespace orderFields {
     export type oid = number;
     export type inid = number;
     export type did = number;
@@ -96,12 +96,12 @@ export namespace ordersFields {
 
 }
 
-export interface orders {
-    oid: ordersFields.oid;
-    inid: ordersFields.inid;
-    did: ordersFields.did;
-    sid: ordersFields.sid;
-    cid: ordersFields.cid;
-    orderdate: ordersFields.orderdate;
+export interface order {
+    OID: orderFields.oid;
+    InID: orderFields.inid;
+    DID: orderFields.did;
+    SID: orderFields.sid;
+    CID: orderFields.cid;
+    OrderDate: orderFields.orderdate;
 
 }

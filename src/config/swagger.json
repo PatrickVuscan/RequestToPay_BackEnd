@@ -14,15 +14,23 @@
   "produces": ["application/json"],
   "tags": [
     {
-      "name": "User Endpoints",
-      "description": "This is where to get information about the users from the database."
+      "name": "Entity Endpoints",
+      "description": "This is where to get information about entities from the database."
+    },
+    {
+      "name": "Invoice Endpoints",
+      "description": "This is where to get information about invoices from the database."
+    },
+    {
+      "name": "Order Endpoints",
+      "description": "This is where to get information about orders from the database."
     }
   ],
   "paths": {
     "/login": {
       "get": {
-        "tags": ["User Endpoints"],
-        "summary": "Returns user information if user exists in database with given password.",
+        "tags": ["Entity Endpoints"],
+        "summary": "Returns entity information if user exists in database with given password.",
         "responses": {
           "200": {
             "description": "OK"
@@ -49,10 +57,67 @@
         ]
       }
     },
-    "/users": {
+    "/entity": {
+      "put": {
+        "tags": ["Entity Endpoints"],
+        "summary": "Inserts a new entity into the database.",
+        "responses": {
+          "200": {
+            "description": "This is the EntityID of the newly created entity."
+          }
+        },
+        "parameters": [
+          {
+            "name": "Name",
+            "in": "query",
+            "description": "The name of the Entity.",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "Password",
+            "in": "query",
+            "description": "The password of entity, for logging in.",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "BillingAddress",
+            "in": "query",
+            "description": "The billing address of the entity.",
+            "required": true,
+            "type": "string"
+          }
+        ]
+      }
+    },
+    "/entityByID": {
       "get": {
-        "tags": ["User Endpoints"],
-        "summary": "Returns user information if user exists in database.",
+        "tags": ["Entity Endpoints"],
+        "summary": "Returns entity information if EntityID exists in database.",
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad request"
+          }
+        },
+        "parameters": [
+          {
+            "name": "EID",
+            "in": "query",
+            "description": "Specifies the EntityID",
+            "required": true,
+            "type": "number"
+          }
+        ]
+      }
+    },
+    "/entityByName": {
+      "get": {
+        "tags": ["Entity Endpoints"],
+        "summary": "Returns entity information if entity exists in database.",
         "responses": {
           "200": {
             "description": "OK"
@@ -109,21 +174,21 @@
           {
             "name": "DeliveryDate",
             "in": "query",
-            "description": "The date for the new invoice to be delivered on.",
+            "description": "The date the order is to be delivered on.",
             "required": true,
             "type": "string"
           },
           {
             "name": "NextInID",
             "in": "query",
-            "description": "The date for the new invoice to be delivered on.",
+            "description": "The ID of the invoice that this invoice replaces/updates.",
             "required": false,
             "type": "number"
           }
         ]
       }
     },
-    "/entityInvoices": {
+    "/entityInvoicesById": {
       "get":  {
         "tags": ["Invoice Endpoints"],
         "summary": "Returns all invoices with the matching Entity ID.",
@@ -142,6 +207,199 @@
             "description": "Specifies the Entity ID",
             "required": true,
             "type": "integer"
+          }
+        ]
+      }
+    },
+    "/entityInvoicesByName": {
+      "get":  {
+        "tags": ["Invoice Endpoints"],
+        "summary": "Returns all invoices with the matching Entity Name.",
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "404": {
+            "description": "No invoices found"
+          }
+        },
+        "parameters": [
+          {
+            "name": "Name",
+            "in": "query",
+            "description": "Specifies the Entity Name",
+            "required": true,
+            "type": "string"
+          }
+        ]
+      }
+    },
+    "/order": {
+      "get":  {
+        "tags": ["Order Endpoints"],
+        "summary": "Returns an order with the matching OrderID",
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "404": {
+            "description": "No orders found"
+          },
+          "400": {
+            "description": "Bad request or multiple orders found"
+          }
+        },
+        "parameters": [
+          {
+            "name": "OID",
+            "in": "query",
+            "description": "Specifies the Order ID",
+            "required": true,
+            "type": "integer"
+          }
+        ]
+      },
+      "put": {
+        "tags": ["Order Endpoints"],
+        "summary": "Inserts a new order into the database.",
+        "responses": {
+          "200": {
+            "description": "This is the ID of the newly created order."
+          }
+        },
+        "parameters": [
+          {
+            "name": "SID",
+            "in": "query",
+            "description": "The ID of the seller.",
+            "required": true,
+            "type": "number"
+          },
+          {
+            "name": "CID",
+            "in": "query",
+            "description": "The ID of the customer.",
+            "required": true,
+            "type": "number"
+          },
+          {
+            "name": "DID",
+            "in": "query",
+            "description": "The ID of the driver.",
+            "required": true,
+            "type": "number"
+          },
+          {
+            "name": "OrderDate",
+            "in": "query",
+            "description": "The date the order was placed.",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "DeliveryDate",
+            "in": "query",
+            "description": "The date for the new order to be delivered on.",
+            "required": true,
+            "type": "string"
+          }
+        ]
+      }
+    },
+    "/orderUInvoice": {
+      "get":  {
+        "tags": ["Order Endpoints"],
+        "summary": "Returns an order with the matching OrderID, joined with its corresponding Invoice.",
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "404": {
+            "description": "No orders found."
+          },
+          "400": {
+            "description": "Bad request or multiple orders found"
+          }
+        },
+        "parameters": [
+          {
+            "name": "OID",
+            "in": "query",
+            "description": "Specifies the Order ID.",
+            "required": true,
+            "type": "integer"
+          }
+        ]
+      }
+    },
+    "/orderUInvoiceUEntity": {
+      "get":  {
+        "tags": ["Order Endpoints"],
+        "summary": "Returns an order with the matching OrderID, joined with its corresponding Invoice and entities.",
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "404": {
+            "description": "No orders found."
+          },
+          "400": {
+            "description": "Bad request or multiple orders found"
+          }
+        },
+        "parameters": [
+          {
+            "name": "OID",
+            "in": "query",
+            "description": "Specifies the Order ID.",
+            "required": true,
+            "type": "integer"
+          }
+        ]
+      }
+    },
+    "/entityOrdersById": {
+      "get":  {
+        "tags": ["Order Endpoints"],
+        "summary": "Returns all orders with the matching Entity ID.",
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "404": {
+            "description": "No orders found"
+          }
+        },
+        "parameters": [
+          {
+            "name": "EID",
+            "in": "query",
+            "description": "Specifies the Entity ID",
+            "required": true,
+            "type": "integer"
+          }
+        ]
+      }
+    },
+    "/entityOrdersByName": {
+      "get":  {
+        "tags": ["Order Endpoints"],
+        "summary": "Returns all orders with the matching Entity Name.",
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "404": {
+            "description": "No invoices found"
+          }
+        },
+        "parameters": [
+          {
+            "name": "Name",
+            "in": "query",
+            "description": "Specifies the Entity Name",
+            "required": true,
+            "type": "string"
           }
         ]
       }
