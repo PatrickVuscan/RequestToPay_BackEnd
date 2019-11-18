@@ -4,7 +4,7 @@ import q from "../../../utils/query";
 
 type UserVerify = (name: string, password: string) => Promise<Entity>;
 export const generateLoginString: (uname: string, pass: string) => string = (uname: string, pass: string) => {
-    return `select * from "RequestToPay"."Entity" where "Userame" = '${uname}' and "Password" = '${pass}'`;
+    return `select * from "RequestToPay"."Entity" where "Username" = '${uname}' and "Password" = '${pass}'`;
 };
 export const loginRequest: UserVerify = async (uname: string, pass: string) => {
     const res = await q(generateLoginString(uname, pass));
