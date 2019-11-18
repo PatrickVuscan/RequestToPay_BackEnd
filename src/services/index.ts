@@ -3,9 +3,10 @@
  */
 
 import {NextFunction, Request, Response} from "express";
-import invoiceRoutes from "./Invoice/routes";
-import orderRoutes from "./Order/routes";
 import userRoutes from "./Entity/routes";
+import invoiceRoutes from "./Invoice/routes";
+import itemRoutes from "./Item/routes";
+import orderRoutes from "./Order/routes";
 
 /* This is the interface that each route must implement */
 export interface IRoute {
@@ -19,4 +20,5 @@ export default [
     ...userRoutes,
     ...invoiceRoutes,
     ...orderRoutes,
+    ... itemRoutes,
 ] as [IRoute];
