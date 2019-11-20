@@ -160,7 +160,7 @@ export default [
             },
         ],
         method: "put",
-        path: "/api/v1/order",
+        path: "/api/v1/orderPaidStatus",
     },
     {
         handler: [
@@ -172,7 +172,7 @@ export default [
             },
         ],
         method: "put",
-        path: "/api/v1/order",
+        path: "/api/v1/orderArrivedStatus",
     },
     {
         handler: [
@@ -184,6 +184,6 @@ export default [
             },
         ],
         method: "put",
-        path: "/api/v1/order",
+        path: "/api/v1/orderDeliveredStatus",
     },
 ] as IRoute[];
