@@ -22,7 +22,16 @@ values (default, null, '2019-01-02'),
        (default, null, '2019-08-05'),
        (default, 2, '2019-11-15'),
        (default, 3, '2019-11-15'),
-       (default, null, '2019-11-15');
+       (default, null, '2019-09-10'),
+       (default, null, '2019-09-15'),
+       (default, null, '2019-09-22'),
+       (default, null, '2019-09-25'),
+       (default, null, '2019-10-11'),
+       (default, null, '2019-10-30'),
+       (default, null, '2019-11-5'),
+       (default, null, '2019-11-6'),
+       (default, null, '2019-11-11'),
+       (default, null, '2019-11-20');
 
 -- InvoiceItems
 insert into "InvoiceItems"("InID", "IID", "Price", "Quantity")
@@ -36,5 +45,14 @@ values (1, 1, 20, '900 Nowhere Ave.');
 -- Orders
 insert into "Order"("OID", "SID", "CID", "InID", "DID", "OrderDate", "PaidStatus", "ArrivedStatus", "DeliveredStatus")
 values (default, 1, 3, 1, 5, '2019-01-01', false, false, false),
-       (default, 1, 4, 2, 5, '2019-08-05', false, false, false),
-       (default, 1, 4, 4, 5, '2019-11-15', false, false, false);
+       (default, 1, 4, 4, 5, '2019-08-05', false, false, false),
+       (default, 1, 4, 5, 5, '2019-09-10', false, false, false),
+       (default, 1, 4, 6, 5, '2019-09-15', false, false, false),
+       (default, 1, 4, 7, 5, '2019-09-22', false, false, false),
+       (default, 1, 4, 8, 5, '2019-09-25', false, false, false),
+       (default, 1, 4, 9, 5, '2019-10-11', false, false, false),
+       (default, 1, 4, 10, 5, '2019-10-30', false, false, false),
+       (default, 1, 4, 11, 5, '2019-11-5', false, false, false),
+       (default, 1, 4, 12, 5, '2019-11-6', false, false, false),
+       (default, 1, 4, 13, 5, '2019-11-11', false, false, false),
+       (default, 1, 4, 14, 5, '2019-11-20', false, false, false);

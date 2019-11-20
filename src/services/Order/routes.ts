@@ -11,6 +11,7 @@ import {
     checkOrdersByEntityIDGetQueryParams,
     checkOrdersByEntityNameGetQueryParams,
     checkOrderSetQueryParams,
+    checkUpdateStatusQueryParams,
     getEntityOrdersById,
     getEntityOrdersByName,
     getEntityOrdersUInvoiceUEntityById,
@@ -19,6 +20,9 @@ import {
     getOrderUInvoice,
     getOrderUInvoiceUEntity,
     setOrder,
+    setOrderArrivedStatus,
+    setOrderDeliveredStatus,
+    setOrderPaidStatus,
 } from "./QueryController";
 
 export default [
@@ -145,5 +149,41 @@ export default [
         ],
         method: "get",
         path: "/api/v1/entityOrdersUInvoiceUEntityByIDAndPersona",
+    },
+    {
+        handler: [
+            checkUpdateStatusQueryParams,
+            async (req: Request, res: Response) => {
+                const result = await setOrderPaidStatus(req.query.OID, req.query.status);
+                res.status(200).send(result);
+                return result;
+            },
+        ],
+        method: "put",
+        path: "/api/v1/orderPaidStatus",
+    },
+    {
+        handler: [
+            checkUpdateStatusQueryParams,
+            async (req: Request, res: Response) => {
+                const result = await setOrderArrivedStatus(req.query.OID, req.query.status);
+                res.status(200).send(result);
+                return result;
+            },
+        ],
+        method: "put",
+        path: "/api/v1/orderArrivedStatus",
+    },
+    {
+        handler: [
+            checkUpdateStatusQueryParams,
+            async (req: Request, res: Response) => {
+                const result = await setOrderDeliveredStatus(req.query.OID, req.query.status);
+                res.status(200).send(result);
+                return result;
+            },
+        ],
+        method: "put",
+        path: "/api/v1/orderDeliveredStatus",
     },
 ] as IRoute[];
