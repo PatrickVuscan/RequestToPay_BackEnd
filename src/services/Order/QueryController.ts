@@ -14,6 +14,9 @@ import {getOrdersUInvoiceUEntityByEntityIDAndPersona} from "./providers/entityOr
 import {getOrderByOrderID} from "./providers/orderRequest";
 import {getOrderUInvoiceByOrderID} from "./providers/orderUInvoiceRequest";
 import {getOrderUInvoiceUEntityByOrderID} from "./providers/orderUInvoiceUEntityRequest";
+import {setArrivedStatus} from "./providers/setArrivedStatusRequest";
+import {setDeliveredStatus} from "./providers/setDeliveredStatusRequest";
+import {setPaidStatus} from "./providers/setPaidStatusRequest";
 
 export const setOrder = async (inv: Order) => {
     return createOrder(inv);
@@ -45,6 +48,18 @@ export const getEntityOrdersUInvoiceUEntityByIdAndPersona = async (entityID: num
 
 export const getEntityOrdersByName = async (name: string) => {
     return await getOrdersByEntityName(name);
+};
+
+export const setOrderPaidStatus = async (orderID: number, status: boolean) => {
+    return await setPaidStatus(orderID, status);
+};
+
+export const setOrderArrivedStatus = async (orderID: number, status: boolean) => {
+    return await setArrivedStatus(orderID, status);
+};
+
+export const setOrderDeliveredStatus = async (orderID: number, status: boolean) => {
+    return await setDeliveredStatus(orderID, status);
 };
 
 export const checkOrderSetQueryParams = (
@@ -125,6 +140,22 @@ export const checkOrdersByEntityNameGetQueryParams = (
         throw new HTTP400Error("Missing Name parameter");
     } else if (!checkAscii(req.query.Name)) {
         throw new HTTP400Error("Only alphabetic characters are allowed");
+    } else {
+        next();
+    }
+};
+
+export const checkUpdateStatusQueryParams = (
+    req: Request,
+    res: Response,
+    next: NextFunction,
+): void => {
+    if (!req.query.OID) {
+        throw new HTTP400Error("Missing OID parameter");
+    } else if (!req.query.status) {
+        throw new HTTP400Error("Missing status parameter");
+    } else if (!checkAscii(req.query.OID) || !checkAscii(req.query.status)) {
+        throw new HTTP400Error("Only alphanumeric and '-' characters are allowed");
     } else {
         next();
     }
