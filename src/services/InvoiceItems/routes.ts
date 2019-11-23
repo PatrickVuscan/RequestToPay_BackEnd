@@ -4,7 +4,12 @@ import { Request, Response } from "express";
 import {InvoiceItems, Item} from "../../utils/dbTypes";
 import {IRoute} from "../index";
 import {getItem} from "../Item/QueryController";
-import {checkInvoiceItemsSetQueryParams, setInvoiceItems} from "./QueryController";
+import {
+    checkInvoiceItemsByInvoiceIDGetQueryParams,
+    checkInvoiceItemsSetQueryParams,
+    getInvoiceItems,
+    setInvoiceItems,
+} from "./QueryController";
 
 export default [
     {
@@ -26,4 +31,16 @@ export default [
         method: "put",
         path: "api/v1/invoiceItems",
     },
-];
+    {
+        handler: [
+            checkInvoiceItemsByInvoiceIDGetQueryParams,
+            async (req: Request, res: Response) => {
+                const result = await getInvoiceItems(req.query.InID);
+                res.status(200).send(result);
+                return result;
+            },
+        ],
+        method: "get",
+        path: "api/v1/invoiceItems",
+    },
+] as IRoute[];

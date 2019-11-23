@@ -5,7 +5,7 @@ import {IRoute} from "..";
 import {Invoice, Item, Order} from "../../utils/dbTypes";
 import {HTTP404Error} from "../../utils/httpErrors";
 import {setInvoice} from "../Invoice/QueryController";
-import {setInvoiceItems} from "../InvoiceItem/QueryController";
+import {setInvoiceItems} from "../InvoiceItems/QueryController";
 import {getItem} from "../Item/QueryController";
 import {
     checkOrderByOrderIDGetQueryParams,

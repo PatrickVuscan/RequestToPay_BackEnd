@@ -9,8 +9,6 @@ export const generateCreateInvoiceItemsString: (items: InvoiceItems) => string =
 
 export const createInvoiceItems: (items: InvoiceItems) => void = async (items: InvoiceItems) => {
     let res = null;
-    console.log("THIS IS THE STRING");
-    console.log(generateCreateInvoiceItemsString(items));
     try {
         res = await q(generateCreateInvoiceItemsString(items));
     } catch (e) {
@@ -19,8 +17,6 @@ export const createInvoiceItems: (items: InvoiceItems) => void = async (items: I
     if (!res) {
         throw new HTTP404Error("No response.");
     } else if (res.rows.length !== 1) {
-        console.log("THIS IS THE STRING2");
-        console.log(res.rows);
         throw new HTTP404Error("Couldn't create InvoiceItems.");
     }
     return res.rows[0];

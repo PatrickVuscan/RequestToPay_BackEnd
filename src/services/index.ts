@@ -5,6 +5,7 @@
 import {NextFunction, Request, Response} from "express";
 import userRoutes from "./Entity/routes";
 import invoiceRoutes from "./Invoice/routes";
+import invoiceItemsRoutes from "./InvoiceItems/routes";
 import itemRoutes from "./Item/routes";
 import orderRoutes from "./Order/routes";
 
@@ -20,5 +21,6 @@ export default [
     ...userRoutes,
     ...invoiceRoutes,
     ...orderRoutes,
-    ... itemRoutes,
+    ...itemRoutes,
+    ...invoiceItemsRoutes,
 ] as [IRoute];

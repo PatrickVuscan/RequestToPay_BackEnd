@@ -2,28 +2,12 @@
   "swagger": "2.0",
   "info": {
     "title": "RequestToPay",
-    "description": "This API is meant to provide data for a demo of Scotia Bank's potential data rich payment on delivery system. Note that using https on locally hosted server will fail and the opposite on a heroku instance.",
+    "description": "This API is meant to provide data for a demo of Scotiabank's potential data rich payment on delivery system. Note that using https on locally hosted server will fail and the opposite on a heroku instance.",
     "license": {
       "name": "LicenseUndecided",
       "url": ""
     },
     "version": "1.0.0"
-  },
-  "definitions": {
-    "itemsList": {
-      "type": "array",
-      "items": {
-        "type": "object",
-        "properties": {
-          "ID": {
-            "type": "integer"
-          },
-          "Quantity": {
-            "type": "number"
-          }
-        }
-      }
-    }
   },
   "basePath": "/api/v1",
   "schemes": ["http", "https"],
@@ -140,7 +124,7 @@
             "in": "query",
             "description": "Specifies the EntityID",
             "required": true,
-            "type": "number"
+            "type": "integer"
           }
         ]
       }
@@ -214,7 +198,7 @@
             "in": "query",
             "description": "The ID of the invoice that this invoice replaces/updates.",
             "required": false,
-            "type": "number"
+            "type": "integer"
           }
         ]
       }
@@ -304,21 +288,21 @@
             "in": "query",
             "description": "The ID of the seller.",
             "required": true,
-            "type": "number"
+            "type": "integer"
           },
           {
             "name": "CID",
             "in": "query",
             "description": "The ID of the customer.",
             "required": true,
-            "type": "number"
+            "type": "integer"
           },
           {
             "name": "DID",
             "in": "query",
             "description": "The ID of the driver.",
             "required": true,
-            "type": "number"
+            "type": "integer"
           },
           {
             "name": "OrderDate",
@@ -348,10 +332,10 @@
                     "type": "object",
                     "properties": {
                       "IID": {
-                        "type": "number"
+                        "type": "integer"
                       },
                       "Quantity": {
-                        "type": "number"
+                        "type": "integer"
                       }
                     }
                   }
@@ -528,7 +512,7 @@
             "in": "query",
             "description": "The ID of the order to update.",
             "required": true,
-            "type": "number"
+            "type": "integer"
           },
           {
             "name": "status",
@@ -555,7 +539,7 @@
             "in": "query",
             "description": "The ID of the order to update.",
             "required": true,
-            "type": "number"
+            "type": "integer"
           },
           {
             "name": "status",
@@ -582,7 +566,7 @@
             "in": "query",
             "description": "The ID of the order to update.",
             "required": true,
-            "type": "number"
+            "type": "integer"
           },
           {
             "name": "status",
@@ -640,7 +624,7 @@
             "in": "query",
             "description": "The ID of the seller entity.",
             "required": true,
-            "type": "number"
+            "type": "integer"
           },
           {
             "name": "Price",
@@ -676,6 +660,27 @@
       }
     },
     "/invoiceItems": {
+      "get":  {
+        "tags": ["InvoiceItems Endpoints"],
+        "summary": "Returns all InvoiceItems with the matching InvoiceID.",
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "404": {
+            "description": "No invoices found"
+          }
+        },
+        "parameters": [
+          {
+            "name": "InID",
+            "in": "query",
+            "description": "Specifies the InvoiceID",
+            "required": true,
+            "type": "integer"
+          }
+        ]
+      },
       "put": {
         "tags": ["InvoiceItems Endpoints"],
         "summary": "Inserts a new invoiceItems row into the database.",
@@ -690,21 +695,21 @@
             "in": "query",
             "description": "The ID of the invoice this is for.",
             "required": true,
-            "type": "number"
+            "type": "integer"
           },
           {
             "name": "IID",
             "in": "query",
             "description": "The ID of the item.",
             "required": true,
-            "type": "number"
+            "type": "integer"
           },
           {
             "name": "Quantity",
             "in": "query",
             "description": "The quantity of the item.",
             "required": true,
-            "type": "number"
+            "type": "integer"
           }
         ]
       }
