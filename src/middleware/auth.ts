@@ -24,7 +24,7 @@ const verifyAuth = (req: Request, res: Response, next: NextFunction) => {
         process.env.SECRET as string,
         {expiresIn: "1h"},
     );
-    res.setHeader("token", newToken);
+    res.setHeader("AuthToken", newToken);
 
     // Everything is good and we can continue
     next();
