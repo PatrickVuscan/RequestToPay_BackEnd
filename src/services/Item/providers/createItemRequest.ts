@@ -17,7 +17,7 @@ export const createItem: (item: Item) => Promise<number> = async (item: Item) =>
     if (!res) {
         throw new HTTP404Error("No response");
     } else if (res.rows.length !== 1) {
-        throw new HTTP404Error("Couldn't create invoice");
+        throw new HTTP404Error("Couldn't create Item");
     }
     return res.rows[0].IID;
 };

@@ -5,7 +5,7 @@ import {HTTP400Error, HTTP404Error} from "../../../utils/httpErrors";
 import q from "../../../utils/query";
 
 export const generateSetArrivedStatusString: (OID: number, status: boolean) => string = (OID: number, status: boolean) => {
-    return `update "RequestToPay"."Order" set "DeliveredStatus" = ${status} where "OID" = ${OID} returning "Order";`;
+    return `update "RequestToPay"."Order" set "ArrivedStatus" = ${status} where "OID" = ${OID} returning "Order";`;
 };
 
 export const setArrivedStatus: (OID: number, status: boolean) => Promise<Order> = async (OID: number, status: boolean) => {

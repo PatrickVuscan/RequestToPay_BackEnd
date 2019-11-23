@@ -28,6 +28,10 @@
     {
       "name": "Item Endpoints",
       "description": "This is where to get information about items from the database."
+    },
+    {
+      "name": "InvoiceItems Endpoints",
+      "description": "This is where to get information about invoice items from the database."
     }
   ],
   "paths": {
@@ -468,6 +472,87 @@
         ]
       }
     },
+    "/orderArrivedStatus": {
+      "put": {
+        "tags": ["Order Endpoints"],
+        "summary": "Updates the Arrived Status of the order.",
+        "responses": {
+          "200": {
+            "description": "This is the updated order."
+          }
+        },
+        "parameters": [
+          {
+            "name": "OID",
+            "in": "query",
+            "description": "The ID of the order to update.",
+            "required": true,
+            "type": "number"
+          },
+          {
+            "name": "status",
+            "in": "query",
+            "description": "The status to update to.",
+            "required": true,
+            "type": "boolean"
+          }
+        ]
+      }
+    },
+    "/orderDeliveredStatus": {
+      "put": {
+        "tags": ["Order Endpoints"],
+        "summary": "Updates the Delivered Status of the order.",
+        "responses": {
+          "200": {
+            "description": "This is the updated order."
+          }
+        },
+        "parameters": [
+          {
+            "name": "OID",
+            "in": "query",
+            "description": "The ID of the order to update.",
+            "required": true,
+            "type": "number"
+          },
+          {
+            "name": "status",
+            "in": "query",
+            "description": "The status to update to.",
+            "required": true,
+            "type": "boolean"
+          }
+        ]
+      }
+    },
+    "/orderPaidStatus": {
+      "put": {
+        "tags": ["Order Endpoints"],
+        "summary": "Updates the Paid Status of the order.",
+        "responses": {
+          "200": {
+            "description": "This is the updated order."
+          }
+        },
+        "parameters": [
+          {
+            "name": "OID",
+            "in": "query",
+            "description": "The ID of the order to update.",
+            "required": true,
+            "type": "number"
+          },
+          {
+            "name": "status",
+            "in": "query",
+            "description": "The status to update to.",
+            "required": true,
+            "type": "boolean"
+          }
+        ]
+      }
+    },
     "/item": {
       "get":  {
         "tags": ["Item Endpoints"],
@@ -545,6 +630,40 @@
             "description": "Specifies the item Name",
             "required": true,
             "type": "string"
+          }
+        ]
+      }
+    },
+    "/invoiceItems": {
+      "put": {
+        "tags": ["InvoiceItems Endpoints"],
+        "summary": "Inserts a new invoiceItems row into the database.",
+        "responses": {
+          "200": {
+            "description": "This is the newly created invoiceItems."
+          }
+        },
+        "parameters": [
+          {
+            "name": "InID",
+            "in": "query",
+            "description": "The ID of the invoice this is for.",
+            "required": true,
+            "type": "number"
+          },
+          {
+            "name": "IID",
+            "in": "query",
+            "description": "The ID of the item.",
+            "required": true,
+            "type": "number"
+          },
+          {
+            "name": "Quantity",
+            "in": "query",
+            "description": "The quantity of the item.",
+            "required": true,
+            "type": "number"
           }
         ]
       }
