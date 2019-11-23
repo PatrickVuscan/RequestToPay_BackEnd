@@ -9,6 +9,22 @@
     },
     "version": "1.0.0"
   },
+  "definitions": {
+    "itemsList": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "ID": {
+            "type": "integer"
+          },
+          "Quantity": {
+            "type": "number"
+          }
+        }
+      }
+    }
+  },
   "basePath": "/api/v1",
   "schemes": ["http", "https"],
   "produces": ["application/json"],
@@ -317,6 +333,16 @@
             "description": "The date for the new order to be delivered on.",
             "required": true,
             "type": "string"
+          },
+          {
+            "name": "items",
+            "in": "query",
+            "description": "The items ordered, with their respective IDs and Quantities.",
+            "required": true,
+            "type": "array",
+            "items": {
+              "type": "number"
+            }
           }
         ]
       }
