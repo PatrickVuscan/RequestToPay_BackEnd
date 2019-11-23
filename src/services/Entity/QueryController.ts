@@ -2,8 +2,10 @@
  * objects exported by this service. Some checks that are used exclusively by the UserService are also defined here.
  * */
 
+import dotenv from "dotenv";
 import {NextFunction, Request, Response} from "express";
-import {checkAscii, checkDate} from "../../utils/checks";
+import * as jwt from "jsonwebtoken";
+import {checkAscii} from "../../utils/checks";
 import {Entity} from "../../utils/dbTypes";
 import {HTTP400Error} from "../../utils/httpErrors";
 import {createEntity} from "./providers/createEntityRequest";
@@ -11,12 +13,26 @@ import {getEntityByEntityID} from "./providers/entityByIDRequest";
 import {getEntityByEntityName} from "./providers/entityByNameRequest";
 import {loginRequest} from "./providers/loginRequest";
 
+dotenv.config();
+
+interface ILoginResponse extends Entity {
+    token: string;
+}
+
 export const setEntity = async (ent: Entity) => {
     return createEntity(ent);
 };
 
 export const getLogin = async  (name: string, pass: string) => {
-    return await loginRequest(name, pass);
+    // Send the jwt in the response
+    const res: ILoginResponse = await loginRequest(name, pass) as ILoginResponse;
+
+    res.token = jwt.sign(
+        {username: name},
+        process.env.SECRET as string,
+        {expiresIn: "1h"},
+    );
+    return res;
 };
 
 export const getEntityByID = async (EID: number) => {
