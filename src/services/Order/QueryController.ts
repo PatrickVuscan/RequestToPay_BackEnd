@@ -3,7 +3,6 @@
  * */
 
 import {NextFunction, Request, Response} from "express";
-import {invoiceItemsEntry, invoiceItemsParser} from "../../config/swaggerParser";
 import {checkAscii, checkDate} from "../../utils/checks";
 import {Order} from "../../utils/dbTypes";
 import {HTTP400Error} from "../../utils/httpErrors";
@@ -78,23 +77,16 @@ export const checkOrderSetQueryParams = (
         throw new HTTP400Error("Missing OrderDate parameter");
     } else if (!req.query.DeliveryDate) {
         throw new HTTP400Error("Missing DeliveryDate parameter");
-    } else if (!req.query.invoiceItems) {
+    } else if (!req.body.invoiceItems) {
         throw new HTTP400Error("Missing invoiceItems parameter");
     } else if (!checkAscii(req.query.SID) || !checkAscii(req.query.CID) || !checkAscii(req.query.DID) ||
-        !checkAscii(req.query.OrderDate) || !checkAscii(req.query.DeliveryDate) ||
-        !checkAscii(req.query.invoiceItems)) {
+        !checkAscii(req.query.OrderDate) || !checkAscii(req.query.DeliveryDate)) { // TODO Write regex to check array
         throw new HTTP400Error("Only alphanumeric and '-' characters are allowed");
     } else if (!checkDate(req.query.DeliveryDate) || !checkDate(req.query.OrderDate)) {
         throw new HTTP400Error("Not a valid date string");
-    } else if (!checkItemsEntryType(req.query.invoiceItems)) {
-        req.query.invoiceItems = invoiceItemsParser(req.query.invoiceItems);
     } else {
         next();
     }
-};
-
-export const checkItemsEntryType: (items: any[]) => boolean = (items: any[]) => {
-    return typeof items === invoiceItemEntry[];
 };
 
 export const checkOrderByOrderIDGetQueryParams = (

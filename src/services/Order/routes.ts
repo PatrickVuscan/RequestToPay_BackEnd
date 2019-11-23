@@ -2,8 +2,7 @@
 
 import { Request, Response } from "express";
 import {IRoute} from "..";
-import {invoiceItemsEntry, invoiceItemsParser} from "../../config/swaggerParser";
-import {Invoice, InvoiceItems, Item, Order} from "../../utils/dbTypes";
+import {Invoice, Item, Order} from "../../utils/dbTypes";
 import {HTTP404Error} from "../../utils/httpErrors";
 import {setInvoice} from "../Invoice/QueryController";
 import {setInvoiceItems} from "../InvoiceItem/QueryController";
@@ -51,8 +50,7 @@ export default [
                     DeliveredStatus: false,
                 };
                 const OrderID = await setOrder(ord);
-                const invoiceItems: invoiceItemsEntry[] = req.query.invoiceItems;
-                for (const currItems of invoiceItems) {
+                for (const currItems of req.body.invoiceItems) {
                     const item: Item = await getItem(currItems.IID);
                     const items = {
                         InID: InvID,

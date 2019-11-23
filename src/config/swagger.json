@@ -335,13 +335,28 @@
             "type": "string"
           },
           {
-            "name": "items",
-            "in": "query",
+            "name": "body",
+            "in": "body",
             "description": "The items ordered, with their respective IDs and Quantities.",
             "required": true,
-            "type": "array",
-            "items": {
-              "type": "number"
+            "schema": {
+              "type": "object",
+              "properties": {
+                "invoiceItems": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "IID": {
+                        "type": "number"
+                      },
+                      "Quantity": {
+                        "type": "number"
+                      }
+                    }
+                  }
+                }
+              }
             }
           }
         ]
