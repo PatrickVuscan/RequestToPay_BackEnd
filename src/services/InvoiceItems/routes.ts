@@ -29,7 +29,7 @@ export default [
             },
         ],
         method: "put",
-        path: "api/v1/invoiceItems",
+        path: "/api/v1/invoiceItems",
     },
     {
         handler: [
@@ -41,6 +41,6 @@ export default [
             },
         ],
         method: "get",
-        path: "api/v1/invoiceItems",
+        path: "/api/v1/invoiceItems",
     },
 ] as IRoute[];
