@@ -5,7 +5,12 @@ import {HTTP400Error, HTTP404Error} from "../../../utils/httpErrors";
 import q from "../../../utils/query";
 
 export const generateGetInvoiceItemsByInvoiceIDString: (InID: number) => string = (InID: number) => {
-    return `select * from "RequestToPay"."InvoiceItems" where "InID" = ${InID}`;
+    return `select
+        "II".*,
+        "I"."Name" as "Name"
+        from "RequestToPay"."InvoiceItems" as "II"
+        join "RequestToPay"."Item" as "I" on "II"."IID" = "I"."IID"
+        where "II"."InID" = ${InID}`;
 };
 
 export const getInvoiceItemsByInID: (InID: number) => Promise<InvoiceItems[]> = async (InID: number) => {
