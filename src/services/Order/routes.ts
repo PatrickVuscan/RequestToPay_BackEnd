@@ -2,9 +2,11 @@
 
 import { Request, Response } from "express";
 import {IRoute} from "..";
-import {Invoice, Order} from "../../utils/dbTypes";
+import {Invoice, Item, Order} from "../../utils/dbTypes";
 import {HTTP404Error} from "../../utils/httpErrors";
 import {setInvoice} from "../Invoice/QueryController";
+import {setInvoiceItems} from "../InvoiceItems/QueryController";
+import {getItem} from "../Item/QueryController";
 import {
     checkOrderByOrderIDGetQueryParams,
     checkOrdersByEntityIDAndPersonaGetQueryParams,
@@ -47,9 +49,19 @@ export default [
                     ArrivedStatus: false,
                     DeliveredStatus: false,
                 };
-                const result = await setOrder(ord);
-                res.status(200).send(result);
-                return result;
+                const OrderID = await setOrder(ord);
+                for (const currItems of req.body.invoiceItems) {
+                    const item: Item = await getItem(currItems.IID);
+                    const items = {
+                        InID: InvID,
+                        IID: currItems.IID,
+                        Price: item.Price,
+                        Quantity: currItems.Quantity,
+                    };
+                    const r = await setInvoiceItems(items);
+                }
+                res.status(200).send(OrderID);
+                return OrderID;
             },
         ],
         method: "put",

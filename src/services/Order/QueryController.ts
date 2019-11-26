@@ -77,8 +77,10 @@ export const checkOrderSetQueryParams = (
         throw new HTTP400Error("Missing OrderDate parameter");
     } else if (!req.query.DeliveryDate) {
         throw new HTTP400Error("Missing DeliveryDate parameter");
+    } else if (!req.body.invoiceItems) {
+        throw new HTTP400Error("Missing invoiceItems parameter");
     } else if (!checkAscii(req.query.SID) || !checkAscii(req.query.CID) || !checkAscii(req.query.DID) ||
-        !checkAscii(req.query.OrderDate) || !checkAscii(req.query.DeliveryDate)) {
+        !checkAscii(req.query.OrderDate) || !checkAscii(req.query.DeliveryDate)) { // TODO Write regex to check array
         throw new HTTP400Error("Only alphanumeric and '-' characters are allowed");
     } else if (!checkDate(req.query.DeliveryDate) || !checkDate(req.query.OrderDate)) {
         throw new HTTP400Error("Not a valid date string");

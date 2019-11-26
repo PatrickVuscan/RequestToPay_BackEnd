@@ -3,7 +3,7 @@ import {HTTP400Error, HTTP404Error} from "../../../utils/httpErrors";
 import q from "../../../utils/query";
 
 export const generateCreateInvoiceItemsString: (items: InvoiceItems) => string = (items: InvoiceItems) => {
-    return `INSERT INTO "RequestToPay"."InvoiceItems" (InID, IID, Price, Quantity) VALUES
+    return `INSERT INTO "RequestToPay"."InvoiceItems" ("InID", "IID", "Price", "Quantity") VALUES
     (${items.InID}, ${items.IID}, ${items.Price}, ${items.Quantity}) RETURNING "InvoiceItems"`;
 };
 
