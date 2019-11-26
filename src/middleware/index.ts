@@ -3,6 +3,7 @@
 *  */
 import {Router} from "express";
 import {handleAPIDocs} from "./apiDocs";
+import {handleAuthentication} from "./auth";
 import {
     handleBodyRequestParsing,
     handleCompression,
@@ -20,4 +21,5 @@ export default [
     handleAPIDocs,
     handleInfoLogger,
     // handleSession,
+    handleAuthentication,
 ] as MiddlewareHandler[];

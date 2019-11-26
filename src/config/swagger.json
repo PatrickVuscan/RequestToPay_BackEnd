@@ -34,6 +34,20 @@
       "description": "This is where to get information about invoice items from the database."
     }
   ],
+  "responses": {
+    "UnauthorizedError": {
+      "description": "JWT token not supplied or invalid header."
+    }
+  },
+  "parameters": {
+    "AuthToken": {
+      "name": "AuthToken",
+      "in": "header",
+      "description": "The JWT token that comes from /api/v1/login",
+      "required": true,
+      "type": "string"
+    }
+  },
   "paths": {
     "/login": {
       "get": {
@@ -72,9 +86,15 @@
         "responses": {
           "200": {
             "description": "This is the EntityID of the newly created entity."
+          },
+          "401": {
+            "$ref": "#/responses/UnauthorizedError"
           }
         },
         "parameters": [
+          {
+            "$ref": "#/parameters/AuthToken"
+          },
           {
             "name": "Name",
             "in": "query",
@@ -116,9 +136,15 @@
           },
           "400": {
             "description": "Bad request"
+          },
+          "401": {
+            "$ref": "#/responses/UnauthorizedError"
           }
         },
         "parameters": [
+          {
+            "$ref": "#/parameters/AuthToken"
+          },
           {
             "name": "EID",
             "in": "query",
@@ -139,9 +165,15 @@
           },
           "400": {
             "description": "Bad request"
+          },
+          "401": {
+            "$ref": "#/responses/UnauthorizedError"
           }
         },
         "parameters": [
+          {
+            "$ref": "#/parameters/AuthToken"
+          },
           {
             "name": "user",
             "in": "query",
@@ -165,9 +197,15 @@
           },
           "400": {
             "description": "Bad request or multiple invoices found"
+          },
+          "401": {
+            "$ref": "#/responses/UnauthorizedError"
           }
         },
         "parameters": [
+          {
+            "$ref": "#/parameters/AuthToken"
+          },
           {
             "name": "InID",
             "in": "query",
@@ -183,9 +221,15 @@
         "responses": {
           "200": {
             "description": "This is the ID of the newly created invoice."
+          },
+          "401": {
+            "$ref": "#/responses/UnauthorizedError"
           }
         },
         "parameters": [
+          {
+            "$ref": "#/parameters/AuthToken"
+          },
           {
             "name": "DeliveryDate",
             "in": "query",
@@ -213,9 +257,15 @@
           },
           "404": {
             "description": "No invoices found"
+          },
+          "401": {
+            "$ref": "#/responses/UnauthorizedError"
           }
         },
         "parameters": [
+          {
+            "$ref": "#/parameters/AuthToken"
+          },
           {
             "name": "EID",
             "in": "query",
@@ -236,9 +286,15 @@
           },
           "404": {
             "description": "No invoices found"
+          },
+          "401": {
+            "$ref": "#/responses/UnauthorizedError"
           }
         },
         "parameters": [
+          {
+            "$ref": "#/parameters/AuthToken"
+          },
           {
             "name": "Name",
             "in": "query",
@@ -262,9 +318,15 @@
           },
           "400": {
             "description": "Bad request or multiple orders found"
+          },
+          "401": {
+            "$ref": "#/responses/UnauthorizedError"
           }
         },
         "parameters": [
+          {
+            "$ref": "#/parameters/AuthToken"
+          },
           {
             "name": "OID",
             "in": "query",
@@ -280,9 +342,15 @@
         "responses": {
           "200": {
             "description": "This is the ID of the newly created order."
+          },
+          "401": {
+            "$ref": "#/responses/UnauthorizedError"
           }
         },
         "parameters": [
+          {
+            "$ref": "#/parameters/AuthToken"
+          },
           {
             "name": "SID",
             "in": "query",
@@ -359,9 +427,15 @@
           },
           "400": {
             "description": "Bad request or multiple orders found"
+          },
+          "401": {
+            "$ref": "#/responses/UnauthorizedError"
           }
         },
         "parameters": [
+          {
+            "$ref": "#/parameters/AuthToken"
+          },
           {
             "name": "OID",
             "in": "query",
@@ -385,9 +459,15 @@
           },
           "400": {
             "description": "Bad request or multiple orders found"
+          },
+          "401": {
+            "$ref": "#/responses/UnauthorizedError"
           }
         },
         "parameters": [
+          {
+            "$ref": "#/parameters/AuthToken"
+          },
           {
             "name": "OID",
             "in": "query",
@@ -408,9 +488,15 @@
           },
           "404": {
             "description": "No orders found"
+          },
+          "401": {
+            "$ref": "#/responses/UnauthorizedError"
           }
         },
         "parameters": [
+          {
+            "$ref": "#/parameters/AuthToken"
+          },
           {
             "name": "EID",
             "in": "query",
@@ -431,9 +517,15 @@
           },
           "404": {
             "description": "No orders found"
+          },
+          "401": {
+            "$ref": "#/responses/UnauthorizedError"
           }
         },
         "parameters": [
+          {
+            "$ref": "#/parameters/AuthToken"
+          },
           {
             "name": "EID",
             "in": "query",
@@ -454,9 +546,15 @@
           },
           "404": {
             "description": "No orders found"
+          },
+          "401": {
+            "$ref": "#/responses/UnauthorizedError"
           }
         },
         "parameters": [
+          {
+            "$ref": "#/parameters/AuthToken"
+          },
           {
             "name": "EID",
             "in": "query",
@@ -484,9 +582,15 @@
           },
           "404": {
             "description": "No invoices found"
+          },
+          "401": {
+            "$ref": "#/responses/UnauthorizedError"
           }
         },
         "parameters": [
+          {
+            "$ref": "#/parameters/AuthToken"
+          },
           {
             "name": "Name",
             "in": "query",
@@ -504,9 +608,15 @@
         "responses": {
           "200": {
             "description": "This is the updated order."
+          },
+          "401": {
+            "$ref": "#/responses/UnauthorizedError"
           }
         },
         "parameters": [
+          {
+            "$ref": "#/parameters/AuthToken"
+          },
           {
             "name": "OID",
             "in": "query",
@@ -531,9 +641,15 @@
         "responses": {
           "200": {
             "description": "This is the updated order."
+          },
+          "401": {
+            "$ref": "#/responses/UnauthorizedError"
           }
         },
         "parameters": [
+          {
+            "$ref": "#/parameters/AuthToken"
+          },
           {
             "name": "OID",
             "in": "query",
@@ -558,9 +674,15 @@
         "responses": {
           "200": {
             "description": "This is the updated order."
+          },
+          "401": {
+            "$ref": "#/responses/UnauthorizedError"
           }
         },
         "parameters": [
+          {
+            "$ref": "#/parameters/AuthToken"
+          },
           {
             "name": "OID",
             "in": "query",
@@ -591,9 +713,15 @@
           },
           "400": {
             "description": "Bad request or multiple items found"
+          },
+          "401": {
+            "$ref": "#/responses/UnauthorizedError"
           }
         },
         "parameters": [
+          {
+            "$ref": "#/parameters/AuthToken"
+          },
           {
             "name": "IID",
             "in": "query",
@@ -609,9 +737,15 @@
         "responses": {
           "200": {
             "description": "This is the ID of the newly created item."
+          },
+          "401": {
+            "$ref": "#/responses/UnauthorizedError"
           }
         },
         "parameters": [
+          {
+            "$ref": "#/parameters/AuthToken"
+          },
           {
             "name": "Name",
             "in": "query",
@@ -646,9 +780,15 @@
           },
           "404": {
             "description": "No items found"
+          },
+          "401": {
+            "$ref": "#/responses/UnauthorizedError"
           }
         },
         "parameters": [
+          {
+            "$ref": "#/parameters/AuthToken"
+          },
           {
             "name": "Name",
             "in": "query",
@@ -687,9 +827,15 @@
         "responses": {
           "200": {
             "description": "This is the newly created invoiceItems."
+          },
+          "401": {
+            "$ref": "#/responses/UnauthorizedError"
           }
         },
         "parameters": [
+          {
+            "$ref": "#/parameters/AuthToken"
+          },
           {
             "name": "InID",
             "in": "query",
