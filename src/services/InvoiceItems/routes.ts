@@ -18,7 +18,7 @@ export default [
             async (req: Request, res: Response) => {
                 const item: Item = await getItem(req.query.IID);
                 const items: InvoiceItems = {
-                    InID: req.query.IID,
+                    InID: req.query.InID,
                     IID: req.query.IID,
                     Price: item.Price,
                     Quantity: req.query.Quantity,
