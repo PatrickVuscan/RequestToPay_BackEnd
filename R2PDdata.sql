@@ -13,8 +13,9 @@ values (default, 'Coke', '20 Everywhere Ave.', 'coke', 'coke'),
 
 -- Items
 insert into "Item"("IID", "SID", "Name", "Price")
-values (default, 1, 'Pallete of Diet Coke', 99.99),
-       (default, 1, 'Pallete of Coke', 105.49);
+values (default, 1, 'Pallet of Diet Coke', 99.99),
+       (default, 1, 'Pallet of Coke', 105.49),
+       (default, 1, 'Pallet of Fanta', 106.99);
 
 -- Invoice
 insert into "Invoice"("InID", "NextInID", "DeliveryDate")
