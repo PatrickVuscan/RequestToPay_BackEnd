@@ -10,7 +10,7 @@ create table "Entity" (
   "EID" serial primary key,
   "Name" text not null,
   "BillingAddress" text not null,
-  "Username" text not null,
+  "Username" text unique not null,
   "Password" text not null
 );
 
