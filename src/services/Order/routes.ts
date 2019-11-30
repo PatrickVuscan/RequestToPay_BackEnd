@@ -8,29 +8,24 @@ import {setInvoice} from "../Invoice/QueryController";
 import {setInvoiceItems} from "../InvoiceItems/QueryController";
 import {getItem} from "../Item/QueryController";
 import {
-    checkOrderByOrderIDGetQueryParams,
-    checkOrdersByEntityIDAndPersonaGetQueryParams,
-    checkOrdersByEntityIDGetQueryParams,
-    checkOrdersByEntityNameGetQueryParams,
-    checkOrderSetQueryParams,
-    checkUpdateStatusQueryParams,
-    getEntityOrdersById,
-    getEntityOrdersByName,
-    getEntityOrdersUInvoiceUEntityById,
-    getEntityOrdersUInvoiceUEntityByIdAndPersona,
+    checkFullOrderByPersonaQueryParams,
+    checkOrderQueryParams,
+    checkOrderSetParams,
+    checkOrdersQueryParams,
+    checkUpdateStatusParams,
+    getFullOrder,
+    getFullOrders,
+    getFullOrdersByPersona,
     getOrder,
-    getOrderUInvoice,
-    getOrderUInvoiceUEntity,
+    getOrders,
     setOrder,
-    setOrderArrivedStatus,
-    setOrderDeliveredStatus,
-    setOrderPaidStatus,
+    setStatus,
 } from "./QueryController";
 
 export default [
     {
         handler: [
-            checkOrderSetQueryParams,
+            checkOrderSetParams,
             async (req: Request, res: Response) => {
                 const inv: Invoice = {
                     InID: -1,
@@ -45,9 +40,9 @@ export default [
                     CID: req.query.CID,
                     DID: req.query.DID,
                     OrderDate: new Date(Date.parse(req.query.OrderDate)),
-                    PaidStatus: false,
                     ArrivedStatus: false,
                     DeliveredStatus: false,
+                    PaidStatus: false,
                 };
                 const OrderID = await setOrder(ord);
                 for (const currItems of req.body.invoiceItems) {
@@ -58,7 +53,7 @@ export default [
                         Price: item.Price,
                         Quantity: currItems.Quantity,
                     };
-                    const r = await setInvoiceItems(items);
+                    await setInvoiceItems(items);
                 }
                 res.status(200).send(OrderID);
                 return OrderID;
@@ -69,7 +64,7 @@ export default [
     },
     {
         handler: [
-            checkOrderByOrderIDGetQueryParams,
+            checkOrderQueryParams,
             async (req: Request, res: Response) => {
                 const result = await getOrder(req.query.OID);
                 res.status(200).send(result);
@@ -81,67 +76,43 @@ export default [
     },
     {
         handler: [
-            checkOrderByOrderIDGetQueryParams,
+            checkOrderQueryParams,
             async (req: Request, res: Response) => {
-                const result = await getOrderUInvoice(req.query.OID);
+                const result = await getFullOrder(req.query.OID);
                 res.status(200).send(result);
                 return result;
             },
         ],
         method: "get",
-        path: "/api/v1/orderUInvoice",
+        path: "/api/v1/fullOrder",
     },
     {
         handler: [
-            checkOrderByOrderIDGetQueryParams,
+            checkOrdersQueryParams,
             async (req: Request, res: Response) => {
-                const result = await getOrderUInvoiceUEntity(req.query.OID);
+                const result = await getOrders(req.query.EID);
                 res.status(200).send(result);
                 return result;
             },
         ],
         method: "get",
-        path: "/api/v1/orderUInvoiceUEntity",
+        path: "/api/v1/orders",
     },
     {
         handler: [
-            checkOrdersByEntityIDGetQueryParams,
+            checkOrdersQueryParams,
             async (req: Request, res: Response) => {
-                const result = await getEntityOrdersById(req.query.EID);
+                const result = await getFullOrders(req.query.EID);
                 res.status(200).send(result);
                 return result;
             },
         ],
         method: "get",
-        path: "/api/v1/entityOrdersByID",
+        path: "/api/v1/fullOrders",
     },
     {
         handler: [
-            checkOrdersByEntityNameGetQueryParams,
-            async (req: Request, res: Response) => {
-                const result = await getEntityOrdersByName(req.query.Name);
-                res.status(200).send(result);
-                return result;
-            },
-        ],
-        method: "get",
-        path: "/api/v1/entityOrdersByName",
-    },
-    {
-        handler: [
-            checkOrdersByEntityIDGetQueryParams,
-            async (req: Request, res: Response) => {
-                const result = await getEntityOrdersUInvoiceUEntityById(req.query.EID);
-                res.status(200).send(result);
-                return result;
-            },
-        ],
-        method: "get",
-        path: "/api/v1/entityOrdersUInvoiceUEntityByID",
-    },
-    {
-        handler: [
-            checkOrdersByEntityIDAndPersonaGetQueryParams,
+            checkFullOrderByPersonaQueryParams,
             async (req: Request, res: Response) => {
                 const reqPersona = req.query.Persona;
                 let Persona;
@@ -154,48 +125,35 @@ export default [
                 } else {
                     throw new HTTP404Error("Persona does not match any of the accepted personas.");
                 }
-                const result = await getEntityOrdersUInvoiceUEntityByIdAndPersona(req.query.EID, Persona);
+                const result = await getFullOrdersByPersona(req.query.EID, Persona);
                 res.status(200).send(result);
                 return result;
             },
         ],
         method: "get",
-        path: "/api/v1/entityOrdersUInvoiceUEntityByIDAndPersona",
+        path: "/api/v1/ordersByPersona",
     },
     {
         handler: [
-            checkUpdateStatusQueryParams,
+            checkUpdateStatusParams,
             async (req: Request, res: Response) => {
-                const result = await setOrderPaidStatus(req.query.OID, req.query.status);
+                const reqStatus = req.query.status;
+                let Status;
+                if (reqStatus === "ArrivedStatus" || reqStatus === "Arrived" || reqStatus === "a") {
+                    Status = "ArrivedStatus";
+                } else if (reqStatus === "DeliveredStatus" || reqStatus === "Delivered" || reqStatus === "d") {
+                    Status = "DeliveredStatus";
+                } else if (reqStatus === "PaidStatus" || reqStatus === "Paid" || reqStatus === "p") {
+                    Status = "PaidStatus";
+                } else {
+                    throw new HTTP404Error("Status does not match any of the accepted statuses.");
+                }
+                const result = await setStatus(req.query.OID, Status, req.query.state);
                 res.status(200).send(result);
                 return result;
             },
         ],
         method: "put",
-        path: "/api/v1/orderPaidStatus",
-    },
-    {
-        handler: [
-            checkUpdateStatusQueryParams,
-            async (req: Request, res: Response) => {
-                const result = await setOrderArrivedStatus(req.query.OID, req.query.status);
-                res.status(200).send(result);
-                return result;
-            },
-        ],
-        method: "put",
-        path: "/api/v1/orderArrivedStatus",
-    },
-    {
-        handler: [
-            checkUpdateStatusQueryParams,
-            async (req: Request, res: Response) => {
-                const result = await setOrderDeliveredStatus(req.query.OID, req.query.status);
-                res.status(200).send(result);
-                return result;
-            },
-        ],
-        method: "put",
-        path: "/api/v1/orderDeliveredStatus",
+        path: "/api/v1/orderStatus",
     },
 ] as IRoute[];

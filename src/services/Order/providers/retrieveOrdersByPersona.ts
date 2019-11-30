@@ -1,8 +1,10 @@
 import {Order} from "../../../utils/dbTypes";
-import {HTTP400Error, HTTP404Error} from "../../../utils/httpErrors";
+import {HTTP404Error} from "../../../utils/httpErrors";
 import q from "../../../utils/query";
 
-export const generateGetOrdersUInvoiceUEntityByEntityIDStringAndPersona: (EID: number, persona: string) => string =
+/* This is for querying for orders by an entity's ID, where they play the role specified by persona. It includes all the
+ * information in its invoice and the entities that are included as well. */
+const generateGetString: (EID: number, persona: string) => string =
     (EID: number, persona: string) => {
     return `select
         "O".*,
@@ -18,9 +20,9 @@ export const generateGetOrdersUInvoiceUEntityByEntityIDStringAndPersona: (EID: n
         where "O"."${persona}" = ${EID};`;
 };
 
-export const getOrdersUInvoiceUEntityByEntityIDAndPersona: (EID: number, persona: string) => Promise<Order[]> =
+export const retrieveOrdersByPersona: (EID: number, persona: string) => Promise<Order[]> =
     async (EID: number, persona: string) => {
-    const res = await q(generateGetOrdersUInvoiceUEntityByEntityIDStringAndPersona(EID, persona));
+    const res = await q(generateGetString(EID, persona));
     if (res.rows.length === 0) {
         throw new HTTP404Error(
             `Found no invoices with this EntityID: ${EID} with persona: ${persona}.  Query result: ${res}`,

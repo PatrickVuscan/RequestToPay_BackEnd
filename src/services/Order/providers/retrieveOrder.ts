@@ -1,11 +1,16 @@
-/* This is for querying an order by its OrderID, but including all the information in its invoice and the entities that
- * are included as well. */
+/** This is for querying an order by its OrderID. */
 
 import {Order} from "../../../utils/dbTypes";
 import {HTTP400Error, HTTP404Error} from "../../../utils/httpErrors";
 import q from "../../../utils/query";
 
-export const generateGetOrderUInvoiceUEntityByOrderIDString: (OID: number) => string = (OID: number) => {
+const generateOrderGetString: (OID: number) => string = (OID: number) => {
+    return `select * from "RequestToPay"."Order" where "OID" = ${OID};`;
+};
+
+/* This is for querying an order by its OrderID, as above, but including all the information in its invoice and the
+ * entities that are included as well. */
+const generateFullOrderGetString: (OID: number) => string = (OID: number) => {
     return `select
         "O".*,
         "I"."DeliveryDate",
@@ -20,8 +25,9 @@ export const generateGetOrderUInvoiceUEntityByOrderIDString: (OID: number) => st
         where "OID" = ${OID};`;
 };
 
-export const getOrderUInvoiceUEntityByOrderID: (OID: number) => Promise<Order> = async (OID: number) => {
-    const res = await q(generateGetOrderUInvoiceUEntityByOrderIDString(OID));
+export const retrieveOrder: (OID: number, fullOrder: boolean) => Promise<Order> =
+    async (OID: number, fullOrder: boolean) => {
+    const res = await q(fullOrder ? generateFullOrderGetString(OID) : generateOrderGetString(OID));
     if (res.rows.length === 0) {
         throw new HTTP404Error(
             `Found no orders with this OrderID: ${OID}.  Query result: ${res}`,

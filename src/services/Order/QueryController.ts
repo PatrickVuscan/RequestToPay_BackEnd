@@ -1,68 +1,45 @@
 /* This is the file where the external APIs of the providers gets turned into the API used by the handlers in the IRoute
- * objects exported by this service.
- * */
+ * objects exported by this service. */
 
 import {NextFunction, Request, Response} from "express";
 import {checkAscii, checkDate} from "../../utils/checks";
 import {Order} from "../../utils/dbTypes";
 import {HTTP400Error} from "../../utils/httpErrors";
-import {createOrder} from "./providers/createOrderRequest";
-import {getOrdersByEntityID} from "./providers/entityOrdersByIDRequest";
-import {getOrdersByEntityName} from "./providers/entityOrdersByNameRequest";
-import {getOrdersUInvoiceUEntityByEntityID} from "./providers/entityOrdersUInvoiceUEntityByIDRequest";
-import {getOrdersUInvoiceUEntityByEntityIDAndPersona} from "./providers/entityOrdersUInvoiceUEntityByIDRequestAndPersona";
-import {getOrderByOrderID} from "./providers/orderRequest";
-import {getOrderUInvoiceByOrderID} from "./providers/orderUInvoiceRequest";
-import {getOrderUInvoiceUEntityByOrderID} from "./providers/orderUInvoiceUEntityRequest";
-import {setArrivedStatus} from "./providers/setArrivedStatusRequest";
-import {setDeliveredStatus} from "./providers/setDeliveredStatusRequest";
-import {setPaidStatus} from "./providers/setPaidStatusRequest";
+import {createOrder} from "./providers/createOrder";
+import {retrieveOrder} from "./providers/retrieveOrder";
+import {retrieveOrders} from "./providers/retrieveOrders";
+import {retrieveOrdersByPersona} from "./providers/retrieveOrdersByPersona";
+import {updateStatus} from "./providers/setStatus";
 
 export const setOrder = async (inv: Order) => {
     return createOrder(inv);
 };
 
 export const getOrder = async (invoiceID: number) => {
-    return await getOrderByOrderID(invoiceID);
+    return await retrieveOrder(invoiceID, false);
 };
 
-export const getOrderUInvoice = async (invoiceID: number) => {
-    return await getOrderUInvoiceByOrderID(invoiceID);
+export const getFullOrder = async (invoiceID: number) => {
+    return await retrieveOrder(invoiceID, true);
 };
 
-export const getOrderUInvoiceUEntity = async (invoiceID: number) => {
-    return await getOrderUInvoiceUEntityByOrderID(invoiceID);
+export const getOrders = async (entityID: number) => {
+    return await retrieveOrders(entityID, false);
 };
 
-export const getEntityOrdersById = async (entityID: number) => {
-    return await getOrdersByEntityID(entityID);
+export const getFullOrders = async (entityID: number) => {
+    return await retrieveOrders(entityID, true);
 };
 
-export const getEntityOrdersUInvoiceUEntityById = async (entityID: number) => {
-    return await getOrdersUInvoiceUEntityByEntityID(entityID);
+export const getFullOrdersByPersona = async (entityID: number, persona: string) => {
+    return await retrieveOrdersByPersona(entityID, persona);
 };
 
-export const getEntityOrdersUInvoiceUEntityByIdAndPersona = async (entityID: number, persona: string) => {
-    return await getOrdersUInvoiceUEntityByEntityIDAndPersona(entityID, persona);
+export const setStatus = async (orderID: number, status: string, state: boolean) => {
+    return await updateStatus(orderID, status, state);
 };
 
-export const getEntityOrdersByName = async (name: string) => {
-    return await getOrdersByEntityName(name);
-};
-
-export const setOrderPaidStatus = async (orderID: number, status: boolean) => {
-    return await setPaidStatus(orderID, status);
-};
-
-export const setOrderArrivedStatus = async (orderID: number, status: boolean) => {
-    return await setArrivedStatus(orderID, status);
-};
-
-export const setOrderDeliveredStatus = async (orderID: number, status: boolean) => {
-    return await setDeliveredStatus(orderID, status);
-};
-
-export const checkOrderSetQueryParams = (
+export const checkOrderSetParams = (
     req: Request,
     res: Response,
     next: NextFunction,
@@ -89,7 +66,7 @@ export const checkOrderSetQueryParams = (
     }
 };
 
-export const checkOrderByOrderIDGetQueryParams = (
+export const checkOrderQueryParams = (
     req: Request,
     res: Response,
     next: NextFunction,
@@ -103,7 +80,7 @@ export const checkOrderByOrderIDGetQueryParams = (
     }
 };
 
-export const checkOrdersByEntityIDGetQueryParams = (
+export const checkOrdersQueryParams = (
     req: Request,
     res: Response,
     next: NextFunction,
@@ -117,7 +94,7 @@ export const checkOrdersByEntityIDGetQueryParams = (
     }
 };
 
-export const checkOrdersByEntityIDAndPersonaGetQueryParams = (
+export const checkFullOrderByPersonaQueryParams = (
     req: Request,
     res: Response,
     next: NextFunction,
@@ -133,21 +110,7 @@ export const checkOrdersByEntityIDAndPersonaGetQueryParams = (
     }
 };
 
-export const checkOrdersByEntityNameGetQueryParams = (
-    req: Request,
-    res: Response,
-    next: NextFunction,
-): void => {
-    if (!req.query.Name) {
-        throw new HTTP400Error("Missing Name parameter");
-    } else if (!checkAscii(req.query.Name)) {
-        throw new HTTP400Error("Only alphabetic characters are allowed");
-    } else {
-        next();
-    }
-};
-
-export const checkUpdateStatusQueryParams = (
+export const checkUpdateStatusParams = (
     req: Request,
     res: Response,
     next: NextFunction,
@@ -156,7 +119,9 @@ export const checkUpdateStatusQueryParams = (
         throw new HTTP400Error("Missing OID parameter");
     } else if (!req.query.status) {
         throw new HTTP400Error("Missing status parameter");
-    } else if (!checkAscii(req.query.OID) || !checkAscii(req.query.status)) {
+    } else if (!req.query.state) {
+        throw new HTTP400Error("Missing state parameter");
+    } else if (!checkAscii(req.query.OID) || !checkAscii(req.query.status) || !checkAscii(req.query.state)) {
         throw new HTTP400Error("Only alphanumeric and '-' characters are allowed");
     } else {
         next();
