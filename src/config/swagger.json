@@ -359,6 +359,13 @@
             "description": "Specifies the Order ID",
             "required": true,
             "type": "integer"
+          },
+          {
+            "name": "FullOrder",
+            "in": "query",
+            "description": "Specifies if the full order details should be returned.",
+            "required": false,
+            "type": "boolean"
           }
         ]
       },
@@ -434,59 +441,7 @@
         ]
       }
     },
-    "/orderUInvoice": {
-      "get":  {
-        "tags": ["Order Endpoints"],
-        "summary": "Returns an order with the matching OrderID, joined with its corresponding Invoice.",
-        "responses": {
-          "200": {
-            "description": "OK"
-          },
-          "404": {
-            "description": "No orders found."
-          },
-          "400": {
-            "description": "Bad request or multiple orders found"
-          }
-        },
-        "parameters": [
-          {
-            "name": "OID",
-            "in": "query",
-            "description": "Specifies the Order ID.",
-            "required": true,
-            "type": "integer"
-          }
-        ]
-      }
-    },
-    "/orderUInvoiceUEntity": {
-      "get":  {
-        "tags": ["Order Endpoints"],
-        "summary": "Returns an order with the matching OrderID, joined with its corresponding Invoice and entities.",
-        "responses": {
-          "200": {
-            "description": "OK"
-          },
-          "404": {
-            "description": "No orders found."
-          },
-          "400": {
-            "description": "Bad request or multiple orders found"
-          }
-        },
-        "parameters": [
-          {
-            "name": "OID",
-            "in": "query",
-            "description": "Specifies the Order ID.",
-            "required": true,
-            "type": "integer"
-          }
-        ]
-      }
-    },
-    "/entityOrdersById": {
+    "/orders": {
       "get":  {
         "tags": ["Order Endpoints"],
         "summary": "Returns all orders with the matching Entity ID.",
@@ -505,34 +460,18 @@
             "description": "Specifies the Entity ID",
             "required": true,
             "type": "integer"
-          }
-        ]
-      }
-    },
-    "/entityOrdersUInvoiceUEntityById": {
-      "get":  {
-        "tags": ["Order Endpoints"],
-        "summary": "Returns all orders with the matching Entity ID, with Invoices and Entity columns mixed in.",
-        "responses": {
-          "200": {
-            "description": "OK"
           },
-          "404": {
-            "description": "No orders found"
-          }
-        },
-        "parameters": [
           {
-            "name": "EID",
+            "name": "FullOrder",
             "in": "query",
-            "description": "Specifies the Entity ID",
-            "required": true,
-            "type": "integer"
+            "description": "Specifies if the full order details should be returned.",
+            "required": false,
+            "type": "boolean"
           }
         ]
       }
     },
-    "/entityOrdersUInvoiceUEntityByIdAndPersona": {
+    "/ordersByPersona": {
       "get":  {
         "tags": ["Order Endpoints"],
         "summary": "Returns all orders with the matching Entity ID and where that Entity is acting as the specified Persona, with the Invoice and Entity columns mixed in.",
@@ -562,104 +501,34 @@
         ]
       }
     },
-    "/entityOrdersByName": {
-      "get":  {
+    "/orderStatus": {
+      "put": {
         "tags": ["Order Endpoints"],
-        "summary": "Returns all orders with the matching Entity Name.",
+        "summary": "Updates the Status of the order.",
         "responses": {
           "200": {
-            "description": "OK"
-          },
-          "404": {
-            "description": "No invoices found"
+            "description": "This is the updated order."
           }
         },
         "parameters": [
           {
-            "name": "Name",
+            "name": "OID",
             "in": "query",
-            "description": "Specifies the Entity Name",
+            "description": "The ID of the order to update.",
+            "required": true,
+            "type": "integer"
+          },
+          {
+            "name": "status",
+            "in": "query",
+            "description": "The status to update.",
             "required": true,
             "type": "string"
-          }
-        ]
-      }
-    },
-    "/orderArrivedStatus": {
-      "put": {
-        "tags": ["Order Endpoints"],
-        "summary": "Updates the Arrived Status of the order.",
-        "responses": {
-          "200": {
-            "description": "This is the updated order."
-          }
-        },
-        "parameters": [
-          {
-            "name": "OID",
-            "in": "query",
-            "description": "The ID of the order to update.",
-            "required": true,
-            "type": "integer"
           },
           {
-            "name": "status",
+            "name": "state",
             "in": "query",
-            "description": "The status to update to.",
-            "required": true,
-            "type": "boolean"
-          }
-        ]
-      }
-    },
-    "/orderDeliveredStatus": {
-      "put": {
-        "tags": ["Order Endpoints"],
-        "summary": "Updates the Delivered Status of the order.",
-        "responses": {
-          "200": {
-            "description": "This is the updated order."
-          }
-        },
-        "parameters": [
-          {
-            "name": "OID",
-            "in": "query",
-            "description": "The ID of the order to update.",
-            "required": true,
-            "type": "integer"
-          },
-          {
-            "name": "status",
-            "in": "query",
-            "description": "The status to update to.",
-            "required": true,
-            "type": "boolean"
-          }
-        ]
-      }
-    },
-    "/orderPaidStatus": {
-      "put": {
-        "tags": ["Order Endpoints"],
-        "summary": "Updates the Paid Status of the order.",
-        "responses": {
-          "200": {
-            "description": "This is the updated order."
-          }
-        },
-        "parameters": [
-          {
-            "name": "OID",
-            "in": "query",
-            "description": "The ID of the order to update.",
-            "required": true,
-            "type": "integer"
-          },
-          {
-            "name": "status",
-            "in": "query",
-            "description": "The status to update to.",
+            "description": "The status state to update to.",
             "required": true,
             "type": "boolean"
           }

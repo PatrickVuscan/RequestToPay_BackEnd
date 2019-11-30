@@ -15,20 +15,12 @@ export const setOrder = async (inv: Order) => {
     return createOrder(inv);
 };
 
-export const getOrder = async (invoiceID: number) => {
-    return await retrieveOrder(invoiceID, false);
+export const getOrder = async (invoiceID: number, fullOrder: boolean) => {
+    return await retrieveOrder(invoiceID, fullOrder);
 };
 
-export const getFullOrder = async (invoiceID: number) => {
-    return await retrieveOrder(invoiceID, true);
-};
-
-export const getOrders = async (entityID: number) => {
-    return await retrieveOrders(entityID, false);
-};
-
-export const getFullOrders = async (entityID: number) => {
-    return await retrieveOrders(entityID, true);
+export const getOrders = async (entityID: number, fullOrder: boolean) => {
+    return await retrieveOrders(entityID, fullOrder);
 };
 
 export const getFullOrdersByPersona = async (entityID: number, persona: string) => {
@@ -94,7 +86,19 @@ export const checkOrdersQueryParams = (
     }
 };
 
-export const checkFullOrderByPersonaQueryParams = (
+export const checkFullOrderParam = (
+    req: Request,
+    res: Response,
+    next: NextFunction,
+): void => {
+    if (!!req.query.FullOrder && !checkAscii(req.query.FullOrder)) {
+        throw new HTTP400Error("Only alphabetic characters are allowed.");
+    } else {
+        next();
+    }
+};
+
+export const checkOrdersByPersonaQueryParams = (
     req: Request,
     res: Response,
     next: NextFunction,
@@ -110,7 +114,7 @@ export const checkFullOrderByPersonaQueryParams = (
     }
 };
 
-export const checkUpdateStatusParams = (
+export const checkUpdateStatusQueryParams = (
     req: Request,
     res: Response,
     next: NextFunction,

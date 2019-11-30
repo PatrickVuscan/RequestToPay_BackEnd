@@ -8,13 +8,12 @@ import {setInvoice} from "../Invoice/QueryController";
 import {setInvoiceItems} from "../InvoiceItems/QueryController";
 import {getItem} from "../Item/QueryController";
 import {
-    checkFullOrderByPersonaQueryParams,
+    checkFullOrderParam,
     checkOrderQueryParams,
+    checkOrdersByPersonaQueryParams,
     checkOrderSetParams,
     checkOrdersQueryParams,
-    checkUpdateStatusParams,
-    getFullOrder,
-    getFullOrders,
+    checkUpdateStatusQueryParams,
     getFullOrdersByPersona,
     getOrder,
     getOrders,
@@ -65,8 +64,9 @@ export default [
     {
         handler: [
             checkOrderQueryParams,
+            checkFullOrderParam,
             async (req: Request, res: Response) => {
-                const result = await getOrder(req.query.OID);
+                const result = await getOrder(req.query.OID, !!req.query.FullOrder);
                 res.status(200).send(result);
                 return result;
             },
@@ -76,21 +76,10 @@ export default [
     },
     {
         handler: [
-            checkOrderQueryParams,
-            async (req: Request, res: Response) => {
-                const result = await getFullOrder(req.query.OID);
-                res.status(200).send(result);
-                return result;
-            },
-        ],
-        method: "get",
-        path: "/api/v1/fullOrder",
-    },
-    {
-        handler: [
             checkOrdersQueryParams,
+            checkFullOrderParam,
             async (req: Request, res: Response) => {
-                const result = await getOrders(req.query.EID);
+                const result = await getOrders(req.query.EID, !!req.query.FullOrder);
                 res.status(200).send(result);
                 return result;
             },
@@ -100,19 +89,7 @@ export default [
     },
     {
         handler: [
-            checkOrdersQueryParams,
-            async (req: Request, res: Response) => {
-                const result = await getFullOrders(req.query.EID);
-                res.status(200).send(result);
-                return result;
-            },
-        ],
-        method: "get",
-        path: "/api/v1/fullOrders",
-    },
-    {
-        handler: [
-            checkFullOrderByPersonaQueryParams,
+            checkOrdersByPersonaQueryParams,
             async (req: Request, res: Response) => {
                 const reqPersona = req.query.Persona;
                 let Persona;
@@ -135,7 +112,7 @@ export default [
     },
     {
         handler: [
-            checkUpdateStatusParams,
+            checkUpdateStatusQueryParams,
             async (req: Request, res: Response) => {
                 const reqStatus = req.query.status;
                 let Status;
