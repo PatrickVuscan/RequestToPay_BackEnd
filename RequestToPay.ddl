@@ -49,7 +49,7 @@ create table "Order" (
   "CID" integer not null references "Entity"("EID"),
   "DID" integer not null references "Entity"("EID"),
   "OrderDate" timestamp not null,
-  "PaidStatus" boolean not null,
   "ArrivedStatus" boolean not null,
-  "DeliveredStatus" boolean not null
+  "DeliveredStatus" boolean not null,
+  "PaidStatus" boolean not null
 );

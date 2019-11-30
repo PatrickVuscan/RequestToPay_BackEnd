@@ -1,5 +1,6 @@
+/* Retrieves all the items by a given name. */
+
 import {Item} from "../../../utils/dbTypes";
-import {HTTP400Error, HTTP404Error} from "../../../utils/httpErrors";
 import q from "../../../utils/query";
 
 const generateGetString: (name: string) => string = (name: string) => {
@@ -8,7 +9,7 @@ const generateGetString: (name: string) => string = (name: string) => {
         "S"."Name" as "SellerName"
         from "RequestToPay"."Item" as "I"
         join "RequestToPay"."Entity" as "S" on "I"."SID" = "S"."EID"
-        where "Item"."Name" = '${name}'`;
+        where "I"."Name" = '${name}'`;
 };
 
 export const retrieveItemsByName: (name: string) => Promise<Item[]> = async (name: string) => {

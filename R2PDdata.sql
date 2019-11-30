@@ -44,7 +44,7 @@ insert into "WarehouseContents"("SID", "IID", "Quantity", "Location")
 values (1, 1, 20, '900 Nowhere Ave.');
 
 -- Orders
-insert into "Order"("OID", "SID", "CID", "InID", "DID", "OrderDate", "PaidStatus", "ArrivedStatus", "DeliveredStatus")
+insert into "Order"("OID", "SID", "CID", "InID", "DID", "OrderDate", "ArrivedStatus", "DeliveredStatus", "PaidStatus")
 values (default, 1, 3, 1, 5, '2019-01-01', true, true, true),
        (default, 1, 4, 4, 5, '2019-08-05', true, true, true),
        (default, 1, 4, 5, 5, '2019-09-10', true, true, true),
