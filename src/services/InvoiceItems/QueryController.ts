@@ -5,15 +5,15 @@ import {NextFunction, Request, Response} from "express";
 import {checkAscii} from "../../utils/checks";
 import {InvoiceItems} from "../../utils/dbTypes";
 import {HTTP400Error} from "../../utils/httpErrors";
-import {createInvoiceItems} from "./providers/createInvoiceItemsRequest";
-import {getInvoiceItemsByInID} from "./providers/invoiceItemsRequest";
+import {createInvoiceItems} from "./providers/createInvoiceItems";
+import {retrieveInvoiceItems} from "./providers/retrieveInvoiceItems";
 
 export const setInvoiceItems = async (items: InvoiceItems) => {
     return createInvoiceItems(items);
 };
 
 export const getInvoiceItems = async (InID: number) => {
-    return getInvoiceItemsByInID(InID);
+    return retrieveInvoiceItems(InID);
 };
 
 export const checkInvoiceItemsSetQueryParams = (

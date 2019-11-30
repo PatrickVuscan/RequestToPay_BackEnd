@@ -2,15 +2,17 @@ import {Invoice, InvoiceItems} from "../../../utils/dbTypes";
 import {HTTP400Error, HTTP404Error} from "../../../utils/httpErrors";
 import q from "../../../utils/query";
 
-export const generateCreateInvoiceItemsString: (items: InvoiceItems) => string = (items: InvoiceItems) => {
-    return `INSERT INTO "RequestToPay"."InvoiceItems" ("InID", "IID", "Price", "Quantity") VALUES
-    (${items.InID}, ${items.IID}, ${items.Price}, ${items.Quantity}) RETURNING "InvoiceItems"`;
+const generateSetString: (items: InvoiceItems) => string = (items: InvoiceItems) => {
+    return `INSERT INTO "RequestToPay"."InvoiceItems"
+        ("InID", "IID", "Price", "Quantity")
+        VALUES (${items.InID}, ${items.IID}, ${items.Price}, ${items.Quantity})
+        RETURNING "InvoiceItems"`;
 };
 
 export const createInvoiceItems: (items: InvoiceItems) => void = async (items: InvoiceItems) => {
     let res = null;
     try {
-        res = await q(generateCreateInvoiceItemsString(items));
+        res = await q(generateSetString(items));
     } catch (e) {
         throw new HTTP400Error("SQL Error.");
     }

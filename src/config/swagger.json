@@ -178,7 +178,7 @@
         ]
       }
     },
-    "/entityInvoicesById": {
+    "/entityInvoices": {
       "get":  {
         "tags": ["Invoice Endpoints"],
         "summary": "Returns all invoices with the matching Entity ID.",
@@ -197,29 +197,6 @@
             "description": "Specifies the Entity ID",
             "required": true,
             "type": "integer"
-          }
-        ]
-      }
-    },
-    "/entityInvoicesByName": {
-      "get":  {
-        "tags": ["Invoice Endpoints"],
-        "summary": "Returns all invoices with the matching Entity Name.",
-        "responses": {
-          "200": {
-            "description": "OK"
-          },
-          "404": {
-            "description": "No invoices found"
-          }
-        },
-        "parameters": [
-          {
-            "name": "Name",
-            "in": "query",
-            "description": "Specifies the Entity Name",
-            "required": true,
-            "type": "string"
           }
         ]
       }

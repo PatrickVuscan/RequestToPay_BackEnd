@@ -2,15 +2,17 @@ import {Invoice} from "../../../utils/dbTypes";
 import {HTTP400Error, HTTP404Error} from "../../../utils/httpErrors";
 import q from "../../../utils/query";
 
-export const generateCreateInvoiceString: (invoice: Invoice) => string = (inv: Invoice) => {
-    return `INSERT INTO "RequestToPay"."Invoice" ("InID", "NextInID", "DeliveryDate") VALUES
-        (default, ${inv.NextInID}, '${inv.DeliveryDate.toISOString()}') RETURNING "InID"`;
+const generateSetString: (invoice: Invoice) => string = (inv: Invoice) => {
+    return `INSERT INTO "RequestToPay"."Invoice"
+        ("InID", "NextInID", "DeliveryDate")
+        VALUES (default, ${inv.NextInID}, '${inv.DeliveryDate.toISOString()}')
+        RETURNING "InID"`;
 };
 
 export const createInvoice: (inv: Invoice) => Promise<number> = async (inv: Invoice) => {
     let res = null;
     try {
-        res = await q(generateCreateInvoiceString(inv));
+        res = await q(generateSetString(inv));
     } catch (e) {
         throw new HTTP400Error("SQL Error");
     }

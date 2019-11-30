@@ -2,7 +2,7 @@ import {Entity} from "../../../utils/dbTypes";
 import {HTTP400Error, HTTP404Error} from "../../../utils/httpErrors";
 import q from "../../../utils/query";
 
-export const generateInsertString: (entity: Entity) => string = (ent: Entity) => {
+const generateSetString: (entity: Entity) => string = (ent: Entity) => {
     return `INSERT INTO "RequestToPay"."Entity"
         ("EID", "Name", "Username", "Password", "BillingAddress")
         VALUES (default, '${ent.Name}', '${ent.Username}', '${ent.Password}', '${ent.BillingAddress}')
@@ -12,7 +12,7 @@ export const generateInsertString: (entity: Entity) => string = (ent: Entity) =>
 export const createEntity: (ent: Entity) => void = async (ent: Entity) => {
     let res = null;
     try {
-        res = await q(generateInsertString(ent));
+        res = await q(generateSetString(ent));
     } catch (e) {
         throw new HTTP400Error("SQL Error");
     }

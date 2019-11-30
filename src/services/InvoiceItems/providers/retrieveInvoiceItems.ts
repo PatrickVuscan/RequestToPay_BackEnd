@@ -4,7 +4,7 @@ import {InvoiceItems} from "../../../utils/dbTypes";
 import {HTTP400Error, HTTP404Error} from "../../../utils/httpErrors";
 import q from "../../../utils/query";
 
-export const generateGetInvoiceItemsByInvoiceIDString: (InID: number) => string = (InID: number) => {
+const generateGetString: (InID: number) => string = (InID: number) => {
     return `select
         "II".*,
         "I"."Name" as "Name"
@@ -13,8 +13,8 @@ export const generateGetInvoiceItemsByInvoiceIDString: (InID: number) => string 
         where "II"."InID" = ${InID}`;
 };
 
-export const getInvoiceItemsByInID: (InID: number) => Promise<InvoiceItems[]> = async (InID: number) => {
-    const res = await q(generateGetInvoiceItemsByInvoiceIDString(InID));
+export const retrieveInvoiceItems: (InID: number) => Promise<InvoiceItems[]> = async (InID: number) => {
+    const res = await q(generateGetString(InID));
     if (res.rows.length === 0) {
         throw new HTTP404Error(
             `Found no invoice items with this InvoiceID: ${InID}.  Query result: ${res}`,

@@ -4,12 +4,10 @@ import { Request, Response } from "express";
 import {IRoute} from "..";
 import {Invoice} from "../../utils/dbTypes";
 import {
-    checkInvoiceByInvoiceIDGetQueryParams,
-    checkInvoicesByEntityIDGetQueryParams,
-    checkInvoicesByEntityNameGetQueryParams,
-    checkInvoiceSetQueryParams,
-    getEntityInvoicesById,
-    getEntityInvoicesByName,
+    checkEntityInvoicesQueryParams,
+    checkInvoiceQueryParams,
+    checkInvoiceSetParams,
+    getEntityInvoices,
     getInvoice,
     setInvoice,
 } from "./QueryController";
@@ -17,7 +15,7 @@ import {
 export default [
     {
         handler: [
-            checkInvoiceSetQueryParams,
+            checkInvoiceSetParams,
             async (req: Request, res: Response) => {
                 const inv: Invoice = {
                         InID: -1,
@@ -34,7 +32,7 @@ export default [
     },
     {
         handler: [
-            checkInvoiceByInvoiceIDGetQueryParams,
+            checkInvoiceQueryParams,
             async (req: Request, res: Response) => {
                 const result = await getInvoice(req.query.InID);
                 res.status(200).send(result);
@@ -46,26 +44,14 @@ export default [
     },
     {
         handler: [
-            checkInvoicesByEntityIDGetQueryParams,
+            checkEntityInvoicesQueryParams,
             async (req: Request, res: Response) => {
-                const result = await getEntityInvoicesById(req.query.EID);
+                const result = await getEntityInvoices(req.query.EID);
                 res.status(200).send(result);
                 return result;
             },
         ],
         method: "get",
-        path: "/api/v1/entityInvoicesByID",
-    },
-    {
-        handler: [
-            checkInvoicesByEntityNameGetQueryParams,
-            async (req: Request, res: Response) => {
-                const result = await getEntityInvoicesByName(req.query.Name);
-                res.status(200).send(result);
-                return result;
-            },
-        ],
-        method: "get",
-        path: "/api/v1/entityInvoicesByName",
+        path: "/api/v1/entityInvoices",
     },
 ] as IRoute[];

@@ -5,9 +5,9 @@ import {NextFunction, Request, Response} from "express";
 import {checkAscii} from "../../utils/checks";
 import {Entity} from "../../utils/dbTypes";
 import {HTTP400Error} from "../../utils/httpErrors";
-import {createEntity} from "./providers/createEntityRequest";
-import {getEntityByEntityID} from "./providers/entityByIDRequest";
+import {createEntity} from "./providers/createEntity";
 import {loginRequest} from "./providers/loginRequest";
+import {getEntityByEntityID} from "./providers/retrieveEntity";
 
 export const setEntity = async (ent: Entity) => {
     return createEntity(ent);
