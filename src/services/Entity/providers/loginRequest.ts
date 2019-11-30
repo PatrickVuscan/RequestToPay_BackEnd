@@ -2,7 +2,7 @@ import {Entity} from "../../../utils/dbTypes";
 import {HTTP404Error} from "../../../utils/httpErrors";
 import q from "../../../utils/query";
 
-const generateGetString: (uname: string, pass: string) => string = (uname: string, pass: string) => {
+export const generateGetLoginString: (uname: string, pass: string) => string = (uname: string, pass: string) => {
     return `select *
         from "RequestToPay"."Entity"
         where "Username" = '${uname}' and "Password" = '${pass}'`;
@@ -10,7 +10,7 @@ const generateGetString: (uname: string, pass: string) => string = (uname: strin
 
 export const loginRequest: (name: string, password: string) => Promise<Entity> =
     async (uname: string, pass: string) => {
-    const res = await q(generateGetString(uname, pass));
+    const res = await q(generateGetLoginString(uname, pass));
     if (res.rows.length !== 1) {
         throw new HTTP404Error(`Could not find entity(${uname}) with specified password(${pass})`);
     }
