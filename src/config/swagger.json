@@ -504,7 +504,7 @@
     "/orderStatus": {
       "put": {
         "tags": ["Order Endpoints"],
-        "summary": "Updates the Status of the order.",
+        "summary": "Updates the given status of an order with the given state.",
         "responses": {
           "200": {
             "description": "This is the updated order."
@@ -521,7 +521,7 @@
           {
             "name": "status",
             "in": "query",
-            "description": "The status to update.",
+            "description": "Specifies the status to update. For ArrivedStatus, you can use ArrivedStatus, Arrived, a as accepted strings. For DeliveredStatus, you can use DeliveredStatus, Delivered, d, as accepted strings. For PaidStatus, you can use PaidStatus, Paid, p as accepted strings.",
             "required": true,
             "type": "string"
           },
