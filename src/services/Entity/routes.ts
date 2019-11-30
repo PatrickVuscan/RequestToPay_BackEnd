@@ -1,16 +1,15 @@
-/* Defines the routes and functions called in that route for the user service. */
+/* Defines the routes, and functions called in that route, for the Entity service. */
 
 import { Request, Response } from "express";
 import {IRoute} from "..";
 import {Entity} from "../../utils/dbTypes";
 import {
-    checkEntityByIDQueryParams,
-    checkEntityByNameQueryParams,
-    checkEntitySetQueryParams,
+    checkEntityQueryParams,
+    checkEntitySetParams,
     checkLoginParams,
-    getEntityByID,
-    getEntityByName,
-    getLogin, setEntity,
+    getEntity,
+    getLogin,
+    setEntity,
 } from "./QueryController";
 
 export default [
@@ -28,7 +27,7 @@ export default [
     },
     {
         handler: [
-            checkEntitySetQueryParams,
+            checkEntitySetParams,
             async (req: Request, res: Response) => {
                 const ent: Entity = {
                     EID: -1,
@@ -47,26 +46,14 @@ export default [
     },
     {
         handler: [
-            checkEntityByIDQueryParams,
+            checkEntityQueryParams,
             async (req: Request, res: Response) => {
-                const result = await getEntityByID(req.query.EID);
+                const result = await getEntity(req.query.EID);
                 res.status(200).send(result);
                 return result;
             },
         ],
         method: "get",
-        path: "/api/v1/entityByID",
-    },
-    {
-        handler: [
-            checkEntityByNameQueryParams,
-            async (req: Request, res: Response) => {
-                const result = await getEntityByName(req.query.user);
-                res.status(200).send(result);
-                return result;
-            },
-        ],
-        method: "get",
-        path: "/api/v1/entityByName",
+        path: "/api/v1/entity",
     },
 ] as IRoute[];

@@ -15,7 +15,6 @@ export const clientError = (err: Error, res: Response, next: NextFunction) => {
 
 // catches server errors
 export const serverError = (err: Error, res: Response, next: NextFunction) => {
-    // TODO: make common serverErrors that can be caught
     if (err instanceof Error) {
         // send the stack if we are not in production mode
         if (process.env.NODE_ENV === "production") {
