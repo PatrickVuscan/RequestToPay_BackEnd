@@ -5,8 +5,8 @@ import {InvoiceItems, Item} from "../../utils/dbTypes";
 import {IRoute} from "../index";
 import {getItem} from "../Item/QueryController";
 import {
-    checkInvoiceItemsByInvoiceIDGetQueryParams,
-    checkInvoiceItemsSetQueryParams,
+    checkInvoiceItemsQueryParams,
+    checkInvoiceItemsSetParams,
     getInvoiceItems,
     setInvoiceItems,
 } from "./QueryController";
@@ -14,7 +14,7 @@ import {
 export default [
     {
         handler: [
-            checkInvoiceItemsSetQueryParams,
+            checkInvoiceItemsSetParams,
             async (req: Request, res: Response) => {
                 const item: Item = await getItem(req.query.IID);
                 const items: InvoiceItems = {
@@ -33,7 +33,7 @@ export default [
     },
     {
         handler: [
-            checkInvoiceItemsByInvoiceIDGetQueryParams,
+            checkInvoiceItemsQueryParams,
             async (req: Request, res: Response) => {
                 const result = await getInvoiceItems(req.query.InID);
                 res.status(200).send(result);

@@ -201,6 +201,142 @@
         ]
       }
     },
+    "/item": {
+      "get":  {
+        "tags": ["Item Endpoints"],
+        "summary": "Returns an item with the matching ItemID",
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "404": {
+            "description": "No invoices found"
+          },
+          "400": {
+            "description": "Bad request or multiple items found"
+          }
+        },
+        "parameters": [
+          {
+            "name": "IID",
+            "in": "query",
+            "description": "Specifies the item ID",
+            "required": true,
+            "type": "integer"
+          }
+        ]
+      },
+      "put": {
+        "tags": ["Item Endpoints"],
+        "summary": "Inserts a new item into the database.",
+        "responses": {
+          "200": {
+            "description": "This is the ID of the newly created item."
+          }
+        },
+        "parameters": [
+          {
+            "name": "Name",
+            "in": "query",
+            "description": "The name of the item.",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "SID",
+            "in": "query",
+            "description": "The ID of the seller entity.",
+            "required": true,
+            "type": "integer"
+          },
+          {
+            "name": "Price",
+            "in": "query",
+            "description": "The price of the item.",
+            "required": true,
+            "type": "number"
+          }
+        ]
+      }
+    },
+    "/itemsByName": {
+      "get":  {
+        "tags": ["Item Endpoints"],
+        "summary": "Returns the items with the matching name.",
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "404": {
+            "description": "No items found"
+          }
+        },
+        "parameters": [
+          {
+            "name": "Name",
+            "in": "query",
+            "description": "Specifies the item Name",
+            "required": true,
+            "type": "string"
+          }
+        ]
+      }
+    },
+    "/invoiceItems": {
+      "get":  {
+        "tags": ["InvoiceItems Endpoints"],
+        "summary": "Returns all InvoiceItems with the matching InvoiceID.",
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "404": {
+            "description": "No invoices found"
+          }
+        },
+        "parameters": [
+          {
+            "name": "InID",
+            "in": "query",
+            "description": "Specifies the InvoiceID",
+            "required": true,
+            "type": "integer"
+          }
+        ]
+      },
+      "put": {
+        "tags": ["InvoiceItems Endpoints"],
+        "summary": "Inserts a new invoiceItems row into the database.",
+        "responses": {
+          "200": {
+            "description": "This is the newly created invoiceItems."
+          }
+        },
+        "parameters": [
+          {
+            "name": "InID",
+            "in": "query",
+            "description": "The ID of the invoice this is for.",
+            "required": true,
+            "type": "integer"
+          },
+          {
+            "name": "IID",
+            "in": "query",
+            "description": "The ID of the item.",
+            "required": true,
+            "type": "integer"
+          },
+          {
+            "name": "Quantity",
+            "in": "query",
+            "description": "The quantity of the item.",
+            "required": true,
+            "type": "integer"
+          }
+        ]
+      }
+    },
     "/order": {
       "get":  {
         "tags": ["Order Endpoints"],
@@ -526,142 +662,6 @@
             "description": "The status to update to.",
             "required": true,
             "type": "boolean"
-          }
-        ]
-      }
-    },
-    "/item": {
-      "get":  {
-        "tags": ["Item Endpoints"],
-        "summary": "Returns an item with the matching ItemID",
-        "responses": {
-          "200": {
-            "description": "OK"
-          },
-          "404": {
-            "description": "No invoices found"
-          },
-          "400": {
-            "description": "Bad request or multiple items found"
-          }
-        },
-        "parameters": [
-          {
-            "name": "IID",
-            "in": "query",
-            "description": "Specifies the item ID",
-            "required": true,
-            "type": "integer"
-          }
-        ]
-      },
-      "put": {
-        "tags": ["Item Endpoints"],
-        "summary": "Inserts a new item into the database.",
-        "responses": {
-          "200": {
-            "description": "This is the ID of the newly created item."
-          }
-        },
-        "parameters": [
-          {
-            "name": "Name",
-            "in": "query",
-            "description": "The name of the item.",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "SID",
-            "in": "query",
-            "description": "The ID of the seller entity.",
-            "required": true,
-            "type": "integer"
-          },
-          {
-            "name": "Price",
-            "in": "query",
-            "description": "The price of the item.",
-            "required": true,
-            "type": "number"
-          }
-        ]
-      }
-    },
-    "/itemsByName": {
-      "get":  {
-        "tags": ["Item Endpoints"],
-        "summary": "Returns the items with the matching name.",
-        "responses": {
-          "200": {
-            "description": "OK"
-          },
-          "404": {
-            "description": "No items found"
-          }
-        },
-        "parameters": [
-          {
-            "name": "Name",
-            "in": "query",
-            "description": "Specifies the item Name",
-            "required": true,
-            "type": "string"
-          }
-        ]
-      }
-    },
-    "/invoiceItems": {
-      "get":  {
-        "tags": ["InvoiceItems Endpoints"],
-        "summary": "Returns all InvoiceItems with the matching InvoiceID.",
-        "responses": {
-          "200": {
-            "description": "OK"
-          },
-          "404": {
-            "description": "No invoices found"
-          }
-        },
-        "parameters": [
-          {
-            "name": "InID",
-            "in": "query",
-            "description": "Specifies the InvoiceID",
-            "required": true,
-            "type": "integer"
-          }
-        ]
-      },
-      "put": {
-        "tags": ["InvoiceItems Endpoints"],
-        "summary": "Inserts a new invoiceItems row into the database.",
-        "responses": {
-          "200": {
-            "description": "This is the newly created invoiceItems."
-          }
-        },
-        "parameters": [
-          {
-            "name": "InID",
-            "in": "query",
-            "description": "The ID of the invoice this is for.",
-            "required": true,
-            "type": "integer"
-          },
-          {
-            "name": "IID",
-            "in": "query",
-            "description": "The ID of the item.",
-            "required": true,
-            "type": "integer"
-          },
-          {
-            "name": "Quantity",
-            "in": "query",
-            "description": "The quantity of the item.",
-            "required": true,
-            "type": "integer"
           }
         ]
       }

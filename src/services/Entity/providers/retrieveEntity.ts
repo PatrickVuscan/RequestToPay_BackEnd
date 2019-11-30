@@ -8,15 +8,15 @@ const generateGetString: (EID: number) => string = (EID: number) => {
     return `select * from "RequestToPay"."Entity" where "EID" = '${EID}';`;
 };
 
-export const getEntityByEntityID: (EID: number) => Promise<Entity> = async (EID: number) => {
+export const retrieveEntity: (EID: number) => Promise<Entity> = async (EID: number) => {
     const res = await q(generateGetString(EID));
     if (res.rows.length === 0) {
         throw new HTTP404Error(
-            `Found no users with his username: ${EID}.  Query result: ${res}`,
+            `Found no entities with his username: ${EID}.  Query result: ${res}`,
         );
     } else if (res.rows.length > 1) {
         throw new HTTP400Error(
-            `Found multiple users with his username: ${EID}.  Query result: ${res}`,
+            `Found multiple entities with his username: ${EID}.  Query result: ${res}`,
         );
     }
     return res.rows[0] as Entity;

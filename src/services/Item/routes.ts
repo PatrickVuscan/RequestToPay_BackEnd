@@ -4,17 +4,18 @@ import { Request, Response } from "express";
 import {IRoute} from "..";
 import {Item} from "../../utils/dbTypes";
 import {
-    checkItemByItemIDGetQueryParams,
-    checkItemByItemNameGetQueryParams,
-    checkItemSetQueryParams,
-    getItem, getItemByName,
+    checkItemByNameQueryParams,
+    checkItemQueryParams,
+    checkItemSetParams,
+    getItem,
+    getItemsByName,
     setItem,
 } from "./QueryController";
 
 export default [
     {
         handler: [
-            checkItemSetQueryParams,
+            checkItemSetParams,
             async (req: Request, res: Response) => {
                 const item: Item = {
                         IID: req.query.IID,
@@ -32,7 +33,7 @@ export default [
     },
     {
         handler: [
-            checkItemByItemIDGetQueryParams,
+            checkItemQueryParams,
             async (req: Request, res: Response) => {
                 const result = await getItem(req.query.IID);
                 res.status(200).send(result);
@@ -44,11 +45,11 @@ export default [
     },
     {
         handler: [
-            checkItemByItemNameGetQueryParams,
+            checkItemByNameQueryParams,
             async (req: Request, res: Response) => {
-                const result = await getItemByName(req.query.Name);
+                const result = await getItemsByName(req.query.Name);
                 res.status(200).send(result);
-                return result;
+                return result; // Note that it can return no items.
             },
         ],
         method: "get",

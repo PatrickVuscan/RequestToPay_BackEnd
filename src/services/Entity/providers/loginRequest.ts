@@ -12,7 +12,7 @@ export const loginRequest: (name: string, password: string) => Promise<Entity> =
     async (uname: string, pass: string) => {
     const res = await q(generateGetString(uname, pass));
     if (res.rows.length !== 1) {
-        throw new HTTP404Error(`Could not find user(${uname}) with specified password(${pass})`);
+        throw new HTTP404Error(`Could not find entity(${uname}) with specified password(${pass})`);
     }
     return res.rows[0] as Entity;
 };

@@ -7,7 +7,7 @@ import {Entity} from "../../utils/dbTypes";
 import {HTTP400Error} from "../../utils/httpErrors";
 import {createEntity} from "./providers/createEntity";
 import {loginRequest} from "./providers/loginRequest";
-import {getEntityByEntityID} from "./providers/retrieveEntity";
+import {retrieveEntity} from "./providers/retrieveEntity";
 
 export const setEntity = async (ent: Entity) => {
     return createEntity(ent);
@@ -18,7 +18,7 @@ export const getLogin = async  (name: string, pass: string) => {
 };
 
 export const getEntity = async (EID: number) => {
-    return await getEntityByEntityID(EID);
+    return await retrieveEntity(EID);
 };
 
 export const checkEntitySetParams = (

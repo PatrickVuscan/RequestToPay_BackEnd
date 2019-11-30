@@ -2,26 +2,26 @@
  * objects exported by this service. */
 
 import {NextFunction, Request, Response} from "express";
-import {checkAscii, checkDate} from "../../utils/checks";
+import {checkAscii} from "../../utils/checks";
 import {Item} from "../../utils/dbTypes";
 import {HTTP400Error} from "../../utils/httpErrors";
-import {createItem} from "./providers/createItemRequest";
-import {getItemsByName} from "./providers/itemByNameRequest";
-import {getItemByItemID} from "./providers/itemRequest";
+import {createItem} from "./providers/createItem";
+import {retrieveItem} from "./providers/retrieveItem";
+import {retrieveItemsByName} from "./providers/retrieveItemsByName";
 
 export const setItem = async (item: Item) => {
     return createItem(item);
 };
 
 export const getItem = async (itemID: number) => {
-    return await getItemByItemID(itemID);
+    return await retrieveItem(itemID);
 };
 
-export const getItemByName = async (name: string) => {
-    return await getItemsByName(name);
+export const getItemsByName = async (name: string) => {
+    return await retrieveItemsByName(name);
 };
 
-export const checkItemSetQueryParams = (
+export const checkItemSetParams = (
     req: Request,
     res: Response,
     next: NextFunction,
@@ -39,7 +39,7 @@ export const checkItemSetQueryParams = (
     }
 };
 
-export const checkItemByItemIDGetQueryParams = (
+export const checkItemQueryParams = (
     req: Request,
     res: Response,
     next: NextFunction,
@@ -53,7 +53,7 @@ export const checkItemByItemIDGetQueryParams = (
     }
 };
 
-export const checkItemByItemNameGetQueryParams = (
+export const checkItemByNameQueryParams = (
     req: Request,
     res: Response,
     next: NextFunction,

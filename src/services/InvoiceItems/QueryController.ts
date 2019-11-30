@@ -16,7 +16,7 @@ export const getInvoiceItems = async (InID: number) => {
     return retrieveInvoiceItems(InID);
 };
 
-export const checkInvoiceItemsSetQueryParams = (
+export const checkInvoiceItemsSetParams = (
     req: Request,
     res: Response,
     next: NextFunction,
@@ -34,7 +34,7 @@ export const checkInvoiceItemsSetQueryParams = (
     }
 };
 
-export const checkInvoiceItemsByInvoiceIDGetQueryParams = (
+export const checkInvoiceItemsQueryParams = (
     req: Request,
     res: Response,
     next: NextFunction,

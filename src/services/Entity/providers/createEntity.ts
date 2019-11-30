@@ -19,7 +19,7 @@ export const createEntity: (ent: Entity) => void = async (ent: Entity) => {
     if (!res) {
         throw new HTTP404Error("No response");
     } else if (res.rows.length !== 1) {
-        throw new HTTP404Error("Couldn't create invoice");
+        throw new HTTP404Error("Couldn't create entity");
     }
     return res.rows[0].EID;
 };
