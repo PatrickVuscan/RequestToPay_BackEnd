@@ -4,6 +4,9 @@ import { Request, Response } from "express";
 import {IRoute} from "..";
 import {Invoice, Item, Order} from "../../utils/dbTypes";
 import {HTTP404Error} from "../../utils/httpErrors";
+import {logger} from "../../utils/logger";
+import {sendSMS} from "../../utils/sms";
+import {getEntity} from "../Entity/QueryController";
 import {setInvoice} from "../Invoice/QueryController";
 import {setInvoiceItems} from "../InvoiceItems/QueryController";
 import {getItem} from "../Item/QueryController";
@@ -130,6 +133,53 @@ export default [
                 }
                 const result = await setStatus(req.query.OID, Status, req.query.state);
                 res.status(200).send(result);
+                // get entity information for the 3 parties involved
+                const customer = await getEntity(result.CID);
+                let driver;
+                if (result.DID) {
+                    driver = await getEntity(result.DID);
+                }
+                const seller = await getEntity(result.SID);
+                // send the notifications with the appropriate messages
+                if (Status === "ArrivedStatus" && customer.PhoneNumber) {
+                    logger.info({
+                        file: "src/services/Entity/route.ts",
+                        message: await sendSMS(
+                            customer.PhoneNumber,
+                            `Your order from ${seller.Name} has arrived!`),
+                    });
+                } else if (Status === "DeliveredStatus" && seller.PhoneNumber) {
+                    logger.info({
+                        file: "src/services/Entity/route.ts",
+                        message: await sendSMS(
+                            seller.PhoneNumber,
+                            `Your transaction with ${customer.Name} is complete!`),
+                    });
+                } else if (Status === "PaidStatus") {
+                    if (customer.PhoneNumber) {
+                        logger.info({
+                            file: "src/services/Entity/route.ts",
+                            message: await sendSMS(
+                                customer.PhoneNumber,
+                                `Your payment to ${seller.Name} has gone through!`),
+                        });
+                    }
+                    if (seller.PhoneNumber) {
+                        logger.info({
+                            file: "src/services/Entity/route.ts",
+                            message: await sendSMS(
+                                seller.PhoneNumber,
+                                `You have received a payment from ${customer.Name} for order number ${result.OID}.`),
+                        });
+                    }
+                } else if (Status === "ApprovedStatus" && customer.PhoneNumber) {
+                    logger.info({
+                        file: "src/services/Entity/route.ts",
+                        message: await sendSMS(
+                            customer.PhoneNumber,
+                            `Order number ${result.OID} has been approved by ${seller.Name}.`),
+                    });
+                }
                 return result;
             },
         ],

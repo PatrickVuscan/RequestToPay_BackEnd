@@ -21,5 +21,5 @@ export const updateStatus: (OID: number, status: string, state: boolean) => Prom
             `Found multiple orders with this OrderID: ${OID}.  Query result: ${res}`,
         );
     }
-    return res.rows[0];
+    return res.rows[0] as Order;
 };
