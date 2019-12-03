@@ -1,7 +1,7 @@
 # documentation label
 documentation:
   - ./README.md
-  - swagger.json
+  - src/config/swagger.json
 
 # adds the test label
 test:
@@ -15,7 +15,7 @@ database:
   - '**.sql'
 
 endpoints:
-  - services/**
+  - src/services/**
 
 middleware:
-  - middleware/**
+  - src/middleware/**
