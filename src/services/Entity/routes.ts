@@ -3,6 +3,7 @@
 import { Request, Response } from "express";
 import {IRoute} from "..";
 import {Entity} from "../../utils/dbTypes";
+import {HTTP404Error} from "../../utils/httpErrors";
 import {logger} from "../../utils/logger";
 import {sendSMS} from "../../utils/sms";
 import {getEntityByRegex} from "./providers/retrieveEntity";
@@ -36,13 +37,19 @@ export default [
         handler: [
             checkEntitySetParams,
             async (req: Request, res: Response) => {
+                // check and set the phone number
+                if (!req.query.PhoneNumber) {
+                    req.query.PhoneNumber = "null";
+                } else if (req.query.PhoneNumber.length !== 10) {
+                    throw new HTTP404Error("Phone number must be exactly 10 digits long or not set");
+                }
                 const ent: Entity = {
                     EID: -1,
                     Name: req.query.Name,
                     BillingAddress: req.query.BillingAddress,
                     Username: req.query.Username,
                     Password: req.query.Password,
-                    PhoneNumber: null,
+                    PhoneNumber: req.query.PhoneNumber,
                 };
                 const result = await setEntity(ent);
                 res.status(200).send(result);

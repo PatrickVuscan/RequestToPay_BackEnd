@@ -102,6 +102,13 @@
             "description": "The billing address of the entity.",
             "required": true,
             "type": "string"
+          },
+          {
+            "name": "PhoneNumber",
+            "in": "query",
+            "description": "Phone number to send notifications to.",
+            "required": false,
+            "type": "string"
           }
         ]
       },

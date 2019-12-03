@@ -42,6 +42,7 @@ export default [
                     ArrivedStatus: false,
                     DeliveredStatus: false,
                     PaidStatus: false,
+                    ApprovedStatus: false,
                 };
                 const OrderID = await setOrder(ord);
                 for (const currItems of req.body.invoiceItems) {
