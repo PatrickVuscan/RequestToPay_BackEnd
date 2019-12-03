@@ -409,7 +409,7 @@
             "name": "DID",
             "in": "query",
             "description": "The ID of the driver.",
-            "required": true,
+            "required": false,
             "type": "integer"
           },
           {

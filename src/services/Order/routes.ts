@@ -37,7 +37,7 @@ export default [
                     InID: InvID,
                     SID: req.query.SID,
                     CID: req.query.CID,
-                    DID: req.query.DID,
+                    DID: req.query.DID || "null",  // this is an optional parameter, as it might be set later
                     OrderDate: new Date(Date.parse(req.query.OrderDate)),
                     ArrivedStatus: false,
                     DeliveredStatus: false,
