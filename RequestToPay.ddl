@@ -1,9 +1,12 @@
 /* This file will set up the database tables. If there is data already in the database, it will be removed. */
 
 -- Refresh the db
-drop schema if exists "RequestToPay" cascade;
-create schema "RequestToPay";
-set search_path to "RequestToPay";
+-- drop schema if exists "RequestToPay" cascade;
+-- create schema "RequestToPay";
+-- set search_path to "RequestToPay";
+drop schema if exists requesttopay cascade;
+create schema requesttopay;
+set search_path to requesttopay;
 
 -- tables
 create table "Entity" (
@@ -11,7 +14,8 @@ create table "Entity" (
   "Name" text not null,
   "BillingAddress" text not null,
   "Username" text unique not null,
-  "Password" text not null
+  "Password" text not null,
+  "PhoneNumber" char(10)
 );
 
 create table "Item" (

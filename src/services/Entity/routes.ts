@@ -42,6 +42,7 @@ export default [
                     BillingAddress: req.query.BillingAddress,
                     Username: req.query.Username,
                     Password: req.query.Password,
+                    PhoneNumber: null,
                 };
                 const result = await setEntity(ent);
                 res.status(200).send(result);
