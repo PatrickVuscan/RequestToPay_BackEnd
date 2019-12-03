@@ -12,5 +12,10 @@
     "dialect": "postgres",
     "dialectOptions": {
         "ssl": true
+    },
+    "linterOptions": {
+        "exclude": [
+            "dbTypes.ts"
+        ]
     }
 }

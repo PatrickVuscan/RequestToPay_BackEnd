@@ -4,8 +4,6 @@ import { Request, Response } from "express";
 import {IRoute} from "..";
 import {Entity} from "../../utils/dbTypes";
 import {HTTP404Error} from "../../utils/httpErrors";
-import {logger} from "../../utils/logger";
-import {sendSMS} from "../../utils/sms";
 import {getEntityByRegex} from "./providers/retrieveEntity";
 import {
     checkEntityQueryParams,

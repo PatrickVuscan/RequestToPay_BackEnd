@@ -5,11 +5,12 @@
   "main": "src/server.ts",
   "scripts": {
     "postinstall": "npx tsc",
+    "build": "npx tsc",
     "dev": "tsc-watch --onSuccess \"node ./dist/server.js\"",
     "start": "node dist/server.js",
-    "start_": "npx pm2 start pm2.yaml",
     "test": "jest --coverage --verbose",
-    "generate-db-types": "schemats generate"
+    "generate-db-types": "schemats generate",
+    "deploy": "git push heroku"
   },
   "author": "",
   "license": "ISC",
@@ -58,7 +59,6 @@
     "jest": "^24.9.0",
     "node-postgres": "0.0.1",
     "pg": "7.12.1",
-    "pm2": "3.5.1",
     "request": "2.88.0",
     "request-promise": "4.2.4",
     "schemats": "3.0.3",

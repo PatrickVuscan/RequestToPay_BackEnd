@@ -172,6 +172,16 @@ export default [
                                 `You have received a payment from ${customer.Name} for order number ${result.OID}.`),
                         });
                     }
+                    if (driver) {
+                        if (driver.PhoneNumber) {
+                            logger.info({
+                                file: "src/services/Entity/route.ts",
+                                message: await sendSMS(
+                                    driver.PhoneNumber,
+                                    `Payment for order (${result.OID}) for customer ${customer.Name} is complete.`),
+                            });
+                        }
+                    }
                 } else if (Status === "ApprovedStatus" && customer.PhoneNumber) {
                     logger.info({
                         file: "src/services/Entity/route.ts",

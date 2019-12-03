@@ -82,6 +82,7 @@ export namespace WarehouseContentsFields {
 
 }
 
+// noinspection JSUnusedGlobalSymbols
 export interface WarehouseContents {
     SID: WarehouseContentsFields.SID;
     IID: WarehouseContentsFields.IID;
