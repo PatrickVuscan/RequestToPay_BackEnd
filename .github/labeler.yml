@@ -1,6 +1,7 @@
 # documentation label
 documentation:
   - ./README.md
+  - src/config/swagger.json
 
 # adds the test label
 test:
@@ -8,3 +9,13 @@ test:
 
 enhancement:
   - src/**/*
+
+database:
+  - '**.ddl'
+  - '**.sql'
+
+endpoints:
+  - src/services/**
+
+middleware:
+  - src/middleware/**
