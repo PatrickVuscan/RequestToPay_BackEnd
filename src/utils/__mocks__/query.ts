@@ -2,6 +2,7 @@
 
 import {QueryResult} from "pg";
 import {generateGetLoginString} from "../../services/Entity/providers/loginRequest";
+import {Entity} from "../dbTypes";
 import {loginNoUsers, loginOneUsers, singleUser, twoUsers, zeroUsers} from "./queryReturns";
 
 export default async (q: string): Promise<QueryResult> => {
