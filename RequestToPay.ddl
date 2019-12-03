@@ -47,9 +47,10 @@ create table "Order" (
   "InID" integer unique not null references "Invoice"("InID"),
   "SID" integer not null references "Entity"("EID"),
   "CID" integer not null references "Entity"("EID"),
-  "DID" integer not null references "Entity"("EID"),
+  "DID" integer references "Entity"("EID"),
   "OrderDate" timestamp not null,
-  "ArrivedStatus" boolean not null,
-  "DeliveredStatus" boolean not null,
-  "PaidStatus" boolean not null
+  "ApprovedStatus"  boolean not null default false,
+  "ArrivedStatus"   boolean not null default false,
+  "DeliveredStatus" boolean not null default false,
+  "PaidStatus"      boolean not null default false
 );

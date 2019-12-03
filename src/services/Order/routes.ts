@@ -122,6 +122,8 @@ export default [
                     Status = "DeliveredStatus";
                 } else if (reqStatus === "PaidStatus" || reqStatus === "Paid" || reqStatus === "p") {
                     Status = "PaidStatus";
+                } else if (reqStatus === "ApprovedStatus" || reqStatus === "Approved" || reqStatus === "ap") {
+                    Status = "ApprovedStatus";
                 } else {
                     throw new HTTP404Error("Status does not match any of the accepted statuses.");
                 }

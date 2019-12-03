@@ -63,8 +63,8 @@ export const checkEntityQueryParams = (
     res: Response,
     next: NextFunction,
 ): void => {
-    if (!req.query.EID) {
-        throw new HTTP400Error("Missing EntityID parameter");
+    if (!req.query.EID && !req.query.regex) {
+        throw new HTTP400Error("Missing EntityID or regex parameter");
     } else if (!checkAscii(req.query.EID)) {
         throw new HTTP400Error("Only alphabetic characters are allowed");
     } else {

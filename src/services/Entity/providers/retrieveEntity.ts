@@ -8,6 +8,10 @@ const generateGetString: (EID: number) => string = (EID: number) => {
     return `select * from "RequestToPay"."Entity" where "EID" = '${EID}';`;
 };
 
+const generateGetRegexString = (regex: string) => {
+    return `select * from "RequestToPay"."Entity" where "Name" similar to '${regex}';`;
+};
+
 export const retrieveEntity: (EID: number) => Promise<Entity> = async (EID: number) => {
     const res = await q(generateGetString(EID));
     if (res.rows.length === 0) {
@@ -20,4 +24,9 @@ export const retrieveEntity: (EID: number) => Promise<Entity> = async (EID: numb
         );
     }
     return res.rows[0] as Entity;
+};
+
+export const getEntityByRegex = async (regex: string) => {
+    const res = await q(generateGetRegexString(regex));
+    return res.rows as Entity[];
 };

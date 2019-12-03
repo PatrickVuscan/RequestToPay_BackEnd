@@ -2,10 +2,10 @@
   "swagger": "2.0",
   "info": {
     "title": "RequestToPay",
-    "description": "This API is meant to provide data for a demo of Scotiabank's potential data rich payment on delivery system. Note that using https on locally hosted server will fail and the opposite on a heroku instance.",
+    "description": "This API is meant to be a proof of concept for Scotia Bank's potential data rich payment on delivery system. Note that using https on locally hosted server will fail and the opposite on a heroku instance.",
     "license": {
-      "name": "LicenseUndecided",
-      "url": ""
+      "name": "MIT",
+      "url": "https://github.com/PatrickVuscan/RequestToPay_BackEnd/blob/master/LICENSE.md"
     },
     "version": "1.0.0"
   },
@@ -121,8 +121,14 @@
             "name": "EID",
             "in": "query",
             "description": "Specifies the EntityID",
-            "required": true,
+            "required": false,
             "type": "integer"
+          },{
+            "name": "regex",
+            "in": "query",
+            "description": "Specifies the regex to match the name to. [A-z]* will get all users",
+            "required": false,
+            "type": "string"
           }
         ]
       }
@@ -521,7 +527,7 @@
           {
             "name": "status",
             "in": "query",
-            "description": "Specifies the status to update. For ArrivedStatus, you can use ArrivedStatus, Arrived, a as accepted strings. For DeliveredStatus, you can use DeliveredStatus, Delivered, d, as accepted strings. For PaidStatus, you can use PaidStatus, Paid, p as accepted strings.",
+            "description": "Specifies the status to update. For ArrivedStatus, you can use ArrivedStatus, Arrived, a as accepted strings. For DeliveredStatus, you can use DeliveredStatus, Delivered, d, as accepted strings. For PaidStatus, you can use PaidStatus, Paid, p as accepted strings. For ApprovedStatus you can use ApprovedStatus, Approved, or ap.",
             "required": true,
             "type": "string"
           },

@@ -3,6 +3,9 @@
 import { Request, Response } from "express";
 import {IRoute} from "..";
 import {Entity} from "../../utils/dbTypes";
+import {logger} from "../../utils/logger";
+import {sendSMS} from "../../utils/sms";
+import {getEntityByRegex} from "./providers/retrieveEntity";
 import {
     checkEntityQueryParams,
     checkEntitySetParams,
@@ -19,6 +22,10 @@ export default [
             async (req: Request, res: Response) => {
                 const result = await getLogin(req.query.user, req.query.pass);
                 res.status(200).send(result);
+                sendSMS("7789906284", `You have logged in as ${req.query.user}`)
+                    .catch((e: Error) => {
+                        logger.error(e);
+                    });
                 return result;
             },
         ],
@@ -48,7 +55,12 @@ export default [
         handler: [
             checkEntityQueryParams,
             async (req: Request, res: Response) => {
-                const result = await getEntity(req.query.EID);
+                let result = null;
+                if (req.query.EID) {
+                    result = await getEntity(req.query.EID);
+                } else if (req.query.regex) {
+                    result = await getEntityByRegex(req.query.regex);
+                }
                 res.status(200).send(result);
                 return result;
             },
