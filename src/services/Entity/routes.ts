@@ -23,10 +23,6 @@ export default [
             async (req: Request, res: Response) => {
                 const result = await getLogin(req.query.user, req.query.pass);
                 res.status(200).send(result);
-                sendSMS("7789906284", `You have logged in as ${req.query.user}`)
-                    .catch((e: Error) => {
-                        logger.error(e);
-                    });
                 return result;
             },
         ],
