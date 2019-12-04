@@ -134,12 +134,13 @@ export default [
                 const result = await setStatus(req.query.OID, Status, req.query.state);
                 res.status(200).send(result);
                 // get entity information for the 3 parties involved
-                const customer = await getEntity(result.CID);
-                let driver;
-                if (result.DID) {
-                    driver = await getEntity(result.DID);
+                const order = await getOrder(req.query.OID, false);
+                const customer = await getEntity(order.CID);
+                let driver = null;
+                if (order.DID) {
+                    driver = await getEntity(order.DID);
                 }
-                const seller = await getEntity(result.SID);
+                const seller = await getEntity(order.SID);
                 // send the notifications with the appropriate messages
                 if (Status === "ArrivedStatus" && customer.PhoneNumber) {
                     logger.info({
@@ -169,7 +170,7 @@ export default [
                             file: "src/services/Entity/route.ts",
                             message: await sendSMS(
                                 seller.PhoneNumber,
-                                `You have received a payment from ${customer.Name} for order number ${result.OID}.`),
+                                `You have received a payment from ${customer.Name} for order number ${order.OID}.`),
                         });
                     }
                     if (driver) {
@@ -178,7 +179,7 @@ export default [
                                 file: "src/services/Entity/route.ts",
                                 message: await sendSMS(
                                     driver.PhoneNumber,
-                                    `Payment for order (${result.OID}) for customer ${customer.Name} is complete.`),
+                                    `Payment for order (${order.OID}) for customer ${customer.Name} is complete.`),
                             });
                         }
                     }
@@ -187,7 +188,7 @@ export default [
                         file: "src/services/Entity/route.ts",
                         message: await sendSMS(
                             customer.PhoneNumber,
-                            `Order number ${result.OID} has been approved by ${seller.Name}.`),
+                            `Order number ${order.OID} has been approved by ${seller.Name}.`),
                     });
                 }
                 return result;
