@@ -1,12 +1,9 @@
 /* This file will set up the database tables. If there is data already in the database, it will be removed. */
 
 -- Refresh the db
--- drop schema if exists "RequestToPay" cascade;
--- create schema "RequestToPay";
--- set search_path to "RequestToPay";
-drop schema if exists requesttopay cascade;
-create schema requesttopay;
-set search_path to requesttopay;
+drop schema if exists "RequestToPay" cascade;
+create schema "RequestToPay";
+set search_path to "RequestToPay";
 
 -- tables
 create table "Entity" (
