@@ -8,7 +8,7 @@ insert into "Entity"("EID", "Name", "BillingAddress", "Username", "Password", "P
 values (default, 'Coke', '20 Everywhere Ave.', 'coke', 'coke',             '7789906284'),
        (default, 'McDonalds', '-1 College s.t.', 'mcdonalds', 'mcdonalds', null),
        (default, 'Chestnut Res', '89 Chestnut s.t.', 'chesnut', 'chesnut', null),
-       (default, 'Patrick', '66 Broadway Ave.', 'patrick', 'patrick',      null),
+       (default, 'Patrick', '66 Broadway Ave.', 'patrick', 'patrick',      '6475158060'),
        (default, 'Driver Mac', '33 Orchard Blvd.', 'driver', 'zoomzoom',   null),
        (default, 'Will G', 'Chestnut Res.', 'will', 'will',                '9786185596');
 
