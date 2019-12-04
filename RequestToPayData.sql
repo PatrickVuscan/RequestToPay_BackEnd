@@ -5,11 +5,11 @@ set search_path to "RequestToPay";
 
 -- Entity
 insert into "Entity"("EID", "Name", "BillingAddress", "Username", "Password", "PhoneNumber")
-values (default, 'Coke',         '20 Everywhere Ave.', 'coke',      'coke',      '7789906284'),
-       (default, 'McDonalds',    '-1 College s.t.',    'mcdonalds', 'mcdonalds', null),
+values (default, 'Coke',         '20 Everywhere Ave.', 'coke',      'coke',      '6138578931'),
+       (default, 'McDonalds',    '-1 College s.t.',    'mcdonalds', 'mcdonalds', '7789906284'),
        (default, 'Chestnut Res', '89 Chestnut s.t.',   'chesnut',   'chesnut',   null),
        (default, 'Patrick',      '66 Broadway Ave.',   'patrick',   'patrick',   '6475158060'),
-       (default, 'Driver Mac',   '33 Orchard Blvd.',   'driver',    'zoomzoom',  null),
+       (default, 'Driver Mac',   '33 Orchard Blvd.',   'driver',    'zoomzoom',  '6478602203'),
        (default, 'Will G',       'Chestnut Res.',      'will',      'will',      '9786185596');
 
 -- Items
