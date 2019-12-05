@@ -3,6 +3,10 @@
 import { Request, Response } from "express";
 import {IRoute} from "..";
 import {Item} from "../../utils/dbTypes";
+import {logger} from "../../utils/logger";
+import {sendSMS} from "../../utils/sms";
+import {getEntity} from "../Entity/QueryController";
+import {getOrder} from "../Order/QueryController";
 import {
     checkItemByNameQueryParams,
     checkItemQueryParams,
@@ -25,6 +29,17 @@ export default [
                     };
                 const result = await setItem(item);
                 res.status(200).send(result);
+                // send SMS updates to appropriate parties
+                const seller = await getEntity(req.query.SID);
+                // send the notifications with the appropriate messages
+                if (seller.PhoneNumber) {
+                    logger.info({
+                        file: "src/services/Order/route.ts",
+                        message: await sendSMS(
+                            seller.PhoneNumber,
+                            `You have successfully registered item ${req.query.Name} for $${req.query.Price}. The ID is ${result}`),
+                    });
+                }
                 return result;
             },
         ],

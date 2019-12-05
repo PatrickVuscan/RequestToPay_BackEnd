@@ -59,6 +59,27 @@ export default [
                     await setInvoiceItems(items);
                 }
                 res.status(200).send(OrderID);
+                // send SMS updates to appropriate parties
+                const order = await getOrder(req.query.OID, false);
+                const customer = await getEntity(order.CID);
+                const seller = await getEntity(order.SID);
+                // send the notifications with the appropriate messages
+                if (customer.PhoneNumber) {
+                    logger.info({
+                        file: "src/services/Order/route.ts",
+                        message: await sendSMS(
+                            customer.PhoneNumber,
+                            `You have successfully created order number ${OrderID} for seller ${seller.Name}`),
+                    });
+                }
+                if (seller.PhoneNumber) {
+                    logger.info({
+                        file: "src/services/Order/route.ts",
+                        message: await sendSMS(
+                            seller.PhoneNumber,
+                            `Customer ${customer.Name} has created an order awaiting approval from you with ID ${OrderID}`),
+                    });
+                }
                 return OrderID;
             },
         ],
@@ -144,14 +165,14 @@ export default [
                 // send the notifications with the appropriate messages
                 if (Status === "ArrivedStatus" && customer.PhoneNumber) {
                     logger.info({
-                        file: "src/services/Entity/route.ts",
+                        file: "src/services/Order/route.ts",
                         message: await sendSMS(
                             customer.PhoneNumber,
                             `Your order from ${seller.Name} has arrived!`),
                     });
                 } else if (Status === "DeliveredStatus" && seller.PhoneNumber) {
                     logger.info({
-                        file: "src/services/Entity/route.ts",
+                        file: "src/services/Order/route.ts",
                         message: await sendSMS(
                             seller.PhoneNumber,
                             `Your transaction with ${customer.Name} is complete!`),
@@ -159,7 +180,7 @@ export default [
                 } else if (Status === "PaidStatus") {
                     if (customer.PhoneNumber) {
                         logger.info({
-                            file: "src/services/Entity/route.ts",
+                            file: "src/services/Order/route.ts",
                             message: await sendSMS(
                                 customer.PhoneNumber,
                                 `Your payment to ${seller.Name} has gone through!`),
@@ -167,7 +188,7 @@ export default [
                     }
                     if (seller.PhoneNumber) {
                         logger.info({
-                            file: "src/services/Entity/route.ts",
+                            file: "src/services/Order/route.ts",
                             message: await sendSMS(
                                 seller.PhoneNumber,
                                 `You have received a payment from ${customer.Name} for order number ${order.OID}.`),
@@ -176,7 +197,7 @@ export default [
                     if (driver) {
                         if (driver.PhoneNumber) {
                             logger.info({
-                                file: "src/services/Entity/route.ts",
+                                file: "src/services/Order/route.ts",
                                 message: await sendSMS(
                                     driver.PhoneNumber,
                                     `Payment for order (${order.OID}) for customer ${customer.Name} is complete.`),
@@ -185,7 +206,7 @@ export default [
                     }
                 } else if (Status === "ApprovedStatus" && customer.PhoneNumber) {
                     logger.info({
-                        file: "src/services/Entity/route.ts",
+                        file: "src/services/Order/route.ts",
                         message: await sendSMS(
                             customer.PhoneNumber,
                             `Order number ${order.OID} has been approved by ${seller.Name}.`),
