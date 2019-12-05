@@ -1,6 +1,6 @@
 /* This file is responsible for testing the loginRequest provider. */
 import {singleUser} from "../../../utils/__mocks__/queryReturns";
-import {HTTP400Error, HTTP404Error} from "../../../utils/httpErrors";
+import {HTTP404Error} from "../../../utils/httpErrors";
 import * as Provider from "./loginRequest";
 
 // we will be mocking this object by providing fake data
@@ -13,7 +13,7 @@ describe("query", () => {
         // get get the result of what we are testing. the mocked q should 'know' this query
         // assert that the request raises an error
         await expect(Provider.loginRequest("zero", "zero")).rejects.toEqual(new HTTP404Error(
-            "Could not find user(zero) with specified password(zero)",
+            "Could not find entity(zero) with specified password(zero)",
         ));
     });
     test("loginRequest: test single user", async () => {

@@ -2,7 +2,7 @@
 
 import {QueryResult} from "pg";
 import {generateGetLoginString} from "../../services/Entity/providers/loginRequest";
-import {loginNoUsers, loginOneUsers, singleUser, twoUsers, zeroUsers} from "./queryReturns";
+import {loginNoUsers, loginOneUsers} from "./queryReturns";
 
 export default async (q: string): Promise<QueryResult> => {
     if (generateGetLoginString("zero", "zero") === q) {

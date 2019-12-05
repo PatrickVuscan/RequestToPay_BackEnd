@@ -1,5 +1,5 @@
 import {Invoice} from "../../../utils/dbTypes";
-import {HTTP400Error, HTTP404Error} from "../../../utils/httpErrors";
+import {HTTP404Error} from "../../../utils/httpErrors";
 import q from "../../../utils/query";
 
 const generateGetString: (EID: number) => string = (EID: number) => {

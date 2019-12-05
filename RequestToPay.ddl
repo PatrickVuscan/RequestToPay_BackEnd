@@ -11,7 +11,8 @@ create table "Entity" (
   "Name" text not null,
   "BillingAddress" text not null,
   "Username" text unique not null,
-  "Password" text not null
+  "Password" text not null,
+  "PhoneNumber" char(10)
 );
 
 create table "Item" (
@@ -43,13 +44,14 @@ create table "WarehouseContents" (
 );
 
 create table "Order" (
-  "OID" serial primary key,
-  "InID" integer unique not null references "Invoice"("InID"),
-  "SID" integer not null references "Entity"("EID"),
-  "CID" integer not null references "Entity"("EID"),
-  "DID" integer not null references "Entity"("EID"),
-  "OrderDate" timestamp not null,
-  "ArrivedStatus" boolean not null,
-  "DeliveredStatus" boolean not null,
-  "PaidStatus" boolean not null
+  "OID"             serial    primary key,
+  "InID"            integer   unique      not null references "Invoice"("InID"),
+  "SID"             integer               not null references "Entity"("EID"),
+  "CID"             integer               not null references "Entity"("EID"),
+  "DID"             integer                        references "Entity"("EID"),
+  "OrderDate"       timestamp             not null,
+  "ApprovedStatus"  boolean               not null default false,
+  "ArrivedStatus"   boolean               not null default false,
+  "DeliveredStatus" boolean               not null default false,
+  "PaidStatus"      boolean               not null default false
 );

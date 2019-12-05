@@ -4,8 +4,8 @@ import q from "../../../utils/query";
 
 const generateSetString: (entity: Entity) => string = (ent: Entity) => {
     return `INSERT INTO "RequestToPay"."Entity"
-        ("EID", "Name", "Username", "Password", "BillingAddress")
-        VALUES (default, '${ent.Name}', '${ent.Username}', '${ent.Password}', '${ent.BillingAddress}')
+        ("EID", "Name", "Username", "Password", "BillingAddress", "PhoneNumber")
+        VALUES (default, '${ent.Name}', '${ent.Username}', '${ent.Password}', '${ent.BillingAddress}', '${ent.PhoneNumber}')
         RETURNING "EID"`;
 };
 

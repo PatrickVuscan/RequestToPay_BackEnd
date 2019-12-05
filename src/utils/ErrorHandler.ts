@@ -15,7 +15,7 @@ export const clientError = (err: Error, res: Response, next: NextFunction) => {
 
 // catches server errors
 export const serverError = (err: Error, res: Response, next: NextFunction) => {
-    if (err instanceof Error) {
+    if (!(err instanceof HTTPClientError)) {
         // send the stack if we are not in production mode
         if (process.env.NODE_ENV === "production") {
             logger.error(err);

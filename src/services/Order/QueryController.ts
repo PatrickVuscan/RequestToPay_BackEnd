@@ -40,8 +40,8 @@ export const checkOrderSetParams = (
         throw new HTTP400Error("Missing SID parameter");
     } else if (!req.query.CID) {
         throw new HTTP400Error("Missing CID parameter");
-    } else if (!req.query.DID) {
-        throw new HTTP400Error("Missing DID parameter");
+    // } else if (!req.query.DID) {
+    //     throw new HTTP400Error("Missing DID parameter");
     } else if (!req.query.OrderDate) {
         throw new HTTP400Error("Missing OrderDate parameter");
     } else if (!req.query.DeliveryDate) {

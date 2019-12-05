@@ -4,6 +4,9 @@ import { Request, Response } from "express";
 import {IRoute} from "..";
 import {Invoice, Item, Order} from "../../utils/dbTypes";
 import {HTTP404Error} from "../../utils/httpErrors";
+import {logger} from "../../utils/logger";
+import {sendSMS} from "../../utils/sms";
+import {getEntity} from "../Entity/QueryController";
 import {setInvoice} from "../Invoice/QueryController";
 import {setInvoiceItems} from "../InvoiceItems/QueryController";
 import {getItem} from "../Item/QueryController";
@@ -37,11 +40,12 @@ export default [
                     InID: InvID,
                     SID: req.query.SID,
                     CID: req.query.CID,
-                    DID: req.query.DID,
+                    DID: req.query.DID || "null",  // this is an optional parameter, as it might be set later
                     OrderDate: new Date(Date.parse(req.query.OrderDate)),
                     ArrivedStatus: false,
                     DeliveredStatus: false,
                     PaidStatus: false,
+                    ApprovedStatus: false,
                 };
                 const OrderID = await setOrder(ord);
                 for (const currItems of req.body.invoiceItems) {
@@ -55,6 +59,27 @@ export default [
                     await setInvoiceItems(items);
                 }
                 res.status(200).send(OrderID);
+                // send SMS updates to appropriate parties
+                const order = await getOrder(OrderID, false);
+                const customer = await getEntity(order.CID);
+                const seller = await getEntity(order.SID);
+                // send the notifications with the appropriate messages
+                if (customer.PhoneNumber) {
+                    logger.info({
+                        file: "src/services/Order/route.ts",
+                        message: await sendSMS(
+                            customer.PhoneNumber,
+                            `You have successfully created order number ${OrderID} for seller ${seller.Name}`),
+                    });
+                }
+                if (seller.PhoneNumber) {
+                    logger.info({
+                        file: "src/services/Order/route.ts",
+                        message: await sendSMS(
+                            seller.PhoneNumber,
+                            `Customer ${customer.Name} has created an order awaiting approval from you with ID ${OrderID}`),
+                    });
+                }
                 return OrderID;
             },
         ],
@@ -122,11 +147,71 @@ export default [
                     Status = "DeliveredStatus";
                 } else if (reqStatus === "PaidStatus" || reqStatus === "Paid" || reqStatus === "p") {
                     Status = "PaidStatus";
+                } else if (reqStatus === "ApprovedStatus" || reqStatus === "Approved" || reqStatus === "ap") {
+                    Status = "ApprovedStatus";
                 } else {
                     throw new HTTP404Error("Status does not match any of the accepted statuses.");
                 }
                 const result = await setStatus(req.query.OID, Status, req.query.state);
                 res.status(200).send(result);
+                // get entity information for the 3 parties involved
+                const order = await getOrder(req.query.OID, false);
+                const customer = await getEntity(order.CID);
+                let driver = null;
+                if (order.DID) {
+                    driver = await getEntity(order.DID);
+                }
+                const seller = await getEntity(order.SID);
+                // send the notifications with the appropriate messages
+                if (Status === "ArrivedStatus" && customer.PhoneNumber) {
+                    logger.info({
+                        file: "src/services/Order/route.ts",
+                        message: await sendSMS(
+                            customer.PhoneNumber,
+                            `Your order from ${seller.Name} has arrived!`),
+                    });
+                } else if (Status === "DeliveredStatus" && seller.PhoneNumber) {
+                    logger.info({
+                        file: "src/services/Order/route.ts",
+                        message: await sendSMS(
+                            seller.PhoneNumber,
+                            `Your transaction with ${customer.Name} is complete!`),
+                    });
+                } else if (Status === "PaidStatus") {
+                    if (customer.PhoneNumber) {
+                        logger.info({
+                            file: "src/services/Order/route.ts",
+                            message: await sendSMS(
+                                customer.PhoneNumber,
+                                `Your payment to ${seller.Name} has gone through!`),
+                        });
+                    }
+                    if (seller.PhoneNumber) {
+                        logger.info({
+                            file: "src/services/Order/route.ts",
+                            message: await sendSMS(
+                                seller.PhoneNumber,
+                                `You have received a payment from ${customer.Name} for order number ${order.OID}.`),
+                        });
+                    }
+                    if (driver) {
+                        if (driver.PhoneNumber) {
+                            logger.info({
+                                file: "src/services/Order/route.ts",
+                                message: await sendSMS(
+                                    driver.PhoneNumber,
+                                    `Payment for order (${order.OID}) for customer ${customer.Name} is complete.`),
+                            });
+                        }
+                    }
+                } else if (Status === "ApprovedStatus" && customer.PhoneNumber) {
+                    logger.info({
+                        file: "src/services/Order/route.ts",
+                        message: await sendSMS(
+                            customer.PhoneNumber,
+                            `Order number ${order.OID} has been approved by ${seller.Name}.`),
+                    });
+                }
                 return result;
             },
         ],

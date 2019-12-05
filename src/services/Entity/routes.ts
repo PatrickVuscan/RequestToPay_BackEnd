@@ -3,6 +3,8 @@
 import { Request, Response } from "express";
 import {IRoute} from "..";
 import {Entity} from "../../utils/dbTypes";
+import {HTTP404Error} from "../../utils/httpErrors";
+import {getEntityByRegex} from "./providers/retrieveEntity";
 import {
     checkEntityQueryParams,
     checkEntitySetParams,
@@ -11,6 +13,8 @@ import {
     getLogin,
     setEntity,
 } from "./QueryController";
+import {logger} from "../../utils/logger";
+import {sendSMS} from "../../utils/sms";
 
 export default [
     {
@@ -29,15 +33,32 @@ export default [
         handler: [
             checkEntitySetParams,
             async (req: Request, res: Response) => {
+                // check and set the phone number
+                if (!req.query.PhoneNumber) {
+                    req.query.PhoneNumber = "null";
+                } else if (req.query.PhoneNumber.length !== 10) {
+                    throw new HTTP404Error("Phone number must be exactly 10 digits long or not set");
+                }
                 const ent: Entity = {
                     EID: -1,
                     Name: req.query.Name,
                     BillingAddress: req.query.BillingAddress,
                     Username: req.query.Username,
                     Password: req.query.Password,
+                    PhoneNumber: req.query.PhoneNumber,
                 };
                 const result = await setEntity(ent);
                 res.status(200).send(result);
+                if (req.query.PhoneNumber) {
+                    logger.info({
+                        file: "src/services/Order/route.ts",
+                        message: await sendSMS(
+                            req.query.PhoneNumber,
+                            `You have successfully registered for <APPNAME> with the username ${req.query.Username}! ` +
+                            `Welcome to the revolutionary data-rich and secure request to pay application and thank ` +
+                            `you for doing your business through Scotia Bank!`),
+                    });
+                }
                 return result;
             },
         ],
@@ -48,7 +69,12 @@ export default [
         handler: [
             checkEntityQueryParams,
             async (req: Request, res: Response) => {
-                const result = await getEntity(req.query.EID);
+                let result = null;
+                if (req.query.EID) {
+                    result = await getEntity(req.query.EID);
+                } else if (req.query.regex) {
+                    result = await getEntityByRegex(req.query.regex);
+                }
                 res.status(200).send(result);
                 return result;
             },

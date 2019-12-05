@@ -1,4 +1,4 @@
-import {Invoice, InvoiceItems} from "../../../utils/dbTypes";
+import {InvoiceItems} from "../../../utils/dbTypes";
 import {HTTP400Error, HTTP404Error} from "../../../utils/httpErrors";
 import q from "../../../utils/query";
 
