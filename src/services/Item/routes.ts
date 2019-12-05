@@ -6,7 +6,6 @@ import {Item} from "../../utils/dbTypes";
 import {logger} from "../../utils/logger";
 import {sendSMS} from "../../utils/sms";
 import {getEntity} from "../Entity/QueryController";
-import {getOrder} from "../Order/QueryController";
 import {
     checkItemByNameQueryParams,
     checkItemQueryParams,

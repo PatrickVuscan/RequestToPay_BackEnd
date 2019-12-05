@@ -60,7 +60,7 @@ export default [
                 }
                 res.status(200).send(OrderID);
                 // send SMS updates to appropriate parties
-                const order = await getOrder(req.query.OID, false);
+                const order = await getOrder(OrderID, false);
                 const customer = await getEntity(order.CID);
                 const seller = await getEntity(order.SID);
                 // send the notifications with the appropriate messages
