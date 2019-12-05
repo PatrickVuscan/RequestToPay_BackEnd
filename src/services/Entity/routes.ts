@@ -13,6 +13,8 @@ import {
     getLogin,
     setEntity,
 } from "./QueryController";
+import {logger} from "../../utils/logger";
+import {sendSMS} from "../../utils/sms";
 
 export default [
     {
@@ -47,6 +49,16 @@ export default [
                 };
                 const result = await setEntity(ent);
                 res.status(200).send(result);
+                if (req.query.PhoneNumber) {
+                    logger.info({
+                        file: "src/services/Order/route.ts",
+                        message: await sendSMS(
+                            req.query.PhoneNumber,
+                            `You have successfully registered for <APPNAME> with the username ${req.query.Username}! ` +
+                            `Welcome to the revolutionary data-rich and secure request to pay application and thank ` +
+                            `you for doing your business through Scotia Bank!`),
+                    });
+                }
                 return result;
             },
         ],
