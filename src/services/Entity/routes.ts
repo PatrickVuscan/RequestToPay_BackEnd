@@ -4,6 +4,8 @@ import { Request, Response } from "express";
 import {IRoute} from "..";
 import {Entity} from "../../utils/dbTypes";
 import {HTTP404Error} from "../../utils/httpErrors";
+import {logger} from "../../utils/logger";
+import {sendSMS} from "../../utils/sms";
 import {getEntityByRegex} from "./providers/retrieveEntity";
 import {
     checkEntityQueryParams,
@@ -13,8 +15,6 @@ import {
     getLogin,
     setEntity,
 } from "./QueryController";
-import {logger} from "../../utils/logger";
-import {sendSMS} from "../../utils/sms";
 
 export default [
     {
@@ -81,5 +81,26 @@ export default [
         ],
         method: "get",
         path: "/api/v1/entity",
+    },
+    {
+        handler: [
+            checkEntitySetParams,
+            async (req: Request, res: Response) => {
+                // check and set the phone number
+                const ent: Entity = {
+                    EID: -1,
+                    Name: req.query.Name,
+                    BillingAddress: req.query.BillingAddress,
+                    Username: req.query.Username,
+                    Password: req.query.Password,
+                    PhoneNumber: req.query.PhoneNumber,
+                };
+                const result = await setEntity(ent);
+                res.status(200).send(result);
+                return result;
+            },
+        ],
+        method: "put",
+        path: "/api/v1/demoEntity",
     },
 ] as IRoute[];
