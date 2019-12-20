@@ -4,9 +4,9 @@ import q from "../../../utils/query";
 
 const generateSetString: (order: Order) => string = (ord: Order) => {
     return `INSERT INTO "RequestToPay"."Order"
-        ("OID", "InID", "SID", "CID", "DID", "OrderDate", "PaidStatus", "ArrivedStatus", "DeliveredStatus")
+        ("OID", "InID", "SID", "CID", "DID", "OrderDate", "ApprovedStatus", "ArrivedStatus", "DeliveredStatus", "PaidStatus")
         VALUES (default, ${ord.InID}, ${ord.SID}, ${ord.CID}, ${ord.DID}, '${ord.OrderDate.toISOString()}',
-            ${ord.PaidStatus}, ${ord.ArrivedStatus}, ${ord.DeliveredStatus})
+             ${ord.ApprovedStatus},${ord.ArrivedStatus}, ${ord.PaidStatus}, ${ord.DeliveredStatus})
         RETURNING "OID";`;
 };
 

@@ -42,10 +42,10 @@ export default [
                     CID: req.query.CID,
                     DID: req.query.DID || "null",  // this is an optional parameter, as it might be set later
                     OrderDate: new Date(Date.parse(req.query.OrderDate)),
+                    ApprovedStatus: false,
                     ArrivedStatus: false,
                     DeliveredStatus: false,
                     PaidStatus: false,
-                    ApprovedStatus: false,
                 };
                 const OrderID = await setOrder(ord);
                 for (const currItems of req.body.invoiceItems) {
