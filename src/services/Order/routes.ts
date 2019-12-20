@@ -2,7 +2,7 @@
 
 import { Request, Response } from "express";
 import {IRoute} from "..";
-import {Invoice, Item, Order} from "../../utils/dbTypes";
+import {Invoice, InvoiceItems, Item, Order} from "../../utils/dbTypes";
 import {HTTP404Error} from "../../utils/httpErrors";
 import {logger} from "../../utils/logger";
 import {sendSMS} from "../../utils/sms";
@@ -42,15 +42,15 @@ export default [
                     CID: req.query.CID,
                     DID: req.query.DID || "null",  // this is an optional parameter, as it might be set later
                     OrderDate: new Date(Date.parse(req.query.OrderDate)),
+                    ApprovedStatus: false,
                     ArrivedStatus: false,
                     DeliveredStatus: false,
                     PaidStatus: false,
-                    ApprovedStatus: false,
                 };
                 const OrderID = await setOrder(ord);
                 for (const currItems of req.body.invoiceItems) {
                     const item: Item = await getItem(currItems.IID);
-                    const items = {
+                    const items: InvoiceItems = {
                         InID: InvID,
                         IID: currItems.IID,
                         Price: item.Price,

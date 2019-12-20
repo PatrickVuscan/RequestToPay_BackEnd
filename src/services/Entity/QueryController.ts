@@ -5,6 +5,7 @@ import {NextFunction, Request, Response} from "express";
 import {checkAscii} from "../../utils/checks";
 import {Entity} from "../../utils/dbTypes";
 import {HTTP400Error} from "../../utils/httpErrors";
+import {createDemoEntity} from "./providers/createDemoEntity";
 import {createEntity} from "./providers/createEntity";
 import {loginRequest} from "./providers/loginRequest";
 import {retrieveEntity} from "./providers/retrieveEntity";
@@ -19,6 +20,10 @@ export const getLogin = async  (name: string, pass: string) => {
 
 export const getEntity = async (EID: number) => {
     return await retrieveEntity(EID);
+};
+
+export const setDemoEntity = async (ent: Entity) => {
+    return createDemoEntity(ent);
 };
 
 export const checkEntitySetParams = (

@@ -547,6 +547,54 @@
           }
         ]
       }
+    },
+    "/demoEntity": {
+      "put": {
+        "tags": ["Entity Endpoints"],
+        "summary": "Creates an entity for the demo.",
+        "responses": {
+          "200": {
+            "description": "This is the EntityID of the newly created entity."
+          }
+        },
+        "parameters": [
+          {
+            "name": "Name",
+            "in": "query",
+            "description": "The name of the Entity to display.",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "Username",
+            "in": "query",
+            "description": "The username of entity, for logging in.",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "Password",
+            "in": "query",
+            "description": "The password of entity, for logging in.",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "BillingAddress",
+            "in": "query",
+            "description": "The billing address of the entity.",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "PhoneNumber",
+            "in": "query",
+            "description": "Phone number to send notifications to.",
+            "required": false,
+            "type": "string"
+          }
+        ]
+      }
     }
   }
 }
