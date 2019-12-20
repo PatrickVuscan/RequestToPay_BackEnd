@@ -9,7 +9,7 @@ import {setOrder} from "../../Order/QueryController";
 const generateSetString: (entity: Entity) => string = (ent: Entity) => {
     return `INSERT INTO "RequestToPay"."Entity"
         ("EID", "Name", "Username", "Password", "BillingAddress", "PhoneNumber")
-        VALUES (default, select dbms_random.string('X', 20) str from dual, '${ent.Username}', '${ent.Password}', '${ent.BillingAddress}', '${ent.PhoneNumber}')
+        VALUES (default, '${ent.Name}', random(), '${ent.Password}', '${ent.BillingAddress}', '${ent.PhoneNumber}')
         RETURNING "EID"`;
 };
 
@@ -23,7 +23,8 @@ export const createDemoEntity: (ent: Entity) => void = async (ent: Entity) => {
     if (!res) {
         throw new HTTP404Error("No response");
     } else if (res.rows.length !== 1) {
-        throw new HTTP404Error("Couldn't create entity");
+        throw new HTTP404Error(generateSetString(ent));
+        // throw new HTTP404Error("Couldn't create entity");
     }
 
     const demoID = res.rows[0].EID;
@@ -210,7 +211,7 @@ export const createDemoEntity: (ent: Entity) => void = async (ent: Entity) => {
     await setOrder(order6);
 
     const items6p1: InvoiceItems = {
-        InID: invoice5ID,
+        InID: invoice6ID,
         IID: 1,
         Price: 89.99,
         Quantity: 4,
@@ -227,7 +228,7 @@ export const createDemoEntity: (ent: Entity) => void = async (ent: Entity) => {
     // Create an item that is the demo user's product to sell.
     const demoItem: Item = {
         IID: -1,
-        Name: `Pallet of ${ent.Name}'s Produce`,
+        Name: `Pallet of ${ent.Name}''s Produce`,
         Price: 109.99,
         SID: demoID,
 

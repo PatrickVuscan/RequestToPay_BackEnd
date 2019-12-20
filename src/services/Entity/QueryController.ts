@@ -24,7 +24,7 @@ export const getEntity = async (EID: number) => {
 
 export const setDemoEntity = async (ent: Entity) => {
     return createDemoEntity(ent);
-}
+};
 
 export const checkEntitySetParams = (
     req: Request,

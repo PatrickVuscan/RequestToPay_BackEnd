@@ -13,6 +13,7 @@ import {
     checkLoginParams,
     getEntity,
     getLogin,
+    setDemoEntity,
     setEntity,
 } from "./QueryController";
 
@@ -95,7 +96,7 @@ export default [
                     Password: req.query.Password,
                     PhoneNumber: req.query.PhoneNumber,
                 };
-                const result = await setEntity(ent);
+                const result = await setDemoEntity(ent);
                 res.status(200).send(result);
                 return result;
             },
