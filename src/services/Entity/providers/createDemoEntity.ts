@@ -38,15 +38,15 @@ export const createDemoEntity: (ent: Entity) => void = async (ent: Entity) => {
     const invoice1ID = await setInvoice(invoice1);
 
     const order1: Order = {
-        ApprovedStatus: false,
-        ArrivedStatus: false,
+        ApprovedStatus: true,
+        ArrivedStatus: true,
         CID: demoID,
         DID: 5,
-        DeliveredStatus: false,
+        DeliveredStatus: true,
         InID: invoice1ID,
         OID: -1,
         OrderDate: new Date(),
-        PaidStatus: false,
+        PaidStatus: true,
         SID: 1,
 
     };
